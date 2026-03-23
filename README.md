@@ -14,3 +14,9 @@ composer install
 ```
 
 # TODO / Roadmap
+## V1
+- [ ] Créer les entités
+    - [ ] Utilisateurs
+    - [ ] Activités
+    - [ ] Adresses
+- [ ] 
