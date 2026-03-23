@@ -14,9 +14,12 @@ composer install
 ```
 
 # TODO / Roadmap
+## V0 Créer les entités
+- [x] Participant en tant que User 
+- [x] Sortie
+    - [ ] dateHeureDebut >= dateLimiteInscription
+    - [ ] dateLimiteInscription defaut = dateHeureDebut
 ## V1
-- [ ] Créer les entités
-  - [x] Participant en tant que User 
 - [ ] Créer les Controller
 - [ ] Créer les fixtures
 
