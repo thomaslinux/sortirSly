@@ -1,6 +1,6 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>100</x><y>160</y><w>130</w><h>170</h></coordinates><panel_attributes>Participant
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>170</x><y>180</y><w>130</w><h>170</h></coordinates><panel_attributes>Participant / User
 --
-pseudo
+username (unique)
 email
 password
 nom
@@ -8,59 +8,61 @@ prenom
 photo
 actif : boolean
 role : string
-bg=#FFAA00</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>390</y><w>190</w><h>150</h></coordinates><panel_attributes>Sortie
+bg=#CCCCCC</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>410</y><w>190</w><h>150</h></coordinates><panel_attributes>Sortie
 --
-titre
+nom
 dateHeureDebut : datetime
 dateLimiteInscription : datetime
 duree : int (minutes)
 nbPlaces : int
 description : text
-bg=#ff0000</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>580</x><y>400</y><w>100</w><h>70</h></coordinates><panel_attributes>Etat
+bg=#CCCCCC</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>650</x><y>410</y><w>100</w><h>50</h></coordinates><panel_attributes>Etat
 --
-libelle</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>430</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=-
+nom</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>420</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=-
 m1=*
 m2=1
-etat</panel_attributes><additional_attributes>10;20;90;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>430</y><w>90</w><h>80</h></coordinates><panel_attributes>Campus
+etat</panel_attributes><additional_attributes>10;20;90;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>450</y><w>90</w><h>80</h></coordinates><panel_attributes>Campus
 --
-ville</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>680</y><w>150</w><h>100</h></coordinates><panel_attributes>Lieu / Adresse
+nom</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>700</y><w>150</w><h>100</h></coordinates><panel_attributes>Lieu / Adresse
 --
 nom
 rue
 latitude : float
-longitude : float</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>220</x><y>300</y><w>160</w><h>110</h></coordinates><panel_attributes>lt=-
+longitude : float</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>320</y><w>160</w><h>110</h></coordinates><panel_attributes>lt=-
 m1=*
 m2=1
-organisateur</panel_attributes><additional_attributes>10;20;130;20;130;90</additional_attributes></element><element><id>Relation</id><coordinates><x>220</x><y>230</y><w>230</w><h>180</h></coordinates><panel_attributes>lt=-
+organisateur</panel_attributes><additional_attributes>10;20;130;20;130;90</additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>250</y><w>230</w><h>180</h></coordinates><panel_attributes>lt=-
 m1=*
 m2=1
-participants</panel_attributes><additional_attributes>10;20;200;20;200;160</additional_attributes></element><element><id>Relation</id><coordinates><x>150</x><y>320</y><w>70</w><h>130</h></coordinates><panel_attributes>lt=-
+participants</panel_attributes><additional_attributes>10;20;200;20;200;160</additional_attributes></element><element><id>Relation</id><coordinates><x>220</x><y>340</y><w>70</w><h>130</h></coordinates><panel_attributes>lt=-
 m1=*
 m2=1
-campus</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>220</x><y>460</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=-
+campus</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>480</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=-
 m1=*
 m2=1
-campus</panel_attributes><additional_attributes>90;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>370</x><y>530</y><w>50</w><h>170</h></coordinates><panel_attributes>lt=-
+campus</panel_attributes><additional_attributes>90;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>550</y><w>50</w><h>170</h></coordinates><panel_attributes>lt=-
 m1=*
 m2=1
-lieu</panel_attributes><additional_attributes>10;10;10;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>540</x><y>680</y><w>110</w><h>90</h></coordinates><panel_attributes>Ville
+lieu</panel_attributes><additional_attributes>10;10;10;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>610</x><y>700</y><w>110</w><h>90</h></coordinates><panel_attributes>Ville
 --
 nom
-codePostal</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>450</x><y>720</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=-
+codePostal</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>520</x><y>740</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=-
 m1=*
 m2=1
-ville</panel_attributes><additional_attributes>10;20;90;20</additional_attributes></element><element><id>UMLNote</id><coordinates><x>580</x><y>200</y><w>90</w><h>140</h></coordinates><panel_attributes>En création
+ville</panel_attributes><additional_attributes>10;20;90;20</additional_attributes></element><element><id>UMLNote</id><coordinates><x>650</x><y>180</y><w>90</w><h>140</h></coordinates><panel_attributes>En création
 Ouverte
 Clôturée
 En cours
 Terminée
 Annulée
 Historisée
-bg=#009900</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>330</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>130</x><y>560</y><w>80</w><h>70</h></coordinates><panel_attributes>Rennes
+bg=#55FF55</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>310</y><w>30</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>200</x><y>580</y><w>80</w><h>70</h></coordinates><panel_attributes>Rennes
 Nantes
 Quimper
 Niort
-bg=#009900</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>160</x><y>500</y><w>40</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>20;10;10;60</additional_attributes></element><element><id>UMLNote</id><coordinates><x>580</x><y>600</y><w>70</w><h>40</h></coordinates><panel_attributes>Créé par
+bg=#55FF55</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>520</y><w>40</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>20;10;10;60</additional_attributes></element><element><id>UMLNote</id><coordinates><x>650</x><y>620</y><w>70</w><h>40</h></coordinates><panel_attributes>Créé par
 les admins
-bg=#FAFA9F</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>630</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>150</x><y>700</y><w>70</w><h>30</h></coordinates><panel_attributes>Patinoire
-bg=#009900</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>700</y><w>120</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>100;10;10;20</additional_attributes></element></diagram>
+bg=#FAFA9F</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>670</x><y>650</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>220</x><y>720</y><w>70</w><h>30</h></coordinates><panel_attributes>Patinoire
+bg=#55FF55</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>720</y><w>120</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>100;10;10;20</additional_attributes></element><element><id>UMLNote</id><coordinates><x>360</x><y>190</y><w>70</w><h>40</h></coordinates><panel_attributes>Créé par
+les fixtures
+bg=#FAFA9F</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>200</y><w>90</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;30;70;10</additional_attributes></element></diagram>
