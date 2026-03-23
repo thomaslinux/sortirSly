@@ -18,8 +18,10 @@ composer install
 - [x] Participant en tant que User 
 - [x] Sortie
     - [ ] dateHeureDebut >= dateLimiteInscription
-    - [ ] dateLimiteInscription defaut = dateHeureDebut
-  
+    - [ ] dateLimiteInscription default = dateHeureDebut
+    - [x] nbPlaces et nom sont non nullables
+- [ ] Créer les relations
+
 <img height="512px" alt="Diagramme de classe du projet" src="CONCEPTION/UML%20Class/sorties_diagramme_classe.png" />
 ## V1
 - [ ] Créer les Controller
