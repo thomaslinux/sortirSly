@@ -1,12 +1,16 @@
 # Projet sorties
 
-Projets d'organisations de sorties pour les élèves de l'ENI. Ce projet est conçu pour fonctionner avec wamp
+Projets d'organisations de sorties pour les élèves de l'ENI. Ce projet est conçu pour fonctionner avec wamp. Vous pouvez télécharger wamp ici :
+
+https://wampserver.aviatechno.net/
 
 # Installation du projet
 
-Dans le dossier www de wamp :
-```git clone https://github.com/thomaslinux/sortirSly.git sortirSly
+Dans le dossier d'installation de wamp, dans www :
+```
+git clone https://github.com/thomaslinux/sortirSly.git sortirSly
 cd sortirSly
-composer install```
+composer install
+```
 
 # TODO / Roadmap
