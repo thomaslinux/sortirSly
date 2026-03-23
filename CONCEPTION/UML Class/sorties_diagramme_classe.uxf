@@ -14,8 +14,8 @@ nom
 ?dateHeureDebut : datetime
 ?dateLimiteInscription : datetime
 ?duree : int (minutes)
-nbPlaces : int
 ?description : text
+nbPlaces : int
 bg=#CCCCCC</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>650</x><y>383</y><w>100</w><h>50</h></coordinates><panel_attributes>Etat
 --
 nom</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>393</y><w>100</w><h>50</h></coordinates><panel_attributes>lt=-
