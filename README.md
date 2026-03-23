@@ -16,6 +16,13 @@ composer install
 # TODO / Roadmap
 ## V1
 - [ ] Créer les entités
+  - [x] Participant en tant que User 
 - [ ] Créer les Controller
 - [ ] Créer les fixtures
 
+
+## V2 - CSS
+- [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
+
+## V3 - API recherche de sorties
+- [ ] Cocher un critère de recherche de sortie recharge dynamiquement la liste des sorties via un appel API
