@@ -3,8 +3,12 @@
     <div style="display: flex; align-items: center;">
         <span class="navbar-brand">ENI'Where</span>
         <div class="navbar-links">
-            <a class="nav-link active" href="{{ path('main_home') }}">Accueil</a>
-            <a class="nav-link" href="{{ path('sortie_list') }}">Liste des sorties</a>
+            <a class="nav-link {{ app.request.attributes.get('_route') == 'main_home' ? 'active' }}"
+               href="{{ path('main_home') }}">Accueil</a>
+            <a class="nav-link {{ app.request.attributes.get('_route') == 'sortie_list' ? 'active' }}"
+               href="{{ path('sortie_list') }}">Liste des sorties</a>
+            <a class="nav-link {{ app.request.attributes.get('_route') == 'participant_update' ? 'active' }}"
+               href="{{ path('participant_update') }}">Modifier mon profil</a>
         </div>
     </div>
     <div class="navbar-actions">
