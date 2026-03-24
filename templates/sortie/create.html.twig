@@ -7,18 +7,17 @@
 
 
 {% block body %}
-    <h2>Création d'une sortie</h2>
-    {{ form_start(sortieForm) }}
-    {{ form_widget(sortieForm) }}
-    <button>
-        <a href="{{ path('sortie_create') }}">Enregistrer "brouillon"</a>
-    </button>
-    <button>
-        <a href="{{ path('sortie_publish') }}">Publier la sortie</a>
-    </button>
+    <div>
+        {% embed 'views/form/template-form-sortie.html.twig' %}
+        {% block formTitle %}Création d'une sortie{% endblock %}
 
+        {% block buttonLabel %}
+            Enregistrer "brouillon"
+        {% endblock %}
 
-    {{ form_end(sortieForm) }}
+        {% endembed %}
+    </div>
+
 
 {% endblock %}
 

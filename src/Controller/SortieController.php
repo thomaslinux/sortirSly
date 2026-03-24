@@ -20,69 +20,66 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final class SortieController extends AbstractController
 {
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
-    public function create(
+    #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    #[Route('/publish', name: 'publish', methods: ['POST'])]
+    public function createOrUpdate(
         EntityManagerInterface $entityManager,
-        EtatRepository $etatRepository,
-        Request $request): Response
+        SortieRepository       $sortieRepository,
+        EtatRepository         $etatRepository,
+        Request                $request,
+        ?int                   $id = null): Response
     {
-        $sortie = new Sortie();
-        $sortieForm = $this->createForm(SortieType::class, $sortie);
-        $sortieForm->handleRequest($request);
-
         $user = $this->getUser();
         if (!$user) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
         }
 
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            $sortie->setOrganisateur($this->getUser());
-            $sortie->setCampus($this->getUser()->getCampus());
-            $sortie->setEtat($etatRepository->findOneBy(["nom" => "En creation"]));
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-            $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' enregistrée en brouillon');
-            return $this->redirectToRoute('main_home');
+        if ($id === null) {
+            $sortie = new Sortie();
+        } else {
+            $sortie = $sortieRepository->find($id);
+            if (!$sortie) {
+                throw $this->createNotFoundException('Sortie non trouvée');
+            }
         }
-        return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
-    }
 
-    #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-    public function update(
-        int                    $id,
-        SortieRepository       $sortieRepository,
-        EntityManagerInterface $entityManager,
-        Request                $request): Response
-    {
-        $sortie = $sortieRepository->find($id);
         $sortieForm = $this->createForm(SortieType::class, $sortie, [
-            'user' => $this->getUser()
+            'user' => $user
         ]);
         $sortieForm->handleRequest($request);
 
-        $user = $this->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
-        }
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            if ($id === null) {
+                $sortie->setOrganisateur($user);
+                $sortie->setCampus($user->getCampus());
+                $sortie->setEtat($etatRepository->findOneBy(["nom" => "En creation"]));
+                $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' enregistrée en brouillon');
+            } else {
+                if (!$sortieForm->get('publier')->isClicked()) {
+                    $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' modifiée');
+                }
+            }
+            if ($sortieForm->get('publier')->isClicked()) {
+                $sortie->setEtat($etatRepository->findOneBy(["nom" => "Ouverte"]));
+                $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' est publiée');
+
+            }
             $entityManager->persist($sortie);
             $entityManager->flush();
-            $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' modifiée');
             return $this->redirectToRoute('main_home');
         }
-        return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm]);
+        if ($id === null) {
+            return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
+        } else {
+            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm]);
+        }
+
     }
 
     #[Route('/detail/{id}', name: 'detail')]
     public function detail(): Response
     {
         return $this->render('sortie/detail.html.twig');
-    }
-
-
-    #[Route('/publish/{id}', name: 'publish', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-    public function publish(): Response
-    {
-        return $this->render('sortie/create.html.twig');
     }
 
 

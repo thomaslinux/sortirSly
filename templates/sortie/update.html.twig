@@ -5,14 +5,17 @@
     {{ parent() }} | Modification de sortie
 {% endblock %}
 
-
-
 {% block body %}
-    <h2>Modification d'une sortie</h2>
-    {{ form_start(sortieForm) }}
-    {{ form_widget(sortieForm) }}
-    <button>Enregistrer</button>
+    <div>
+        {% embed 'views/form/template-form-sortie.html.twig' %}
+            {% block formTitle %}Création d'une sortie{% endblock %}
 
-    {{ form_end(sortieForm) }}
+            {% block buttonLabel %}
+                Enregistrer "brouillon"
+            {% endblock %}
+
+        {% endembed %}
+    </div>
+
 
 {% endblock %}

@@ -12,6 +12,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -54,7 +56,10 @@ class SortieType extends AbstractType
                 'query_builder' => function (LieuRepository $lieuRepository) {
                     return $lieuRepository->createQueryBuilder('l')->addOrderBy('l.nom');
                 }
-            ]);
+            ])
+            ->add('publier', SubmitType::class, ['label' => 'Publier'])
+           ;
+//        ->add('annuler', ResetType::class, ['label' => 'Annuler'])
     }
 
 
