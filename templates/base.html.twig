@@ -12,6 +12,20 @@
         {% endblock %}
     </head>
     <body>
+        {% block header %}{% endblock %}
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+
+
+    {% endfor %}
         {% block body %}{% endblock %}
+        {% block footer %}{% endblock %}
     </body>
 </html>
