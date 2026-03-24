@@ -23,7 +23,7 @@ class Sortie
     #[ORM\Column(nullable: true)]
     private ?\DateTime $dateLimiteInscription = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $duree = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
