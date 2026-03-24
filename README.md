@@ -13,6 +13,7 @@ cd sortirSly
 composer install
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
 ```
 
 # TODO / Roadmap
@@ -22,8 +23,14 @@ php bin/console doctrine:migrations:migrate
     - [ ] dateHeureDebut >= dateLimiteInscription
     - [ ] dateLimiteInscription default = dateHeureDebut
     - [x] nbPlaces et nom sont non nullables
-- [ ] Créer les relations
-- [ ] Créer les fixtures
+- [x] Créer les relations
+- [-] Créer les fixtures
+  - [x] Users
+  - [ ] Sortie
+  - [ ] Lieu
+- [ ] Associer Users et Campus 
+- [ ] Associer Sortie et Campus
+- [ ] Associer Sortie et Users
 
 <img height="512px" alt="Diagramme de classe du projet" src="CONCEPTION/UML%20Class/sorties_diagramme_classe.png" />
 ## V1
