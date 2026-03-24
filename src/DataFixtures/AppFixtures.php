@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -17,6 +18,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $this->addUsers($manager);
+        $this->addEtats($manager);
     }
 
     public function addUsers(ObjectManager $manager)
@@ -36,6 +38,18 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
+
+    public function addEtats(ObjectManager $manager)
+    {
+        $etats = ['En création', 'Ouverte', 'Clôturée', 'En cours', 'Terminée', 'Annulée', 'Historisée'];
+
+        foreach ($etats as $etat) {
+            $et = new Etat();
+            $et->setNom($etat);
+            $manager->persist($et);
+        }
+        $manager->flush();
+    }
 
 
 }
