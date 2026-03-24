@@ -35,11 +35,14 @@ php bin/console doctrine:fixtures:load
 - [ ] Formulaire de création de sorties
     - [ ] dateLimiteInscription > dateHeureDebut
 
-## V2 - CSS
-- [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
-
-## V3 - API recherche de sorties
+## V2 - API recherche de sorties
 - [ ] Cocher un critère de recherche de sortie recharge dynamiquement la liste des sorties via un appel API
+
+## V3 - CSS et JS
+- [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
+- [ ] Modifier le thème pour éviter de perdre de l'espace
+- [ ] Désactiver la grille au redimentionnement
+- [ ] Trier les éléments de la liste de sorties dans le tableau de sorties
 
 # Modèle graphique html :
 
