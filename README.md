@@ -11,6 +11,8 @@ Dans le dossier d'installation de wamp, dans www :
 git clone https://github.com/thomaslinux/sortirSly.git sortirSly
 cd sortirSly
 composer install
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
 ```
 
 # TODO / Roadmap

@@ -16,7 +16,7 @@ class Lieu
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $rue = null;
 
     #[ORM\Column(nullable: true)]
