@@ -21,18 +21,19 @@ php bin/console doctrine:fixtures:load
 - [x] Participant en tant que User 
 - [x] Sortie
     - [x] dateHeureDebut >= dateLimiteInscription
-    - [ ] dateLimiteInscription default = dateHeureDebut
     - [x] nbPlaces et nom sont non nullables
 - [x] Créer les relations
-- [x] Associer Users et Campus 
-- [x] Associer Sortie et Campus
-- [x] Associer Sortie et Users
+    - [x] Associer Users et Campus 
+    - [x] Associer Sortie et Campus
+    - [x] Associer Sortie et Users
 - [x] Créer les fixtures avec associations
+- [x] Récupérer et afficher la liste des sorties
 
 <img height="512px" alt="Diagramme de classe du projet" src="CONCEPTION/UML%20Class/sorties_diagramme_classe.png" />
-## V1
-- [ ] Créer les Controller
 
+## V1
+- [ ] Formulaire de création de sorties
+    - [ ] dateLimiteInscription > dateHeureDebut
 
 ## V2 - CSS
 - [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
