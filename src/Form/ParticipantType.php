@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\Participant;
+use App\Repository\CampusRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -24,9 +27,11 @@ class ParticipantType extends AbstractType
             ->add('nom', TextType::class, ['label' => 'Nom :'])
             ->add('tel', TelType::class,  ['label' => 'Telephone :'])
             ->add('email', EmailType::class, ['label' => 'Email :'])
+            ->add('campus', EntityType::class, ['class' => Campus::class, 'choice_label' => 'nom', 'required' => true, 'query_builder' => function (CampusRepository $campusRepository) {
+                return $campusRepository->createQueryBuilder('c')->addOrderBy('c.nom', 'ASC');
+            }])
             ->add('plainPassword', RepeatedType::class, ['type' => PasswordType::class, 'invalid_message' => 'Les mots de passe doivent correspondre.', 'options' => ['attr' => ['class' => 'password-field']], 'required' => false, 'first_options' => ['label' => 'Mot de passe : '], 'second_options' => ['label' => 'Confirmation Mot de passe : '], 'mapped' => false])
-//            ->add('campus', ChoiceType::class, ['choices' => ['Rennes' => 'rennes', 'Quimper' => 'quimper', 'Nantes' => 'nantes', 'Niort' => 'niort']])
-            ->add('photo', FileType::class, ['mapped' => false, 'required' => false])
+            ->add('photo', FileType::class,  ['mapped' => false, 'required' => false])
         ;
     }
 
