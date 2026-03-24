@@ -1,0 +1,16 @@
+{% form_theme sortieForm 'views/form/form-theme.html.twig' %}
+
+<h2>
+    {% block formTitle %}
+    {% endblock %}
+</h2>
+{{ form_start(sortieForm) }}
+{{ form_widget(sortieForm) }}
+    <button>
+        {% block buttonLabel %}
+        {% endblock %}
+    </button>
+<button><a href="{{ path('main_home') }}">Annuler</a></button>
+
+
+{{ form_end(sortieForm) }}
