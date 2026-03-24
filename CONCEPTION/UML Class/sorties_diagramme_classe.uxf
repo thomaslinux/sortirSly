@@ -8,6 +8,7 @@ password
 ?photo
 actif : boolean
 role : string
+tel : string
 bg=#CCCCCC</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>383</y><w>200</w><h>150</h></coordinates><panel_attributes>Sortie
 --
 nom
