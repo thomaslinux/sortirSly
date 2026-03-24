@@ -27,6 +27,7 @@ class AppFixtures extends Fixture
         $this->addLieux($manager);
         $this->addUsers($manager);
         $this->addSorties($manager);
+        $this->inscrireParticipants($manager);
     }
     public function addCampus(ObjectManager $manager) {
         $campusList = ['Rennes', 'Nantes', 'Quimper', 'Niort'];
@@ -143,8 +144,21 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-//    public function inscrireParticipants(ObjectManager $manager)
-//    {
-//
-//    }
+    public function inscrireParticipants(ObjectManager $manager)
+    {
+        $faker = Factory::create('fr_FR');
+        $participantList = $manager->getRepository(Participant::class)->findAll();
+        $sortieList = $manager->getRepository(Sortie::class)->findAll();
+
+        // Une boucle pour chaque sortie
+        // Une boucle pour combien de participants mettre, avec un score de $i variable
+
+        foreach ($sortieList as $sortie) {
+            for ($i = 0; $i < $sortie->getNbPlaces(); $i++) {
+                $sortie->addInscription($faker->randomElement($participantList));
+            }
+            $manager->persist($sortie);
+        }
+        $manager->flush();
+    }
 }
