@@ -1,18 +1,22 @@
 {% extends 'base.html.twig' %}
 
 
-
 {% block title %}
-{{ parent() }} | Création de sortie
+    {{ parent() }} | Création de sortie
 {% endblock %}
-
 
 
 {% block body %}
     <h2>Création d'une sortie</h2>
     {{ form_start(sortieForm) }}
     {{ form_widget(sortieForm) }}
-    <button>Enregistrer "brouillon"</button>
+    <button>
+        <a href="{{ path('sortie_create') }}">Enregistrer "brouillon"</a>
+    </button>
+    <button>
+        <a href="{{ path('sortie_publish') }}">Publier la sortie</a>
+    </button>
+
 
     {{ form_end(sortieForm) }}
 

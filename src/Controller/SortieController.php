@@ -46,8 +46,6 @@ final class SortieController extends AbstractController
         return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
     }
 
-
-
     #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function update(
         int                    $id,
