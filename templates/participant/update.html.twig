@@ -1,3 +1,4 @@
+{% extends 'base.html.twig' %}
 {% block body %}
     {% embed 'views/form/template-form-participant.html.twig' with {form : form} %}
         {% block formTitle %}  Mon profil : {{ participant.username }} {% endblock %}
