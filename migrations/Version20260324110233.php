@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20260324104506 extends AbstractMigration
+final class Version20260324110233 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -23,7 +23,7 @@ final class Version20260324104506 extends AbstractMigration
         $this->addSql('CREATE TABLE campus (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE etat (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE lieu (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, rue VARCHAR(255) DEFAULT NULL, latitude DOUBLE PRECISION DEFAULT NULL, longitude DOUBLE PRECISION DEFAULT NULL, ville_id INT DEFAULT NULL, INDEX IDX_2F577D59A73F0036 (ville_id), PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4');
-        $this->addSql('CREATE TABLE participant (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, nom VARCHAR(255) DEFAULT NULL, prenom VARCHAR(255) DEFAULT NULL, photo VARCHAR(255) DEFAULT NULL, actif TINYINT NOT NULL, campus_id INT DEFAULT NULL, INDEX IDX_D79F6B11AF5D55E1 (campus_id), UNIQUE INDEX UNIQ_IDENTIFIER_USERNAME (username, email), PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('CREATE TABLE participant (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, nom VARCHAR(255) DEFAULT NULL, prenom VARCHAR(255) DEFAULT NULL, photo VARCHAR(255) DEFAULT NULL, actif TINYINT NOT NULL, tel VARCHAR(255) DEFAULT NULL, campus_id INT DEFAULT NULL, INDEX IDX_D79F6B11AF5D55E1 (campus_id), UNIQUE INDEX UNIQ_IDENTIFIER_USERNAME (username, email), PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE sortie (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, date_heure_debut DATETIME DEFAULT NULL, date_limite_inscription DATETIME DEFAULT NULL, duree INT NOT NULL, description LONGTEXT DEFAULT NULL, nb_places INT NOT NULL, organisateur_id INT DEFAULT NULL, etat_id INT DEFAULT NULL, lieu_id INT DEFAULT NULL, campus_id INT DEFAULT NULL, INDEX IDX_3C3FD3F2D936B2FA (organisateur_id), INDEX IDX_3C3FD3F2D5E86FF (etat_id), INDEX IDX_3C3FD3F26AB213CC (lieu_id), INDEX IDX_3C3FD3F2AF5D55E1 (campus_id), PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE sortie_participant (sortie_id INT NOT NULL, participant_id INT NOT NULL, INDEX IDX_E6D4CDADCC72D953 (sortie_id), INDEX IDX_E6D4CDAD9D1C3019 (participant_id), PRIMARY KEY (sortie_id, participant_id)) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE ville (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, code_postal INT NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4');
