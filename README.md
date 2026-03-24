@@ -20,17 +20,14 @@ php bin/console doctrine:fixtures:load
 ## V0 Créer les entités
 - [x] Participant en tant que User 
 - [x] Sortie
-    - [ ] dateHeureDebut >= dateLimiteInscription
+    - [x] dateHeureDebut >= dateLimiteInscription
     - [ ] dateLimiteInscription default = dateHeureDebut
     - [x] nbPlaces et nom sont non nullables
 - [x] Créer les relations
-- [-] Créer les fixtures
-  - [x] Users
-  - [ ] Sortie
-  - [ ] Lieu
-- [ ] Associer Users et Campus 
-- [ ] Associer Sortie et Campus
-- [ ] Associer Sortie et Users
+- [x] Associer Users et Campus 
+- [x] Associer Sortie et Campus
+- [x] Associer Sortie et Users
+- [x] Créer les fixtures avec associations
 
 <img height="512px" alt="Diagramme de classe du projet" src="CONCEPTION/UML%20Class/sorties_diagramme_classe.png" />
 ## V1
