@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\SortieType;
+use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,10 +39,24 @@ final class SortieController extends AbstractController
     }
 
 
-    #[Route('/update/{id}', name: 'update')]
-    public function update(): Response
+    #[Route('/update/{id}', name: 'update',methods: ['GET', 'POST'])]
+    public function update(
+        int $id,
+        SortieRepository $sortieRepository,
+        EntityManagerInterface $entityManager,
+        Request $request): Response
     {
-        return $this->render('sortie/update.html.twig' );
+        $sortie = $sortieRepository->find($id);
+        $sortieForm=$this->createForm(SortieType::class,$sortie);
+        $sortieForm->handleRequest($request);
+
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+            $this->addFlash('success','Sortie '.$sortie->getNom().' modifiée');
+            return $this->redirectToRoute('main_home',['id'=>$sortie->getId()]);
+        }
+        return $this->render('sortie/update.html.twig',['sortieForm'=>$sortieForm] );
     }
 
 
