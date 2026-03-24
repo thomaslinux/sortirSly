@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>{{ participant.username }}</h2>
+    <div>
+        {#        balise image de profil #}
+        <div>Prénom : {{ participant.prenom }}</div>
+        <div>Nom : {{ participant.nom }}</div>
+        <div>Télephone : {{ participant.tel }}</div>
+        <div>Email : {{ participant.email }}</div>
+        <div>Campus : {{ participant.campus.nom }}</div>
+    </div>
+    <div><a href="{{ path('main_home') }}">Retour</a></div>
+{% endblock %}
+

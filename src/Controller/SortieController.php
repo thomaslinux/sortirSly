@@ -19,6 +19,23 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[Route("/sortie", name: 'sortie_')]
 final class SortieController extends AbstractController
 {
+    #[Route("/list", name: 'list', methods: ['GET', 'POST'])]
+    public function list(
+        EntityManagerInterface $entityManager,
+        SortieRepository       $sortieRepository,
+        Request                $request
+    )
+    {
+        // TODO récupérer les éléments de recherche dans la request
+        // TODO récupére les éléments en fonction de la recherche
+        $sorties = $sortieRepository->findAll();
+
+        return $this->render('sortie/list.html.twig', [
+            'sorties' => $sorties
+        ]);
+    }
+
+
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     #[Route('/publish', name: 'publish', methods: ['POST'])]
