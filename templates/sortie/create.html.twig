@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}
+{{ parent() }} | Création de sortie
+{% endblock %}
+
+
+
+{% block body %}
+    <h2>Création d'une sortie</h2>
+    {{ form_start(sortieForm) }}
+    {{ form_widget(sortieForm) }}
+    <button>Enregistrer "brouillon"</button>
+
+    {{ form_end(sortieForm) }}
+
+{% endblock %}
+
