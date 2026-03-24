@@ -1,5 +1,7 @@
 {% block body %}
-    <h2>Mon profil : {{ participant.username }}</h2>
-
-
+    {% embed 'views/form/template-form-participant.html.twig' with {form : form} %}
+        {% block formTitle %}  Mon profil : {{ participant.username }} {% endblock %}
+        {% block buttonLabel %}Modifier{% endblock %}
+    {% endembed %}
+    <button><a href="{{ path('main_home') }}">Annuler</a></button>
 {% endblock %}
