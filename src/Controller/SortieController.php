@@ -41,17 +41,11 @@ final class SortieController extends AbstractController
             $entityManager->persist($sortie);
             $entityManager->flush();
             $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' enregistrée en brouillon');
-            return $this->redirectToRoute('main_home', ['id' => $sortie->getId()]);
+            return $this->redirectToRoute('main_home');
         }
         return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
     }
 
-
-    #[Route('/detail/{id}', name: 'detail')]
-    public function detail(): Response
-    {
-        return $this->render('sortie/detail.html.twig');
-    }
 
 
     #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
@@ -72,24 +66,22 @@ final class SortieController extends AbstractController
             throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
         }
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            $etat = new Etat();
-            $etat->setNom("En création");
-
-            $sortie->setOrganisateur($this->getUser())->setNom($this->getUser()->getUserIdentifier());
-            $sortie->setCampus($this->getUser()->getCampus());
-            $sortie->setEtat($etat);
             $entityManager->persist($sortie);
-            $entityManager->persist($etat);
-
             $entityManager->flush();
             $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' modifiée');
-            return $this->redirectToRoute('main_home', ['id' => $sortie->getId()]);
+            return $this->redirectToRoute('main_home');
         }
         return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm]);
     }
 
+    #[Route('/detail/{id}', name: 'detail')]
+    public function detail(): Response
+    {
+        return $this->render('sortie/detail.html.twig');
+    }
 
-    #[Route('/publish/{id}', name: 'publish', requirements: ['id' => '/d+'], methods: ['GET', 'POST'])]
+
+    #[Route('/publish/{id}', name: 'publish', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function publish(): Response
     {
         return $this->render('sortie/create.html.twig');
