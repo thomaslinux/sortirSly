@@ -40,3 +40,7 @@ php bin/console doctrine:fixtures:load
 
 ## V3 - API recherche de sorties
 - [ ] Cocher un critère de recherche de sortie recharge dynamiquement la liste des sorties via un appel API
+
+# Modèle graphique html :
+
+https://rawcdn.githack.com/thomaslinux/sortirSly/refs/heads/master/assets/styles/michel.html
