@@ -41,17 +41,16 @@ class SortieType extends AbstractType
             ->add('nbPlaces', NumberType::class, [
                 'label' => 'Nombre de places :'
             ])
-//            ->add('campus', EntityType::class, [
-//                'class' => Campus::class,
-//                'choice_label' => 'Campus :',
-//                'data' => $user()->getCampus(),
-//                'query_builder' => function (CampusRepository $campusRepository) {
-//                    return $campusRepository->createQueryBuilder('c')->addOrderBy('c.nom');
-//                }
-//            ])
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'nom',
+                'query_builder' => function (CampusRepository $campusRepository) {
+                    return $campusRepository->createQueryBuilder('c')->addOrderBy('c.nom');
+                }
+            ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
-                'choice_label' => 'Lieu :',
+                'choice_label' => 'nom',
                 'query_builder' => function (LieuRepository $lieuRepository) {
                     return $lieuRepository->createQueryBuilder('l')->addOrderBy('l.nom');
                 }

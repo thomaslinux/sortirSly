@@ -6,6 +6,7 @@ use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
+use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,16 +20,24 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final class SortieController extends AbstractController
 {
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(
+        EntityManagerInterface $entityManager,
+        EtatRepository $etatRepository,
+        Request $request): Response
     {
         $sortie = new Sortie();
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
 
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
+        }
+
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-
-            $sortie->setEtat($etat);
-
+            $sortie->setOrganisateur($this->getUser());
+            $sortie->setCampus($this->getUser()->getCampus());
+            $sortie->setEtat($etatRepository->findOneBy(["nom" => "En creation"]));
             $entityManager->persist($sortie);
             $entityManager->flush();
             $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' enregistrée en brouillon');
