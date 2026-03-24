@@ -1,10 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
-{% endblock %}
 
 {% block title %}
-
+    {{ parent() }} | Modification de sortie
 {% endblock %}
 
+
+
+{% block body %}
+    <h2>Modification d'une sortie</h2>
+    {{ form_start(sortieForm) }}
+    {{ form_widget(sortieForm) }}
+    <button>Enregistrer</button>
+
+    {{ form_end(sortieForm) }}
+
+{% endblock %}
