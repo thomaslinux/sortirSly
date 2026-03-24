@@ -1,0 +1,17 @@
+<!-- Main Navigation Bar -->
+<nav class="top-navbar">
+    <div style="display: flex; align-items: center;">
+        <span class="navbar-brand">ENI'Where</span>
+        <div class="navbar-links">
+            <a class="nav-link active" href="{{ path('main_home') }}">Accueil</a>
+            <a class="nav-link" href="{{ path('sortie_list') }}">Liste des sorties</a>
+        </div>
+    </div>
+    <div class="navbar-actions">
+        <a href="{{ path('sortie_create') }}" class="btn btn-gradient">Créer une sortie</a>
+        <div style="display: flex; gap: 1rem; color: var(--primary);">
+            <span class="material-symbols-outlined" style="cursor: pointer;">notifications</span>
+            <span class="material-symbols-outlined" style="cursor: pointer;">account_circle</span>
+        </div>
+    </div>
+</nav>
