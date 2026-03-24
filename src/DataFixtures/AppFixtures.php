@@ -99,7 +99,17 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
         $campusList = $manager->getRepository(Campus::class)->findAll();
 
-        for ($i = 0; $i < 10; $i++) {
+        $admin = new Participant();
+        $admin
+            ->setRoles(['ROLE_ADMIN'])
+            ->setEmail('admin@admin.admin')
+            ->setUsername('admin')
+            ->setPassword(
+                $this->userPasswordHasher->hashPassword($admin, 'admin')
+            );
+        $manager->persist($admin);
+
+        for ($i = 0; $i < 50; $i++) {
             $user = new Participant();
             $user
                 ->setCampus($faker->randomElement($campusList))
@@ -114,6 +124,7 @@ class AppFixtures extends Fixture
                 );
             $manager->persist($user);
         }
+
         $manager->flush();
     }
 
