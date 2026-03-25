@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -34,13 +35,13 @@ class SortieType extends AbstractType
             ->add('dateLimiteInscription', DateType::class, [
                 'label' => 'Date limite d\'inscription :'
             ])
-            ->add('duree', NumberType::class, [
+            ->add('duree', IntegerType::class, [
                 'label' => 'Durée :'
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description et infos :'
             ])
-            ->add('nbPlaces', NumberType::class, [
+            ->add('nbPlaces', IntegerType::class, [
                 'label' => 'Nombre de places :'
             ])
             ->add('campus', EntityType::class, [

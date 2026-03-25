@@ -166,18 +166,18 @@ class Sortie
         return $this->inscriptions;
     }
 
-    public function addInscription(Participant $inscription): static
+    public function sIncrire(Participant $participant): static
     {
-        if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions->add($inscription);
+        if (!$this->inscriptions->contains($participant)) {
+            $this->inscriptions->add($participant);
         }
 
         return $this;
     }
 
-    public function removeInscription(Participant $inscription): static
+    public function seDesister(Participant $participant): static
     {
-        $this->inscriptions->removeElement($inscription);
+        $this->inscriptions->removeElement($participant);
 
         return $this;
     }

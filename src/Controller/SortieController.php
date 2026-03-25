@@ -9,6 +9,7 @@ use App\Form\CancelSortieType;
 use App\Form\Model\CancelSortie;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -94,6 +95,7 @@ final class SortieController extends AbstractController
 
     }
 
+
     #[Route('/detail/{id}', name: 'detail', requirements: ['id' => '\d+'])]
     public function detail(
         int              $id,
@@ -111,7 +113,7 @@ final class SortieController extends AbstractController
     }
 
 
-    #[Route('/cancel/{id}', name: 'cancel',requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    #[Route('/cancel/{id}', name: 'cancel', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function cancel(
         int                    $id,
         Request                $request,
@@ -120,9 +122,7 @@ final class SortieController extends AbstractController
         SortieRepository       $sortieRepository): Response
     {
         $user = $this->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
-        }
+
         $sortie = $sortieRepository->find($id);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
@@ -152,10 +152,6 @@ final class SortieController extends AbstractController
         SortieRepository       $sortieRepository
     ): Response
     {
-        $user = $this->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
-        }
         $sortie = $sortieRepository->find($id);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
@@ -165,4 +161,70 @@ final class SortieController extends AbstractController
         $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' supprimée!');
         return $this->redirectToRoute('main_home');
     }
+
+    #[Route('/publish/{id}', name: 'publishId', methods: ['GET'])]
+    public function publishId(
+        int                    $id,
+        EntityManagerInterface $entityManager,
+        EtatRepository         $etatRepository,
+        SortieRepository       $sortieRepository): Response
+    {
+
+        $sortie = $sortieRepository->find($id);
+        if (!$sortie) {
+            throw $this->createNotFoundException('Sortie non trouvée');
+        }
+
+        $sortie->setEtat($etatRepository->findOneBy(["nom" => "Ouverte"]));
+        $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' est publiée');
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+        return $this->redirectToRoute('main_home');
+    }
+
+    #[Route('/subscribe/{id}', name: 'subscribe', requirements: ['id' => '\d+'])]
+    public function subscribe(int                    $id,
+                              EntityManagerInterface $entityManager,
+                              SortieRepository       $sortieRepository): Response
+    {
+
+        $sortie = $sortieRepository->find($id);
+        if (!$sortie) {
+            throw $this->createNotFoundException('Sortie non trouvée');
+        }
+
+        $user = $this->getUser();
+        $sortie->sIncrire($user);
+        $this->addFlash('success', 'Vous êtes inscrit à la sortie ' . $sortie->getNom());
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('sortie_list');
+    }
+
+
+    #[Route('/unsubscribe/{id}', name: 'unsubscribe', requirements: ['id' => '\d+'])]
+    public function unsubscribe(int                    $id,
+                              EntityManagerInterface $entityManager,
+                              SortieRepository       $sortieRepository): Response
+    {
+
+        $sortie = $sortieRepository->find($id);
+        if (!$sortie) {
+            throw $this->createNotFoundException('Sortie non trouvée');
+        }
+
+        $user = $this->getUser();
+        $sortie->seDesister($user);
+        $this->addFlash('success', 'Vous vous êtes désisté de la sortie ' . $sortie->getNom());
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('sortie_list');
+    }
+
+
 }

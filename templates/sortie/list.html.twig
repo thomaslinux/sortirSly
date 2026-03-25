@@ -88,7 +88,32 @@
                            href="{{ path('participant_profil', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.username }}</a>
                     </td>
                     <td class="actions-cell">
-                        <a class="action-link" href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
+                        {#                        La ou David travaille #}
+                        {# TODO faire le tri en fonction des droits et des actions déjà menée  #}
+                        {% if sortie.etat.nom != 'En creation' %}
+                            <a class="action-link"
+                               href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
+                        {% endif %}
+
+                        {% if sortie.etat.nom == 'Ouverte' %}
+                            {% if sortie.inscriptions.contains(app_user) %}
+                            <a class="action-link"
+                               href="{{ path('sortie_subscribe', {'id': sortie.id}) }}">S'inscrire</a>
+                            {% else %}
+                                                        <a class="action-link"
+                               href="{{ path('sortie_unsubscribe', {'id': sortie.id}) }}">Se désister</a>
+                            {% endif %}
+                        {% endif %}
+                        {% if sortie.etat.nom == 'En creation' %}
+                            <a class="action-link"
+                               href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
+                            <a class="action-link"
+                               href="{{ path('sortie_publishId', {'id': sortie.id}) }}">Publier</a>
+                        {% endif %}
+                        {% if sortie.etat.nom == 'Ouverte' %}
+                            <a class="action-link"
+                               href="{{ path('sortie_cancel', {'id': sortie.id}) }}">Annuler</a>
+                        {% endif %}
                     </td>
                 </tr>
 
@@ -98,7 +123,8 @@
         <div class=" pagination">
             <span class="page-info">Page 1 sur 4</span>
             <div class="page-controls">
-                <button class="page-btn nav" disabled="">
+                <button class="page-btn nav"
+                        disabled="">
                     <span class="material-symbols-outlined">chevron_left</span>
                 </button>
                 <button class="page-btn active">1</button>
