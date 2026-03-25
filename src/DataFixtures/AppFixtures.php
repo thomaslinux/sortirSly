@@ -29,7 +29,9 @@ class AppFixtures extends Fixture
         $this->addSorties($manager);
         $this->inscrireParticipants($manager);
     }
-    public function addCampus(ObjectManager $manager) {
+
+    public function addCampus(ObjectManager $manager)
+    {
         $campusList = ['Rennes', 'Nantes', 'Quimper', 'Niort'];
 
         foreach ($campusList as $element) {
@@ -42,7 +44,8 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-    public function addEtats(ObjectManager $manager) {
+    public function addEtats(ObjectManager $manager)
+    {
         $etats = "En creation; Ouverte; Cloturee; En cours; Terminee; Annulee; Historisee";
         $etatList = explode("; ", $etats);
 
@@ -56,7 +59,8 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-    public function addVilles(ObjectManager $manager) {
+    public function addVilles(ObjectManager $manager)
+    {
         $faker = Factory::create('fr_FR');
 
         $villes = "Chartres-de-Bretagne; Bruz; Rennes; Quimper; Brest; Niort; Nantes";
@@ -65,7 +69,7 @@ class AppFixtures extends Fixture
         foreach ($villeList as $element) {
             $ville = new Ville();
             $ville->setNom($element);
-            $ville->setCodePostal($faker->numberBetween(10000,99999));
+            $ville->setCodePostal($faker->numberBetween(10000, 99999));
 
             $manager->persist($ville);
         }
@@ -85,8 +89,7 @@ class AppFixtures extends Fixture
             $lieu = new Lieu();
             $lieu
                 ->setNom($element)
-                ->setVille($faker->randomElement($villeList))
-            ;
+                ->setVille($faker->randomElement($villeList));
 
             $manager->persist($lieu);
         }
@@ -139,12 +142,12 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 200; $i++) {
             $sortie = new Sortie();
             $sortie
-                ->setNom($faker->text(15))
-                ->setDateHeureDebut($faker->dateTimeBetween('now','+2 months', 'Europe/Paris'))
-                ->setDateLimiteInscription($faker->dateTimeBetween('now', $sortie->getDateHeureDebut(),'Europe/Paris'))
+                ->setNom($faker->realText(15))
+                ->setDateHeureDebut($faker->dateTimeBetween('now', '+2 months', 'Europe/Paris'))
+                ->setDateLimiteInscription($faker->dateTimeBetween('now', $sortie->getDateHeureDebut(), 'Europe/Paris'))
                 ->setDuree($faker->numberBetween(15, 180))
-                ->setNbPlaces($faker->numberBetween(2,255))
-                ->setDescription($faker->text(255));
+                ->setNbPlaces($faker->numberBetween(2, 255))
+                ->setDescription($faker->realText(255));
             $sortie
                 ->setOrganisateur($faker->randomElement($participantList))
                 ->setCampus($faker->randomElement($campusList))

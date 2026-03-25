@@ -30,30 +30,39 @@
             {% for sortie in sorties %}
                 <tr>
                     <td class="event-name">
-                        <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">
-                            {{ sortie.nom }}</a>
+                        <a class="action-link"
+                           href="{{ path('sortie_detail', {'id': sortie.id}) }}">{{ sortie.nom }}</a>
                     </td>
-                    <td>25/05/2024 18:30</td>
-                    <td>24/05/2024</td>
-                    <td><span class="badge badge-tertiary">12 / 20</span></td>
-                    <td>
+                    <td class="date-de-sortie">{{ sortie.dateHeureDebut | date ('d/m/Y H:i') }}</td>
+                    <td class="cloture">{{ sortie.dateLimiteInscription | date ('d/m/Y') }}</td>
+                    <td><span
+                            class="badge badge-tertiary">{{ sortie.inscriptions.count }} / {{ sortie.nbPlaces }}</span>
+                    </td>
+                    <td class="Etat">
                         <div class="status status-open">
-                            <span class="status-dot"></span> Ouverte
+                            <span class="status-dot"></span> {{ sortie.etat.nom }}
                         </div>
                     </td>
-                    <td style="text-align: center;">
-                    <span class="material-symbols-outlined"
-                          style="color: var(--secondary); font-variation-settings: 'FILL' 1;">check_circle</span>
+                    {% if sortie.inscriptions.contains(app.user) %}
+                        <td style="text-align: center;">
+                            <span class="material-symbols-outlined"
+                                  style="color: var(--secondary); font-variation-settings: 'FILL' 1;">check_circle</span>
+                        </td>
+                    {% else %}
+                        <td style="text-align: center; color: var(--outline-variant);">—</td>
+                    {% endif %}
+                    <td><a class="organizer"
+                           href="{{ path('participant_profil', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.username }}</a>
                     </td>
-                    <td><a class="organizer" href="#">C. Dupont</a></td>
                     <td class="actions-cell">
-                        <button class="action-link">Afficher</button>
+                        <a class="action-link" href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
                     </td>
                 </tr>
+
             {% endfor %}
             </tbody>
         </table>
-        <div class="pagination">
+        <div class=" pagination">
             <span class="page-info">Page 1 sur 4</span>
             <div class="page-controls">
                 <button class="page-btn nav" disabled="">
