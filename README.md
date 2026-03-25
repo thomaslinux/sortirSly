@@ -47,3 +47,5 @@ php bin/console doctrine:fixtures:load
 # Modèle graphique html :
 
 https://rawcdn.githack.com/thomaslinux/sortirSly/refs/heads/master/assets/styles/michel.html
+
+https://rawcdn.githack.com/thomaslinux/sortirSly/refs/heads/master/assets/styles/jackie.html
