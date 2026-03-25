@@ -90,6 +90,9 @@
                     <td class="actions-cell">
                         {#                        La ou David travaille #}
                         {# TODO faire le tri en fonction des droits et des actions déjà menée  #}
+
+{#                        is_granted('EDIT', sortie)#}
+
                         {% if sortie.etat.nom != 'En creation' %}
                             <a class="action-link"
                                href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>

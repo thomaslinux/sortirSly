@@ -62,6 +62,7 @@ final class SortieController extends AbstractController
                 throw $this->createNotFoundException('Sortie non trouvée');
             }
         }
+        $this->denyAccessUnlessGranted('EDIT', $sortie);
         $user = $this->getUser();
         $sortieForm = $this->createForm(SortieType::class, $sortie, [
             'user' => $user
@@ -105,9 +106,11 @@ final class SortieController extends AbstractController
     {
 
         $sortie = $sortieRepository->find($id);
+
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
+        $this->denyAccessUnlessGranted('VIEW', $sortie);
         return $this->render('sortie/detail.html.twig', ['sortie' => $sortie]);
     }
 
@@ -130,6 +133,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
+        $this->denyAccessUnlessGranted('EDIT', $sortie);
         $cancelSortie = new CancelSortie();
         $cancelSortieForm = $this->createForm(CancelSortieType::class, $cancelSortie, [
             'user' => $user
@@ -164,6 +168,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
+        $this->denyAccessUnlessGranted('EDIT', $sortie);
         $entityManager->remove($sortie);
         $entityManager->flush();
         $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' supprimée!');
@@ -184,7 +189,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
-
+        $this->denyAccessUnlessGranted('EDIT', $sortie);
         $sortie->setEtat($etatRepository->findOneBy(["nom" => "Ouverte"]));
         $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' est publiée');
 
@@ -205,7 +210,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
-
+        $this->denyAccessUnlessGranted('VIEW', $sortie);
         $user = $this->getUser();
         $sortie->sIncrire($user);
         $this->addFlash('success', 'Vous êtes inscrit à la sortie ' . $sortie->getNom());
@@ -227,7 +232,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
-
+        $this->denyAccessUnlessGranted('VIEW', $sortie);
         $user = $this->getUser();
         $sortie->seDesister($user);
         $this->addFlash('success', 'Vous vous êtes désisté de la sortie ' . $sortie->getNom());
