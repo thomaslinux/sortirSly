@@ -49,25 +49,20 @@ final class SortieController extends AbstractController
         Request                $request,
         ?int                   $id = null): Response
     {
-        $user = $this->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
-        }
-
         if ($id === null) {
-            $sortie = new Sortie();
             $userAgent = $request->headers->get('User-Agent');
             if (preg_match('/Mobile|Android|iPhone|iPad|BlackBerry|IEMobile/i', $userAgent ?? '')){
                 $this->addFlash('error', 'Création de sortie interdite sur mobile.');
                 return $this->redirectToRoute('sortie_list');
             }
+            $sortie = new Sortie();
         } else {
             $sortie = $sortieRepository->find($id);
             if (!$sortie) {
                 throw $this->createNotFoundException('Sortie non trouvée');
             }
         }
-
+        $user = $this->getUser();
         $sortieForm = $this->createForm(SortieType::class, $sortie, [
             'user' => $user
         ]);
@@ -127,6 +122,11 @@ final class SortieController extends AbstractController
         EtatRepository         $etatRepository,
         SortieRepository       $sortieRepository): Response
     {
+            $userAgent = $request->headers->get('User-Agent');
+            if (preg_match('/Mobile|Android|iPhone|iPad|BlackBerry|IEMobile/i', $userAgent ?? '')){
+                $this->addFlash('error', 'Annulation de sortie interdite sur mobile.');
+                return $this->redirectToRoute('sortie_list');
+            }
         $user = $this->getUser();
 
         $sortie = $sortieRepository->find($id);
@@ -155,9 +155,15 @@ final class SortieController extends AbstractController
     public function delete(
         int                    $id,
         EntityManagerInterface $entityManager,
-        SortieRepository       $sortieRepository
+        SortieRepository       $sortieRepository,
+        Request $request
     ): Response
     {
+            $userAgent = $request->headers->get('User-Agent');
+            if (preg_match('/Mobile|Android|iPhone|iPad|BlackBerry|IEMobile/i', $userAgent ?? '')){
+                $this->addFlash('error', 'Suppression de sortie interdite sur mobile.');
+                return $this->redirectToRoute('sortie_list');
+            }
         $sortie = $sortieRepository->find($id);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
