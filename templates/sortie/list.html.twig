@@ -1,19 +1,95 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Liste des sorties</h2>
-    <section class="series-list">
-        {% for sortie in sorties %}
-            <article>
-                <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">
-                    <div class="nom">{{ sortie.nom }}</div>
-                </a>
-            </article>
-        {% endfor %}
+    <!-- Results Table -->
+    <div class="list-header">
+        <div>
+            <h1>Les sorties</h1>
+            <p class="current-date">Mardi 21 Mai 2024</p>
+        </div>
+        <div class="stats-display">
+            <span>Affichage</span>
+            <p>15 sorties trouvées</p>
+        </div>
+    </div>
+    <section class="event-list">
+        <table class="event-table">
+            <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture</th>
+                <th>Inscrits/Places</th>
+                <th>État</th>
+                <th style="text-align: center;">Inscrit</th>
+                <th>Organisateur</th>
+                <th style="text-align: right;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sortie in sorties %}
+
+                <tr>
+                    <td class="event-name">
+                        <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">
+                            {{ sortie.nom }}</a>
+                    </td>
+                    <td>25/05/2024 18:30</td>
+                    <td>24/05/2024</td>
+                    <td><span class="badge badge-tertiary">12 / 20</span></td>
+                    <td>
+                        <div class="status status-open">
+                            <span class="status-dot"></span> Ouverte
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                    <span class="material-symbols-outlined"
+                          style="color: var(--secondary); font-variation-settings: 'FILL' 1;">check_circle</span>
+                    </td>
+                    <td><a class="organizer" href="#">C. Dupont</a></td>
+                    <td class="actions-cell">
+                        <button class="action-link">Afficher</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="event-name">Randonnée Erdre et Sèvre</td>
+                    <td>26/05/2024 09:00</td>
+                    <td>25/05/2024</td>
+                    <td><span class="badge badge-tertiary">8 / 15</span></td>
+                    <td>
+                        <div class="status status-open">
+                            <span class="status-dot"></span> Ouverte
+                        </div>
+                    </td>
+                    <td style="text-align: center; color: var(--outline-variant);">—</td>
+                    <td><a class="organizer" href="#">M. Durand</a></td>
+                    <td class="actions-cell">
+                        <button class="action-link">S'inscrire</button>
+                        <button class="action-link">Afficher</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination">
+            <span class="page-info">Page 1 sur 4</span>
+            <div class="page-controls">
+                <button class="page-btn nav" disabled="">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn nav">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        </div>
     </section>
 {% endblock %}
 
-{% block title %}
-    Liste des sorties
-{% endblock %}
+    {% block title %}
+        Liste des sorties
+    {% endblock %}
 

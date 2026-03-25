@@ -1,21 +1,26 @@
 <!-- Main Navigation Bar -->
-<nav class="top-navbar">
-    <div style="display: flex; align-items: center;">
-        <span class="navbar-brand">ENI'Where</span>
-        <div class="navbar-links">
-            <a class="nav-link {{ app.request.attributes.get('_route') == 'main_home' ? 'active' }}"
-               href="{{ path('main_home') }}">Accueil</a>
-            <a class="nav-link {{ app.request.attributes.get('_route') == 'sortie_list' ? 'active' }}"
-               href="{{ path('sortie_list') }}">Liste des sorties</a>
-            <a class="nav-link {{ app.request.attributes.get('_route') == 'participant_update' ? 'active' }}"
-               href="{{ path('participant_update') }}">Modifier mon profil</a>
-        </div>
-    </div>
-    <div class="navbar-actions">
-        <a href="{{ path('sortie_create') }}" class="btn btn-gradient">Créer une sortie</a>
-        <div style="display: flex; gap: 1rem; color: var(--primary);">
-            <span class="material-symbols-outlined" style="cursor: pointer;">notifications</span>
-            <span class="material-symbols-outlined" style="cursor: pointer;">account_circle</span>
-        </div>
-    </div>
-</nav>
+<div class="nav-bar">
+    <a class="logo-container" href="#">
+        <img alt="ENI'Where Logo" class="logo-img"
+             src="https://lh3.googleusercontent.com/aida/ADBb0uhmS1HStPALWr4ylBezF6mQ5WPKUbY5zq7Za-ncrdTs5AKL4SVv-uAUN8nA8Zws3aLkiGNBQgRL-mgQlz_e_Sh3bAnQnsKZqnbmBVUv8e4_Be1sL0sv0TdISWLvqtz0ma45XcczjMAXwcsCcaI3vAdc0YbkV5BcMTuIud7rM49IXy4zJzOrWSjVJkE_6JyFnG7iZEc9EUTFd-_tNhcnicT_kjb4dF7YQX2vTf6FxXr2lctHu8KBL50oZDjm"/>
+        <span class="logo-text">ENI'Where</span>
+    </a>
+    <nav class="nav-links">
+
+        <a class="{{ app.request.attributes.get('_route') == 'main_home' ? 'active' }}"
+           href="{{ path('main_home') }}">Accueil</a>
+        <a class="{{ app.request.attributes.get('_route') == 'sortie_list' ? 'active' }}"
+           href="{{ path('sortie_list') }}">Liste des sorties</a>
+        <a class="{{ app.request.attributes.get('_route') == 'participant_update' ? 'active' }}"
+           href="{{ path('participant_update') }}">Modifier mon profil</a>
+    </nav>
+</div>
+<div class="nav-actions">
+    <button class="btn-create">Create event</button>
+    <button class="icon-btn">
+        <span class="material-symbols-outlined">notifications</span>
+    </button>
+    <button class="icon-btn">
+        <span class="material-symbols-outlined">account_circle</span>
+    </button>
+</div>
