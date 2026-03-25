@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Mon Profil - ENI'Where</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary: #594157;
+            --secondary: #726da8;
+            --tertiary: #7d8cc4;
+            --accent-1: #a0d2db;
+            --accent-2: #bee7e8;
+            --background: #e4ffff;
+            --surface: #ffffff;
+            --text-main: #002021;
+            --text-muted: #4c444a;
+            --input-bg: transparent;
+            --input-border: #cfc3ca;
+            --font-family: 'Manrope', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            background-color: rgba(228, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(207, 195, 202, 0.2);
+        }
+
+        .navbar-content {
+            width: 100%;
+            max-width: 1920px;
+            padding: 0 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-icon-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-icon-btn:hover {
+            background-color: rgba(190, 231, 232, 0.5);
+        }
+
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            overflow: hidden;
+            margin-left: 8px;
+        }
+
+        .user-avatar-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Profile Container */
+        .profile-container {
+            flex: 1;
+            padding-top: 120px;
+            padding-bottom: 60px;
+            width: 100%;
+            max-width: 1920px;
+            margin: 0 auto;
+            padding-left: 48px;
+            padding-right: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-header {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .profile-card {
+            background-color: var(--surface);
+            border-radius: 40px;
+            box-shadow: 0 10px 40px rgba(89, 65, 87, 0.05);
+            width: 100%;
+            max-width: 1100px;
+            padding: 64px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 64px;
+        }
+
+        /* Left Side: Avatar */
+        .profile-avatar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .profile-avatar-container {
+            width: 320px;
+            height: 320px;
+            border-radius: 32px;
+            overflow: hidden;
+            background-color: #000;
+            position: relative;
+        }
+
+        .profile-avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .avatar-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .btn-upload {
+            width: 100%;
+            background-color: var(--accent-2);
+            color: var(--primary);
+            border: none;
+            padding: 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-upload:hover {
+            background-color: #aed9da;
+        }
+
+        /* Right Side: Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-bottom: 1.5px solid var(--primary);
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 8px 0 12px 0;
+            font-family: var(--font-family);
+            font-size: 16px;
+            color: var(--secondary);
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: var(--secondary);
+            opacity: 0.6;
+        }
+
+        select.form-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23594157'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 4px center;
+            background-size: 20px;
+            padding-right: 32px;
+        }
+
+        /* Buttons Section */
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid rgba(207, 195, 202, 0.3);
+            color: var(--text-main);
+            padding: 16px 48px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--accent-2);
+            width: 100%;
+            padding: 48px 0;
+            margin-top: auto;
+            border-top: 1px solid rgba(207, 195, 202, 0.15);
+        }
+
+        .footer-content {
+            width: 100%;
+            max-width: 1920px;
+            padding: 0 48px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copyright {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 1024px) {
+            .profile-card {
+                grid-template-columns: 1fr;
+                padding: 40px;
+            }
+            .profile-avatar-section {
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="navbar">
+    <div class="navbar-content">
+        <div class="nav-left">
+            <a class="logo" href="#">
+                <span class="material-symbols-outlined" style="font-size: 32px;">explore</span>
+                ENI'Where
+            </a>
+            <nav class="nav-links">
+                <a class="nav-link" href="#">Events</a>
+                <a class="nav-link" href="#">Campus</a>
+                <a class="nav-link" href="#">Map</a>
+                <a class="nav-link" href="#">Community</a>
+            </nav>
+        </div>
+        <div class="nav-right">
+            <button class="nav-icon-btn">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <button class="nav-icon-btn">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+            <div class="user-avatar-small">
+                <img alt="Avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-QK2nzhdiyqT1ocTNnO0MtFZhAHwwJdCSIxXCD-gOuhwyoeKQ9IiacmQgerTRNImcL95xaulk25QRvukJZdpwKC1IKYpY-iv5GOlLXjy1b0pD0XI-E2abl5qQkhvIizZ8nrOVDPga1o8dEWv-u7-mYrhcROIihGgo4gVZFGSzBKLrDEKfVCXIjKD3NXZg5Np5CmMK6MQ0aB_K2_HjsX3IBzEkIJLGhiucwIio_LmK_fGFafBYzpRAuBRZT920Qp9p3JxHu5xxkjiu"/>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="profile-container">
+    <h1 class="profile-header">Mon profil</h1>
+    <div class="profile-card">
+        <div class="profile-avatar-section">
+            <div class="profile-avatar-container">
+                <img alt="Main Profile Photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAolC7xMFJ1D-75divs6DV464YnoV5tp_8H3fCpQLNNn0JWJ0SUDRV0gBhAIIuVuMQ4IaElVO9zyBnVynGNqTC7OzAp3VpFgNZVs9Ju8x-qI1cdUpgB2PB6Hq8Qd6aGLCaqHzbty7qOHhcOHZ1qoOA4pG7CAvYaxoySRFZCtogXV5EQVEDdlomdJiTkYcA5b8BGAh5neyHU2RfwuGayUWmWpavdu7PODRJjgGHC-q3FwQDDXqbT7wNIK2AUK1DH6kvNLl4uyfUu6bqN"/>
+            </div>
+            <div style="width: 100%;">
+                <p class="avatar-label" style="margin-bottom: 8px;">Ma photo</p>
+                <input id="file-input" style="display: none;" type="file"/>
+                <button class="btn-upload" onclick="document.getElementById('file-input').click()">
+                    <span class="material-symbols-outlined">upload</span>
+                    Modifier la photo
+                </button>
+            </div>
+        </div>
+        <form class="form-grid" onsubmit="return false;">
+            <div class="form-group">
+                <label class="form-label">Pseudo</label>
+                <input class="form-input" type="text" value="Benoit35"/>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Campus</label>
+                <select class="form-input">
+                    <option>Rennes</option>
+                    <option>Nantes</option>
+                    <option>Angers</option>
+                    <option>Niort</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Prénom</label>
+                <input class="form-input" type="text" value="Benoit"/>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Nom</label>
+                <input class="form-input" type="text" value="Dupond"/>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Téléphone</label>
+                <input class="form-input" type="tel" value="06 12 34 56 78"/>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input class="form-input" type="email" value="benoit.dupond@eni.fr"/>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Mot de passe</label>
+                <input class="form-input" placeholder="••••••••••••" type="password"/>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Confirmation</label>
+                <input class="form-input" placeholder="••••••••••••" type="password"/>
+            </div>
+            <div class="form-actions">
+                <button class="btn-secondary" type="button">Annuler</button>
+                <button class="btn-primary" type="submit">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</main>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="copyright">
+            © 2024 ENI'Where. All rights reserved.
+        </div>
+        <div class="footer-links">
+            <a class="footer-link" href="#">Privacy Policy</a>
+            <a class="footer-link" href="#">Terms of Service</a>
+            <a class="footer-link" href="#">Campus Rules</a>
+            <a class="footer-link" href="#">Contact Support</a>
+        </div>
+    </div>
+</footer>
+</body></html>
