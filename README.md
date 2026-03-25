@@ -21,21 +21,31 @@ php bin/console doctrine:fixtures:load
 - [x] Participant en tant que User 
 - [x] Sortie
     - [x] dateHeureDebut >= dateLimiteInscription
-    - [ ] dateLimiteInscription default = dateHeureDebut
     - [x] nbPlaces et nom sont non nullables
 - [x] Créer les relations
-- [x] Associer Users et Campus 
-- [x] Associer Sortie et Campus
-- [x] Associer Sortie et Users
+    - [x] Associer Users et Campus 
+    - [x] Associer Sortie et Campus
+    - [x] Associer Sortie et Users
 - [x] Créer les fixtures avec associations
+- [x] Récupérer et afficher la liste des sorties
 
 <img height="512px" alt="Diagramme de classe du projet" src="CONCEPTION/UML%20Class/sorties_diagramme_classe.png" />
+
 ## V1
-- [ ] Créer les Controller
+- [ ] Formulaire de création de sorties
+    - [ ] dateLimiteInscription > dateHeureDebut
 
-
-## V2 - CSS
-- [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
-
-## V3 - API recherche de sorties
+## V2 - API recherche de sorties
 - [ ] Cocher un critère de recherche de sortie recharge dynamiquement la liste des sorties via un appel API
+
+## V3 - CSS et JS
+- [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
+- [ ] Modifier le thème pour éviter de perdre de l'espace
+- [ ] Désactiver la grille au redimentionnement
+- [ ] Trier les éléments de la liste de sorties dans le tableau de sorties
+
+# Modèle graphique html :
+
+https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/assets/styles/michel.html
+
+https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/assets/styles/jackie.html
