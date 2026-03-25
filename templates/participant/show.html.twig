@@ -3,7 +3,9 @@
 {% block body %}
     <h2>{{ participant.username }}</h2>
     <div>
-        {#        balise image de profil #}
+        <div>
+            <img src="{{ asset('images/profil/'~participant.photo) }}" alt="{{ participant.username }}">
+        </div>
         <div>Prénom : {{ participant.prenom }}</div>
         <div>Nom : {{ participant.nom }}</div>
         <div>Télephone : {{ participant.tel }}</div>
