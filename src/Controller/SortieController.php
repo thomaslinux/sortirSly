@@ -38,7 +38,8 @@ final class SortieController extends AbstractController
         ]);
     }
 
-
+// code commum pour les 3 fonction de création, de modification et de publication
+// Pour la publication => ne fonctionne que dans les page de création ou de modification (voir publishID pour différence)
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     #[Route('/publish', name: 'publish', methods: ['POST'])]
@@ -92,12 +93,12 @@ final class SortieController extends AbstractController
         if ($id === null) {
             return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
         } else {
-            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm]);
+            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm,'sortie'=>$sortie]);
         }
 
     }
 
-
+// affichage de la page de détail d'une sortie
     #[Route('/detail/{id}', name: 'detail', requirements: ['id' => '\d+'])]
     public function detail(
         int              $id,
@@ -111,7 +112,7 @@ final class SortieController extends AbstractController
         return $this->render('sortie/detail.html.twig', ['sortie' => $sortie]);
     }
 
-
+    // Permet d'annuler une sortie lorsqu'elle est "Ouverte" : passe en statut annulé
     #[Route('/cancel/{id}', name: 'cancel', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function cancel(
         int                    $id,
@@ -148,7 +149,7 @@ final class SortieController extends AbstractController
         return $this->render('sortie/cancel.html.twig', ['sortie' => $sortie, 'cancelSortieForm' => $cancelSortieForm]);
     }
 
-
+//Permet de supprimer une sortie lorsqu'elle est "en création" : elle disparait de la BdD
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
     public function delete(
         int                    $id,
@@ -172,6 +173,8 @@ final class SortieController extends AbstractController
         return $this->redirectToRoute('main_home');
     }
 
+
+    // Permet de publier une sortie à partir de la page de listing
     #[Route('/publish/{id}', name: 'publishId', methods: ['GET'])]
     public function publishId(
         int                    $id,
@@ -193,6 +196,8 @@ final class SortieController extends AbstractController
         return $this->redirectToRoute('main_home');
     }
 
+
+    // inscription à une sortie
     #[Route('/subscribe/{id}', name: 'subscribe', requirements: ['id' => '\d+'])]
     public function subscribe(int                    $id,
                               EntityManagerInterface $entityManager,
@@ -214,7 +219,7 @@ final class SortieController extends AbstractController
         return $this->redirectToRoute('sortie_list');
     }
 
-
+// se désister d'une sortie
     #[Route('/unsubscribe/{id}', name: 'unsubscribe', requirements: ['id' => '\d+'])]
     public function unsubscribe(int                    $id,
                               EntityManagerInterface $entityManager,
