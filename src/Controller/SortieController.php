@@ -54,6 +54,11 @@ final class SortieController extends AbstractController
 
         if ($id === null) {
             $sortie = new Sortie();
+            $userAgent = $request->headers->get('User-Agent');
+            if (preg_match('/Mobile|Android|iPhone|iPad|BlackBerry|IEMobile/i', $userAgent ?? '')){
+                $this->addFlash('error', 'Création de sortie interdite sur mobile.');
+                return $this->redirectToRoute('sortie_list');
+            }
         } else {
             $sortie = $sortieRepository->find($id);
             if (!$sortie) {
