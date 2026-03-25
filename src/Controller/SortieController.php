@@ -28,8 +28,7 @@ final class SortieController extends AbstractController
         Request                $request
     )
     {
-        // TODO récupérer les éléments de recherche dans la request
-        // TODO récupére les éléments en fonction de la recherche
+        // TODO afficher les résultats de la recherche
         $sorties = $sortieRepository->findAll();
 
         return $this->render('sortie/list.html.twig', [
