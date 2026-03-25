@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Form\CancelSortieType;
+use App\Form\Model\CancelSortie;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
@@ -92,25 +94,75 @@ final class SortieController extends AbstractController
 
     }
 
-    #[Route('/detail/{id}', name: 'detail')]
-    public function detail(): Response
+    #[Route('/detail/{id}', name: 'detail', requirements: ['id' => '\d+'])]
+    public function detail(
+        int              $id,
+        SortieRepository $sortieRepository): Response
     {
-        return $this->render('sortie/detail.html.twig');
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
+        }
+        $sortie = $sortieRepository->find($id);
+        if (!$sortie) {
+            throw $this->createNotFoundException('Sortie non trouvée');
+        }
+        return $this->render('sortie/detail.html.twig', ['sortie' => $sortie]);
     }
 
 
-    #[Route('/cancel/{id}', name: 'cancel')]
-    public function cancel(): Response
+    #[Route('/cancel/{id}', name: 'cancel',requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function cancel(
+        int                    $id,
+        Request                $request,
+        EntityManagerInterface $entityManager,
+        EtatRepository         $etatRepository,
+        SortieRepository       $sortieRepository): Response
     {
-        return $this->render('sortie/cancel.html.twig');
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
+        }
+        $sortie = $sortieRepository->find($id);
+        if (!$sortie) {
+            throw $this->createNotFoundException('Sortie non trouvée');
+        }
+        $cancelSortie = new CancelSortie();
+        $cancelSortieForm = $this->createForm(CancelSortieType::class, $cancelSortie, [
+            'user' => $user
+        ]);
+        $cancelSortieForm->handleRequest($request);
+
+        if ($cancelSortieForm->isSubmitted() && $cancelSortieForm->isValid()) {
+            $sortie->setEtat($etatRepository->findOneBy(["nom" => "Annulee"]));
+            $sortie->setDescription($sortie->getDescription() . '. Annulée pour le motif suivant : ' . $cancelSortie->getDescriptionCancel());
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+            $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' annulée pour le motif suivant : ' . $cancelSortie->getDescriptionCancel());
+            return $this->redirectToRoute('main_home');
+        }
+        return $this->render('sortie/cancel.html.twig', ['sortie' => $sortie, 'cancelSortieForm' => $cancelSortieForm]);
     }
 
 
-    #[Route('/delete/{id}', name: 'delete')]
-    public function delete(): Response
+    #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
+    public function delete(
+        int                    $id,
+        EntityManagerInterface $entityManager,
+        SortieRepository       $sortieRepository
+    ): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
+        }
+        $sortie = $sortieRepository->find($id);
+        if (!$sortie) {
+            throw $this->createNotFoundException('Sortie non trouvée');
+        }
+        $entityManager->remove($sortie);
+        $entityManager->flush();
+        $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' supprimée!');
         return $this->redirectToRoute('main_home');
     }
-
-
 }
