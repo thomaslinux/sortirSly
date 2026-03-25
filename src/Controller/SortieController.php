@@ -52,9 +52,8 @@ final class SortieController extends AbstractController
     {
         if ($id === null) {
             $userAgent = $request->headers->get('User-Agent');
-            if (preg_match('/Mobile|Android|iPhone|iPad|BlackBerry|IEMobile/i', $userAgent ?? '')){
-                $this->addFlash('error', 'Création de sortie interdite sur mobile.');
-                return $this->redirectToRoute('sortie_list');
+            if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')){
+                throw $this->createNotFoundException('Accès interdit sur mobile');
             }
             $sortie = new Sortie();
         } else {
@@ -122,9 +121,8 @@ final class SortieController extends AbstractController
         SortieRepository       $sortieRepository): Response
     {
             $userAgent = $request->headers->get('User-Agent');
-            if (preg_match('/Mobile|Android|iPhone|iPad|BlackBerry|IEMobile/i', $userAgent ?? '')){
-                $this->addFlash('error', 'Annulation de sortie interdite sur mobile.');
-                return $this->redirectToRoute('sortie_list');
+            if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')){
+                throw $this->createNotFoundException('Accès interdit sur mobile');
             }
         $user = $this->getUser();
 
@@ -159,9 +157,8 @@ final class SortieController extends AbstractController
     ): Response
     {
             $userAgent = $request->headers->get('User-Agent');
-            if (preg_match('/Mobile|Android|iPhone|iPad|BlackBerry|IEMobile/i', $userAgent ?? '')){
-                $this->addFlash('error', 'Suppression de sortie interdite sur mobile.');
-                return $this->redirectToRoute('sortie_list');
+            if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')){
+                throw $this->createNotFoundException('Accès interdit sur mobile');
             }
         $sortie = $sortieRepository->find($id);
         if (!$sortie) {
