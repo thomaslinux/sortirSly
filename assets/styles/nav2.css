@@ -1,49 +1,10 @@
-:root {
-    --primary: #412b40;
-    --primary-container: #594157;
-    --on-primary: #ffffff;
-    --secondary: #5c5891;
-    --on-secondary: #ffffff;
-    --tertiary: #1f2f61;
-    --tertiary-fixed: #dce1ff;
-    --on-tertiary-fixed-variant: #354477;
-    --background: #e4ffff;
-    --on-background: #002021;
-    --surface: #e4ffff;
-    --on-surface: #002021;
-    --surface-variant: #c1eaeb;
-    --on-surface-variant: #4c444a;
-    --surface-container-low: #d2fbfc;
-    --surface-container: #ccf6f7;
-    --surface-container-high: #c7f0f1;
-    --surface-container-highest: #c1eaeb;
-    --outline: #7e747b;
-    --outline-variant: #cfc3ca;
-    --error: #ba1a1a;
-    --glass-bg: rgba(255, 255, 255, 0.8);
-    --gradient-main: linear-gradient(135deg, #412b40 0%, #594157 100%);
-    --radius-default: 0.25rem;
-    --radius-lg: 0.5rem;
-    --radius-xl: 1.5rem;
-    --radius-full: 9999px;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-nav: 0 10px 30px rgba(89, 65, 87, 0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Manrope', sans-serif;
-    background-color: var(--background);
-    color: var(--on-background);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
+/*body {*/
+/*    font-family: 'Manrope', sans-serif;*/
+/*    background-color: var(--background);*/
+/*    color: var(--on-background);*/
+/*    line-height: 1.5;*/
+/*    -webkit-font-smoothing: antialiased;*/
+/*}*/
 
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -188,4 +149,9 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--primary-container);
+}
+
+/* additional edits*/
+a {
+    text-decoration: none;
 }

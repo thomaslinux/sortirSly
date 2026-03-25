@@ -43,10 +43,12 @@
                    href="{{ path('sortie_create') }}">Create event
                 </a>
             </div>
-            <div class="user-profile">
-                <span class="material-symbols-outlined">account_circle</span>
-                <span class="user-name">Admin</span>
-            </div>
+            {% if app.user %}
+                <a class="user-profile" href="{{ path('participant_update') }}">
+                    <span class=" material-symbols-outlined">account_circle</span>
+                    <span class="user-name">{{ app.user.username }}</span>
+                </a>
+            {% endif %}
         </div>
     </div>
 </nav>
