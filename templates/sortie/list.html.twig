@@ -28,7 +28,6 @@
             </thead>
             <tbody>
             {% for sortie in sorties %}
-
                 <tr>
                     <td class="event-name">
                         <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">
@@ -48,23 +47,6 @@
                     </td>
                     <td><a class="organizer" href="#">C. Dupont</a></td>
                     <td class="actions-cell">
-                        <button class="action-link">Afficher</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="event-name">Randonnée Erdre et Sèvre</td>
-                    <td>26/05/2024 09:00</td>
-                    <td>25/05/2024</td>
-                    <td><span class="badge badge-tertiary">8 / 15</span></td>
-                    <td>
-                        <div class="status status-open">
-                            <span class="status-dot"></span> Ouverte
-                        </div>
-                    </td>
-                    <td style="text-align: center; color: var(--outline-variant);">—</td>
-                    <td><a class="organizer" href="#">M. Durand</a></td>
-                    <td class="actions-cell">
-                        <button class="action-link">S'inscrire</button>
                         <button class="action-link">Afficher</button>
                     </td>
                 </tr>
