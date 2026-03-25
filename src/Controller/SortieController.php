@@ -93,10 +93,32 @@ final class SortieController extends AbstractController
 
     }
 
-    #[Route('/detail/{id}', name: 'detail')]
-    public function detail(): Response
+    #[Route('/detail/{id}', name: 'detail', requirements: ['id' => '\d+'])]
+    public function detail(
+        int              $id,
+        Request                $request,
+        SortieRepository $sortieRepository): Response
     {
-        return $this->render('sortie/detail.html.twig');
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
+        }
+
+        if ($id === null) {
+            $sortie = new Sortie();
+        } else {
+            $sortie = $sortieRepository->find($id);
+            if (!$sortie) {
+                throw $this->createNotFoundException('Sortie non trouvée');
+            }
+        }
+
+        $sortieForm = $this->createForm(SortieType::class, $sortie, [
+            'user' => $user
+        ]);
+        $sortieForm->handleRequest($request);
+
+        return $this->render('sortie/detail.html.twig',['sortie'=>$sortie,'sortieForm' => $sortieForm]);
     }
 
 
