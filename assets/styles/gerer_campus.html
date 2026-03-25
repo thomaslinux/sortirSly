@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ENI'Where - Gérer les campus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary: #412b40;
+            --primary-container: #594157;
+            --on-primary: #ffffff;
+            --secondary: #5c5891;
+            --on-secondary: #ffffff;
+            --tertiary: #1f2f61;
+            --tertiary-fixed: #dce1ff;
+            --on-tertiary-fixed-variant: #354477;
+            --background: #e4ffff;
+            --on-background: #002021;
+            --surface: #e4ffff;
+            --on-surface: #002021;
+            --surface-variant: #c1eaeb;
+            --on-surface-variant: #4c444a;
+            --surface-container-low: #d2fbfc;
+            --surface-container: #ccf6f7;
+            --surface-container-high: #c7f0f1;
+            --surface-container-highest: #c1eaeb;
+            --outline: #7e747b;
+            --outline-variant: #cfc3ca;
+            --error: #ba1a1a;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --gradient-main: linear-gradient(135deg, #412b40 0%, #594157 100%);
+            --radius-default: 0.25rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-nav: 0 10px 30px rgba(89,65,87,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--background);
+            color: var(--on-background);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Navigation Bar */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-nav);
+        }
+
+        .navbar-content {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: var(--primary-container);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--on-surface-variant);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.25rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            color: var(--primary-container);
+            padding: 0.5rem;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            background: none;
+            border: none;
+        }
+
+        .icon-btn:hover {
+            background-color: var(--surface-container-low);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--surface-container-highest);
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .user-profile:hover {
+            background-color: var(--surface-container);
+        }
+
+        .user-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--primary-container);
+        }
+
+        /* Main Content */
+        .campus-management-page {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 8rem 3rem 5rem 3rem;
+        }
+
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--on-surface-variant);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+
+        /* Sidebar Filters & Stats */
+        .management-sidebar {
+            grid-column: span 12;
+        }
+
+        @media (min-width: 1024px) {
+            .management-sidebar {
+                grid-column: span 4;
+            }
+        }
+
+        .search-filters {
+            background-color: #ffffff;
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+        }
+
+        .filter-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--on-surface-variant);
+        }
+
+        .filter-input {
+            width: 100%;
+            background-color: var(--surface-container-low);
+            border: none;
+            border-radius: var(--radius-lg);
+            padding: 0.75rem;
+            color: var(--on-surface);
+            outline: none;
+        }
+
+        .filter-input:focus {
+            box-shadow: 0 0 0 2px rgba(92, 88, 145, 0.2);
+        }
+
+        .btn-search {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient-main);
+            color: var(--on-primary);
+            border-radius: 0.75rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .btn-search:active {
+            transform: scale(0.95);
+        }
+
+        .stats-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .stats-card {
+            background-color: var(--surface-container-highest);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stats-info p:first-child {
+            font-size: 0.875rem;
+            color: var(--on-tertiary-fixed-variant);
+            font-weight: 500;
+        }
+
+        .stats-info p:last-child {
+            font-size: 1.875rem;
+            font-weight: 900;
+            color: var(--tertiary);
+        }
+
+        .stats-icon {
+            background-color: var(--tertiary-fixed);
+            padding: 0.75rem;
+            border-radius: var(--radius-full);
+            color: var(--tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Table Section */
+        .management-main {
+            grid-column: span 12;
+        }
+
+        @media (min-width: 1024px) {
+            .management-main {
+                grid-column: span 8;
+            }
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .campus-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.75rem;
+        }
+
+        .campus-table th {
+            text-align: left;
+            color: var(--on-surface-variant);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            padding: 0 1.25rem 1rem 1.25rem;
+        }
+
+        .campus-table th:last-child {
+            text-align: right;
+        }
+
+        .campus-table tr:not(thead tr):not(tfoot tr) {
+            background-color: #ffffff;
+            box-shadow: var(--shadow-sm);
+            transition: background-color 0.2s;
+        }
+
+        .campus-table tr:not(thead tr):not(tfoot tr):hover {
+            background-color: var(--surface-container-low);
+        }
+
+        .campus-table td {
+            padding: 1.25rem;
+        }
+
+        .campus-table td:first-child {
+            border-top-left-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.025em;
+        }
+
+        .campus-table td:last-child {
+            border-top-right-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+        }
+
+        .action-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s, opacity 0.2s;
+        }
+
+        .btn-edit {
+            color: var(--secondary);
+        }
+
+        .btn-edit:hover {
+            color: var(--primary);
+        }
+
+        .btn-delete {
+            color: var(--error);
+        }
+
+        .btn-delete:hover {
+            opacity: 0.8;
+        }
+
+        /* Table Footer / Add Campus */
+        .table-add-row {
+            background-color: var(--surface-container-low);
+            border: 2px dashed rgba(126, 116, 123, 0.3);
+        }
+
+        .table-add-row td:first-child {
+            border-radius: 1rem 0 0 1rem;
+        }
+
+        .table-add-row td:last-child {
+            border-radius: 0 1rem 1rem 0;
+        }
+
+        .add-input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            outline: none;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .add-input::placeholder {
+            color: rgba(126, 116, 123, 0.5);
+        }
+
+        .btn-add {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+            transition: transform 0.2s;
+        }
+
+        .btn-add:active {
+            transform: scale(0.95);
+        }
+
+        /* Hero Image/Banner */
+        .campus-banner {
+            margin-top: 2rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            height: 16rem;
+            position: relative;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(65, 43, 64, 0.6), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+        }
+
+        .banner-content {
+            color: #ffffff;
+        }
+
+        .banner-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .banner-content p {
+            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        .site-footer {
+            width: 100%;
+            padding: 3rem;
+            background-color: var(--background);
+        }
+
+        .footer-content {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-brand h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-brand p {
+            color: var(--on-surface-variant);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            color: var(--on-surface-variant);
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: var(--radius-full);
+            background-color: var(--surface-container-highest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--primary);
+            transition: background-color 0.2s;
+        }
+
+        .social-btn:hover {
+            background-color: var(--surface-container);
+        }
+
+    </style>
+</head>
+<body>
+<!-- TopNavBar -->
+<nav class="top-navbar">
+    <div class="navbar-content">
+        <div class="nav-left">
+            <a class="brand-logo" href="#">ENI'Where</a>
+            <div class="nav-links">
+                <a class="nav-link" href="#">Discover</a>
+                <a class="nav-link" href="#">Events</a>
+                <a class="nav-link active" href="#">Venues</a>
+                <a class="nav-link" href="#">Creators</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <div class="user-profile">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span class="user-name">Admin</span>
+            </div>
+        </div>
+    </div>
+</nav>
+<main class="campus-management-page">
+    <!-- Header Section -->
+    <header class="page-header">
+        <h1 class="page-title">Gérer les campus</h1>
+        <p class="page-subtitle">Administration et configuration des sites de formation ENI.</p>
+    </header>
+    <div class="dashboard-grid">
+        <!-- Sidebar Section -->
+        <aside class="management-sidebar">
+            <section class="search-filters">
+                <div class="filter-header">
+                    <span class="material-symbols-outlined" style="color: var(--secondary);">filter_list</span>
+                    <h2>Filtrer les sites</h2>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Le nom contient :</label>
+                    <input class="filter-input" placeholder="Ex: Nantes, Rennes..." type="text"/>
+                </div>
+                <button class="btn-search">
+                    <span class="material-symbols-outlined" style="font-size: 1rem;">search</span>
+                    Rechercher
+                </button>
+            </section>
+            <div class="stats-container">
+                <div class="stats-card">
+                    <div class="stats-info">
+                        <p>Villes actives</p>
+                        <p>154</p>
+                    </div>
+                    <div class="stats-icon">
+                        <span class="material-symbols-outlined">location_city</span>
+                    </div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-info">
+                        <p>Événements liés</p>
+                        <p>892</p>
+                    </div>
+                    <div class="stats-icon">
+                        <span class="material-symbols-outlined">event</span>
+                    </div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-info">
+                        <p>Admin actifs</p>
+                        <p>12</p>
+                    </div>
+                    <div class="stats-icon">
+                        <span class="material-symbols-outlined">admin_panel_settings</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- Main Table Section -->
+        <section class="management-main">
+            <div class="table-wrapper">
+                <table class="campus-table">
+                    <thead>
+                    <tr>
+                        <th>Campus</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>SAINT HERBLAIN</td>
+                        <td>
+                            <div class="action-group">
+                                <button class="btn-action btn-edit">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">edit</span> Modifier
+                                </button>
+                                <button class="btn-action btn-delete">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">delete</span> Supprimer
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CHARTRES DE BRETAGNE</td>
+                        <td>
+                            <div class="action-group">
+                                <button class="btn-action btn-edit">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">edit</span> Modifier
+                                </button>
+                                <button class="btn-action btn-delete">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">delete</span> Supprimer
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>LA ROCHE SUR YON</td>
+                        <td>
+                            <div class="action-group">
+                                <button class="btn-action btn-edit">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">edit</span> Modifier
+                                </button>
+                                <button class="btn-action btn-delete">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">delete</span> Supprimer
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr class="table-add-row">
+                        <td>
+                            <input class="add-input" placeholder="Nom du nouveau campus..." type="text"/>
+                        </td>
+                        <td>
+                            <button class="btn-add">
+                                <span class="material-symbols-outlined" style="font-size: 0.875rem;">add</span> Ajouter
+                            </button>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="campus-banner">
+                <img alt="Campus structure" class="banner-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIYm30HrrfNuEhhiY9jF9LqD7VCi7hOR0MnhbJS4fvmuuC6V41hNc3h2CGdsIiDBnWnUV1almfR0pf4w9x3c-14qH-wdLE81YRWP9-sZjC0CJpQ_lYJx1D6pv0R4nFSeQM-iNo1ptE6qZFmlUwepydcw3_vu-Up2xz3GXVsai3XAfmzPDwyPow52BqCfVMSg2KyV1vgfeVvAi2as8WlKZ6BXZ8O5lAo3kYw6lpJD7DHmo8IOXkuDoCbXqli2RF1Se-EzePWSas4-GI"/>
+                <div class="banner-overlay">
+                    <div class="banner-content">
+                        <h3>Campus Life</h3>
+                        <p>Gérez les lieux où la magie opère.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <h4>ENI'Where</h4>
+            <p>© 2024 ENI'Where. All rights reserved.</p>
+        </div>
+        <div class="footer-links">
+            <a class="footer-link" href="#">About Us</a>
+            <a class="footer-link" href="#">Contact</a>
+            <a class="footer-link" href="#">Privacy Policy</a>
+            <a class="footer-link" href="#">Terms of Service</a>
+        </div>
+        <div class="footer-social">
+            <div class="social-btn">
+                <span class="material-symbols-outlined">language</span>
+            </div>
+            <div class="social-btn">
+                <span class="material-symbols-outlined">share</span>
+            </div>
+        </div>
+    </div>
+</footer>
+</body></html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Gérer les villes | Sortir.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            /* Etheric Grape Palette */
+            --primary: #594157;
+            --secondary: #726da8;
+            --tertiary: #7d8cc4;
+            --accent-1: #a0d2db;
+            --accent-2: #bee7e8;
+
+            --background: #e4ffff;
+            --surface: #ffffff;
+            --on-surface: #002021;
+            --on-surface-variant: #4c444a;
+            --outline-variant: rgba(207, 195, 202, 0.3);
+
+            --font-family: 'Manrope', sans-serif;
+            --header-height: 80px;
+            --container-max-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background);
+            color: var(--on-surface);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .material-symbols-outlined {
+            vertical-align: middle;
+            font-size: 24px;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--header-height);
+            background: rgba(228, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4rem;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            height: 32px;
+            width: 32px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .brand-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.025em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--on-surface-variant);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-search {
+            background-color: var(--accent-1);
+            opacity: 0.5;
+            border-radius: 999px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-search input {
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 0.875rem;
+            width: 180px;
+        }
+
+        .btn-create {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        .btn-create:hover {
+            opacity: 0.9;
+        }
+
+        .btn-create:active {
+            transform: scale(0.95);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 0.5rem;
+            color: var(--primary);
+        }
+
+        .icon-btn {
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .icon-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: calc(var(--header-height) + 3rem) 2rem 5rem;
+        }
+
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--on-surface-variant);
+            font-size: 1.125rem;
+            max-width: 600px;
+        }
+
+        /* Filter Card */
+        .filter-card {
+            background-color: #dcf9fa;
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .filter-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--on-surface-variant);
+            margin-left: 0.25rem;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-input-wrapper {
+            flex-grow: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            font-family: inherit;
+            font-size: 1rem;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn-search {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-search:hover {
+            background-color: #412b40;
+        }
+
+        /* City Table */
+        .table-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(89, 65, 87, 0.05);
+        }
+
+        .city-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .city-table th {
+            padding: 1.25rem 2rem;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--outline-variant);
+            background-color: rgba(89, 65, 87, 0.02);
+        }
+
+        .city-table td {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--outline-variant);
+            font-weight: 500;
+        }
+
+        .city-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .city-name {
+            font-weight: 700;
+            color: var(--on-surface);
+        }
+
+        .zip-code {
+            color: var(--on-surface-variant);
+        }
+
+        .actions-cell {
+            text-align: right;
+        }
+
+        .btn-action {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        tr:hover .btn-action {
+            opacity: 1;
+        }
+
+        .btn-edit { color: var(--secondary); margin-right: 1rem; }
+        .btn-delete { color: #ba1a1a; }
+
+        .add-row {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .add-input {
+            width: 100%;
+            max-width: 250px;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--outline-variant);
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .btn-add {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        /* Stats Container */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background-color: #dcf9fa;
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .icon-blue { background-color: var(--primary); }
+        .icon-purple { background-color: var(--secondary); }
+        .icon-indigo { background-color: var(--tertiary); }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #d2fbfc;
+            margin-top: 5rem;
+            padding: 3rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .footer-info .brand {
+            font-weight: 800;
+            font-size: 1.125rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-info .copyright {
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            color: var(--on-surface-variant);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-socials span {
+            cursor: pointer;
+        }
+
+        /* 1920x1080 Optimization */
+        @media (min-width: 1920px) {
+            :root {
+                --container-max-width: 1440px;
+            }
+            .page-header h1 { font-size: 4rem; }
+            .navbar { padding: 0 8rem; }
+            .container { padding-left: 0; padding-right: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 0 1.5rem; }
+            .nav-links, .nav-search { display: none; }
+            .filter-actions { flex-direction: column; }
+            .btn-search { padding: 0.85rem; justify-content: center; }
+            .stats-container { grid-template-columns: 1fr; }
+            .footer { flex-direction: column; text-align: center; gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<header class="navbar">
+    <div class="nav-left">
+        <a class="logo-container" href="#">
+            <img alt="Sortir.com Logo" class="logo-image" src="https://lh3.googleusercontent.com/aida/ADBb0uiVnWYxWuvi-Va-uZ2OMhGFWYCGZ4fgdWudeAa83R0uHHiG4GCs2bKpXFmeYiieYxQYTf7EBxiTU6xNqFD_nMxf8Zgzdx65Wh4jV8QQVR1bqOM_g1VQKclh409vkgwK7knVzYMKdTqk7U0A5rhGwlApORzOm1pbIxBI0y3fvnAgnvkSe57jCUVBVQRb5YiWNLZcos3FQXGbSqJ2DY0x_zWy4H4G5W1oRzY6OmHT6UcwcEsS_qkYZEqCAh0"/>
+            <span class="brand-text">Sortir.com</span>
+        </a>
+        <nav class="nav-links">
+            <a class="nav-link active" href="#">Discover</a>
+            <a class="nav-link" href="#">Events</a>
+            <a class="nav-link" href="#">Venues</a>
+            <a class="nav-link" href="#">Creators</a>
+        </nav>
+    </div>
+    <div class="nav-right">
+        <div class="nav-search">
+            <span class="material-symbols-outlined">search</span>
+            <input placeholder="Search cities..." type="text"/>
+        </div>
+        <button class="btn-create">Create Event</button>
+        <div class="nav-icons">
+            <span class="material-symbols-outlined icon-btn">notifications</span>
+            <span class="material-symbols-outlined icon-btn">account_circle</span>
+        </div>
+    </div>
+</header>
+<main class="container">
+    <section class="page-header">
+        <h1>Gérer les villes</h1>
+        <p>Administrez la liste des destinations disponibles pour les organisateurs. Ajoutez de nouvelles localités ou modifiez les codes postaux existants.</p>
+    </section>
+    <section class="filter-card">
+        <h2 class="filter-title">
+            <span class="material-symbols-outlined">filter_list</span>
+            Filtrer les villes
+        </h2>
+        <div class="filter-group">
+            <label class="filter-label">Le nom contient :</label>
+            <div class="filter-actions">
+                <div class="search-input-wrapper">
+                    <input class="search-input" placeholder="Ex: Paris, Nantes..." type="text"/>
+                </div>
+                <button class="btn-search">
+                    <span class="material-symbols-outlined">search</span>
+                    Rechercher
+                </button>
+            </div>
+        </div>
+    </section>
+    <section class="table-container">
+        <table class="city-table">
+            <thead>
+            <tr>
+                <th>Ville</th>
+                <th>Code postal</th>
+                <th class="actions-cell">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="city-name">Nantes</td>
+                <td class="zip-code">44000</td>
+                <td class="actions-cell">
+                    <button class="btn-action btn-edit"><span class="material-symbols-outlined">edit</span> Modifier</button>
+                    <button class="btn-action btn-delete"><span class="material-symbols-outlined">delete</span> Supprimer</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="city-name">Rennes</td>
+                <td class="zip-code">35000</td>
+                <td class="actions-cell">
+                    <button class="btn-action btn-edit"><span class="material-symbols-outlined">edit</span> Modifier</button>
+                    <button class="btn-action btn-delete"><span class="material-symbols-outlined">delete</span> Supprimer</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="city-name">Paris</td>
+                <td class="zip-code">75000</td>
+                <td class="actions-cell">
+                    <button class="btn-action btn-edit"><span class="material-symbols-outlined">edit</span> Modifier</button>
+                    <button class="btn-action btn-delete"><span class="material-symbols-outlined">delete</span> Supprimer</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="city-name">Lyon</td>
+                <td class="zip-code">69000</td>
+                <td class="actions-cell">
+                    <button class="btn-action btn-edit"><span class="material-symbols-outlined">edit</span> Modifier</button>
+                    <button class="btn-action btn-delete"><span class="material-symbols-outlined">delete</span> Supprimer</button>
+                </td>
+            </tr>
+            <tr class="add-row">
+                <td><input class="add-input" placeholder="Nouvelle ville" type="text"/></td>
+                <td><input class="add-input" placeholder="Code postal" type="text"/></td>
+                <td class="actions-cell">
+                    <button class="btn-add">
+                        <span class="material-symbols-outlined">add</span>
+                        Ajouter
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="stats-container">
+        <div class="stat-card">
+            <div class="stat-icon icon-blue">
+                <span class="material-symbols-outlined">location_city</span>
+            </div>
+            <div>
+                <div class="stat-value">154</div>
+                <div class="stat-label">Villes actives</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-purple">
+                <span class="material-symbols-outlined">event</span>
+            </div>
+            <div>
+                <div class="stat-value">892</div>
+                <div class="stat-label">Événements liés</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-indigo">
+                <span class="material-symbols-outlined">person</span>
+            </div>
+            <div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Admin actifs</div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="footer">
+    <div class="footer-info">
+        <div class="brand">Sortir.com</div>
+        <div class="copyright">© 2024 Sortir.com. The Ethereal Curator.</div>
+    </div>
+    <nav class="footer-links">
+        <a class="footer-link" href="#">Privacy Policy</a>
+        <a class="footer-link" href="#">Terms of Service</a>
+        <a class="footer-link" href="#">Help Center</a>
+        <a class="footer-link" href="#">Contact Us</a>
+    </nav>
+    <div class="footer-socials">
+        <span class="material-symbols-outlined">language</span>
+        <span class="material-symbols-outlined">share</span>
+    </div>
+</footer>
+</body></html>
