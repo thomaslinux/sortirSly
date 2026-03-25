@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Créer une sortie | ENI'Where</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary: #412b40;
+            --primary-container: #594157;
+            --secondary: #5c5891;
+            --surface: #e4ffff;
+            --surface-bright: #e4ffff;
+            --surface-dim: #b9e2e3;
+            --surface-container: #ccf6f7;
+            --surface-container-low: #d2fbfc;
+            --surface-container-lowest: #ffffff;
+            --surface-variant: #c1eaeb;
+            --on-surface: #002021;
+            --on-surface-variant: #4c444a;
+            --outline-variant: #cfc3ca;
+            --white: #ffffff;
+            --etheric-gradient: linear-gradient(135deg, #412b40 0%, #594157 100%);
+            --card-shadow: 0 10px 30px rgba(89, 65, 87, 0.08);
+            --font-family: 'Manrope', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--surface);
+            color: var(--primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: rgba(228, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2.5rem;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            text-decoration: none;
+            font-size: 1.25rem; /* Smaller logo as requested */
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--on-surface-variant);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-container);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-container);
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn:hover {
+            background-color: var(--surface-container);
+        }
+
+        .user-avatar {
+            height: 2.5rem;
+            width: 2.5rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(89, 65, 87, 0.2);
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Layout Container */
+        .main-container {
+            max-width: 1280px; /* Optimized for standard large desktop viewing */
+            margin: 0 auto;
+            padding: 8rem 1.5rem 5rem;
+        }
+
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.025em;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            color: var(--on-surface-variant);
+            font-size: 1.125rem;
+            max-width: 40rem;
+        }
+
+        /* Event Form Grid */
+        .event-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .form-section {
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-general {
+            background-color: var(--surface-container-lowest);
+        }
+
+        .section-logistics {
+            background-color: var(--surface-container-low);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-header .material-symbols-outlined {
+            color: var(--secondary);
+            font-size: 1.875rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Input Groups */
+        .form-group-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .input-row-3 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--surface-variant);
+            border: none;
+            border-bottom: 2px solid transparent;
+            border-radius: 0.75rem 0.75rem 0 0;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            background-color: var(--white);
+            border-bottom: 2px solid var(--secondary);
+            box-shadow: 0 4px 12px rgba(92, 88, 145, 0.1);
+        }
+
+        textarea.form-input {
+            resize: none;
+        }
+
+        .input-with-action {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-add {
+            flex-shrink: 0;
+            width: 3.5rem;
+            height: 3.5rem;
+            background-color: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .btn-add:hover {
+            background-color: var(--primary);
+        }
+
+        /* GPS Card */
+        .gps-card {
+            background-color: var(--surface-bright);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(207, 195, 202, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .gps-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gps-header span:first-child {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .gps-coords {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .coord-item label {
+            display: block;
+            font-size: 0.625rem;
+            color: var(--on-surface-variant);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .coord-item input {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-family: monospace;
+            font-size: 0.875rem;
+            width: 100%;
+        }
+
+        /* Map Placeholder */
+        .map-container {
+            height: 10rem;
+            width: 100%;
+            border-radius: 1rem;
+            overflow: hidden;
+            filter: grayscale(1);
+            opacity: 0.8;
+            transition: all 0.5s ease;
+        }
+
+        .map-container:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        .map-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Footer Actions */
+        .form-footer {
+            grid-column: span 2;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(207, 195, 202, 0.2);
+        }
+
+        .btn-cancel {
+            background: none;
+            border: none;
+            color: var(--on-surface-variant);
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .btn-cancel:hover {
+            color: var(--primary);
+        }
+
+        .btn-outline {
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary {
+            background: var(--etheric-gradient);
+            color: var(--white);
+            padding: 1.25rem 3rem;
+            border-radius: 1rem;
+            border: none;
+            font-weight: 800;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(65, 43, 64, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 15px 25px -5px rgba(65, 43, 64, 0.25);
+        }
+
+        .btn-primary:active, .btn-outline:active {
+            transform: scale(0.95);
+        }
+
+        /* Site Footer */
+        .site-footer {
+            background-color: var(--surface-container-low);
+            padding: 3rem 2.5rem;
+            margin-top: 5rem;
+        }
+
+        .site-footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--primary-container);
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--on-surface-variant);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--on-surface-variant);
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-container);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* Material Icon Adjustments */
+        .material-symbols-outlined {
+            vertical-align: middle;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        @media (max-width: 1024px) {
+            .event-form {
+                grid-template-columns: 1fr;
+            }
+            .form-footer {
+                grid-column: span 1;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn-primary, .btn-outline, .btn-cancel {
+                text-align: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- TopNavBar -->
+<nav class="navbar">
+    <div class="nav-brand">
+        <a class="logo" href="#">ENI'Where</a>
+        <div class="nav-links">
+            <a class="nav-link" href="#">Events</a>
+            <a class="nav-link" href="#">Campus</a>
+            <a class="nav-link" href="#">Map</a>
+            <a class="nav-link" href="#">Community</a>
+        </div>
+    </div>
+    <div class="nav-actions">
+        <button class="icon-btn"><span class="material-symbols-outlined">notifications</span></button>
+        <button class="icon-btn"><span class="material-symbols-outlined">settings</span></button>
+        <div class="user-avatar">
+            <img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5GD_MoyGWXJFsHAcf1B_idG4zLYfu_uBIqD1lJ-TjqjjvwljWy6wCxQXX9BVlwyifRevSuzXIdOClpwHyj7Iwf_pUfNoDXkOLwHzxKKnhawC_SvcxUX0ywkLpHqwjCYhvM_9k-sQQbs1pjS075UykjjoOTOFZsknfCjpZrgaLgHCWHOvDWySTpnWsCJWwps4QfdLw-3cvTirjSmc2kymenlaIzzYHTkkdsbZUV2Bde0D4OAWnRYg7h3AbaUw_SUCT7g2i3483djk6"/>
+        </div>
+    </div>
+</nav>
+<main class="main-container">
+    <!-- Header Section -->
+    <header class="page-header">
+        <h1 class="page-title">Créer une sortie</h1>
+        <p class="page-subtitle">
+            Partagez un moment unique avec la communauté ENI. Remplissez les détails ci-dessous pour planifier votre prochain événement.
+        </p>
+    </header>
+    <!-- Form Section -->
+    <form class="event-form">
+        <!-- Left Column: Informations Générales -->
+        <section class="form-section section-general">
+            <div class="section-header">
+                <span class="material-symbols-outlined">info</span>
+                <h2 class="section-title text-primary">Informations Générales</h2>
+            </div>
+            <div class="form-group-list">
+                <div class="input-group">
+                    <label class="form-label">Nom de la sortie</label>
+                    <input class="form-input" placeholder="Ex: Afterwork au V&amp;B" type="text"/>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label class="form-label">Date et heure</label>
+                        <input class="form-input" type="datetime-local"/>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Limite d'inscription</label>
+                        <input class="form-input" type="date"/>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label class="form-label">Nombre de places</label>
+                        <input class="form-input" min="1" placeholder="10" type="number"/>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Durée (minutes)</label>
+                        <input class="form-input" min="15" placeholder="120" step="15" type="number"/>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="form-label">Description et infos</label>
+                    <textarea class="form-input" placeholder="Décrivez l'événement, les points de rendez-vous ou les prérequis..." rows="6"></textarea>
+                </div>
+            </div>
+        </section>
+        <!-- Right Column: Lieu & Logistique -->
+        <section class="form-section section-logistics">
+            <div class="section-header">
+                <span class="material-symbols-outlined">location_on</span>
+                <h2 class="section-title text-primary">Lieu &amp; Logistique</h2>
+            </div>
+            <div class="form-group-list">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label class="form-label">Campus</label>
+                        <select class="form-input">
+                            <option>Nantes</option>
+                            <option>Rennes</option>
+                            <option>Niort</option>
+                            <option>Quimper</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Ville</label>
+                        <select class="form-input">
+                            <option>Saint-Herblain</option>
+                            <option>Chartres-de-Bretagne</option>
+                            <option>Niort Centre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="form-label">Lieu</label>
+                    <div class="input-with-action">
+                        <select class="form-input">
+                            <option>V&amp;B Atlantis</option>
+                            <option>Le Melocotton</option>
+                            <option>Parc de Procé</option>
+                        </select>
+                        <button class="btn-add" type="button">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-row-3">
+                    <div class="input-group">
+                        <label class="form-label">Rue</label>
+                        <input class="form-input" placeholder="Rue de la paix" type="text"/>
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">Code Postal</label>
+                        <input class="form-input" placeholder="44000" type="text"/>
+                    </div>
+                </div>
+                <div class="gps-card">
+                    <div class="gps-header">
+                        <span>Coordonnées GPS auto</span>
+                        <span class="material-symbols-outlined" style="font-size: 1rem; color: var(--secondary);">gps_fixed</span>
+                    </div>
+                    <div class="gps-coords">
+                        <div class="coord-item">
+                            <label>LATITUDE</label>
+                            <input readonly="" type="text" value="47.2184"/>
+                        </div>
+                        <div class="coord-item">
+                            <label>LONGITUDE</label>
+                            <input readonly="" type="text" value="-1.5536"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <img alt="City map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCARTIFH-7Z0bwBslHKFVKYjGz_zJ27f17GXhpIorV1HwjTvJ-9sF2FshRNlr2ttZaVdUSjRoCGdZDtjYby4_V8U-rTosgDtq-N6BBMVgNWNhkrd4uFXLkIQWyo2soDDSlXn_s9xiaRTk3Vbg1DAsEN45izRBLgtCmRUsZlcJI0wZqKwqtnwcjHgWEppmmUf3BXRJ_SOZ9PHuTaiET931BRx2AK7wUz2LYahWN_0NaKScuAO9AW7EK8F_y_Rq3rslzyUavrQE6MeXAP"/>
+                </div>
+            </div>
+        </section>
+        <!-- Actions Footer -->
+        <footer class="form-footer">
+            <button class="btn-cancel" type="button">Annuler</button>
+            <button class="btn-outline" type="button">Enregistrer</button>
+            <button class="btn-primary" type="submit">
+                <span class="material-symbols-outlined">rocket_launch</span>
+                Publier la sortie
+            </button>
+        </footer>
+    </form>
+</main>
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="site-footer-content">
+        <div class="footer-brand">
+            <span class="footer-logo">ENI'Where</span>
+            <p class="copyright">© 2024 ENI'Where. Professional Event Curation.</p>
+        </div>
+        <div class="footer-links">
+            <a class="footer-link" href="#">Privacy Policy</a>
+            <a class="footer-link" href="#">Terms of Service</a>
+            <a class="footer-link" href="#">Support</a>
+            <a class="footer-link" href="#">Contact Us</a>
+        </div>
+    </div>
+</footer>
+</body></html>
