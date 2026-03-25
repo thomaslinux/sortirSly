@@ -27,8 +27,6 @@
                            href="{{ path('admin_app_new') }}">Gérer les utilisateurs</a>
                     {% endif %}
 
-                    <a class="{{ app.request.attributes.get('_route') == 'app_logout' ? 'active' }}"
-                       href="{{ path('app_logout') }}">Logout</a>
                 {% else %}
                     <a class="{{ app.request.attributes.get('_route') == 'app_login' ? 'active' }}"
                        href="{{ path('app_login') }}">Login</a>
@@ -40,7 +38,7 @@
         <div class="nav-right">
             {% if app.user %}
                 <div class="nav-actions">
-                    <a class="btn btn-gradient"
+                    <a class="btn btn-gradient mobile-hidden"
                        href="{{ path('sortie_create') }}">Create event
                     </a>
                 </div>

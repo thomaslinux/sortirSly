@@ -29,8 +29,8 @@ final class SortieController extends AbstractController
         Request                $request
     )
     {
-
         // TODO afficher les résultats de la recherche
+        // TODO changer la requête sur mobile (campus utilisateur)
         $sorties = $sortieRepository->findAll();
 
         return $this->render('sortie/list.html.twig', [
@@ -52,7 +52,7 @@ final class SortieController extends AbstractController
     {
         if ($id === null) {
             $userAgent = $request->headers->get('User-Agent');
-            if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')){
+            if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')) {
                 throw $this->createNotFoundException('Accès interdit sur mobile');
             }
             $sortie = new Sortie();
@@ -93,7 +93,7 @@ final class SortieController extends AbstractController
         if ($id === null) {
             return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
         } else {
-            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm,'sortie'=>$sortie]);
+            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm, 'sortie' => $sortie]);
         }
 
     }
@@ -123,10 +123,10 @@ final class SortieController extends AbstractController
         EtatRepository         $etatRepository,
         SortieRepository       $sortieRepository): Response
     {
-            $userAgent = $request->headers->get('User-Agent');
-            if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')){
-                throw $this->createNotFoundException('Accès interdit sur mobile');
-            }
+        $userAgent = $request->headers->get('User-Agent');
+        if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')) {
+            throw $this->createNotFoundException('Accès interdit sur mobile');
+        }
         $user = $this->getUser();
 
         $sortie = $sortieRepository->find($id);
@@ -157,13 +157,13 @@ final class SortieController extends AbstractController
         int                    $id,
         EntityManagerInterface $entityManager,
         SortieRepository       $sortieRepository,
-        Request $request
+        Request                $request
     ): Response
     {
-            $userAgent = $request->headers->get('User-Agent');
-            if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')){
-                throw $this->createNotFoundException('Accès interdit sur mobile');
-            }
+        $userAgent = $request->headers->get('User-Agent');
+        if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')) {
+            throw $this->createNotFoundException('Accès interdit sur mobile');
+        }
         $sortie = $sortieRepository->find($id);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
@@ -224,8 +224,8 @@ final class SortieController extends AbstractController
 // se désister d'une sortie
     #[Route('/unsubscribe/{id}', name: 'unsubscribe', requirements: ['id' => '\d+'])]
     public function unsubscribe(int                    $id,
-                              EntityManagerInterface $entityManager,
-                              SortieRepository       $sortieRepository): Response
+                                EntityManagerInterface $entityManager,
+                                SortieRepository       $sortieRepository): Response
     {
 
         $sortie = $sortieRepository->find($id);
