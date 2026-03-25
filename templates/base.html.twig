@@ -27,7 +27,11 @@
         </div>
     {% endfor %}
 {% endfor %}
-{% block body %}{% endblock %}
+<main class="main-wrapper">
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+</main>
 {% block footer %}{% endblock %}
 </body>
 </html>
