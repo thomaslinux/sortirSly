@@ -104,9 +104,9 @@ class AppFixtures extends Fixture
 
         $admin = new Participant();
         $admin
-            ->setRoles(['ROLE_ADMIN'])
-            ->setEmail('admin@admin.admin')
             ->setUsername('admin')
+            ->setEmail('admin@admin.admin')
+            ->setRoles(['ROLE_ADMIN'])
             ->setPassword(
                 $this->userPasswordHasher->hashPassword($admin, 'admin')
             );
@@ -139,14 +139,14 @@ class AppFixtures extends Fixture
         $etatList = $manager->getRepository(Etat::class)->findAll();
         $lieuList = $manager->getRepository(Lieu::class)->findAll();
 
-        for ($i = 0; $i < 200; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $sortie = new Sortie();
             $sortie
-                ->setNom($faker->realText(15))
+                ->setNom($faker->realText(30))
                 ->setDateHeureDebut($faker->dateTimeBetween('now', '+2 months', 'Europe/Paris'))
                 ->setDateLimiteInscription($faker->dateTimeBetween('now', $sortie->getDateHeureDebut(), 'Europe/Paris'))
                 ->setDuree($faker->numberBetween(15, 180))
-                ->setNbPlaces($faker->numberBetween(2, 255))
+                ->setNbPlaces($faker->numberBetween(2, 40))
                 ->setDescription($faker->realText(255));
             $sortie
                 ->setOrganisateur($faker->randomElement($participantList))
