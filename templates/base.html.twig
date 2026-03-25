@@ -16,14 +16,15 @@
 
 <header class="header">{% include 'views/nav/nav.html.twig' %}</header>
 
-{% for label, messages in app.flashes %}
-    {% for message in messages %}
-        <div class="{{ label }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endfor %}
+
 <main class="container">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     {% block body %}{% endblock %}
 </main>
 {% block footer %}{% endblock %}

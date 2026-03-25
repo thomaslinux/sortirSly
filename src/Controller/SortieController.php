@@ -145,10 +145,12 @@ final class SortieController extends AbstractController
         $cancelSortieForm->handleRequest($request);
 
         if ($cancelSortieForm->isSubmitted() && $cancelSortieForm->isValid()) {
-            $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' annulée pour le motif suivant :' .$cancelSortie->getDescriptionCancel());
+
             $sortie->setEtat($etatRepository->findOneBy(["nom" => "Annulee"]));
+            $sortie->setDescription($sortie->getDescription().'. Annulée pour le motif suivant : '.$cancelSortie->getDescriptionCancel());
             $entityManager->persist($sortie);
             $entityManager->flush();
+            $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' annulée pour le motif suivant : '.$cancelSortie->getDescriptionCancel());
             return $this->redirectToRoute('main_home');
         }
 
