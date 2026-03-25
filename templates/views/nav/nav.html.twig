@@ -11,8 +11,15 @@
            href="{{ path('main_home') }}">Accueil</a>
         <a class="{{ app.request.attributes.get('_route') == 'sortie_list' ? 'active' }}"
            href="{{ path('sortie_list') }}">Liste des sorties</a>
+        {% if app.user %}
+        <a class="{{ app.request.attributes.get('_route') == 'app_logout' ? 'active' }}"
+           href="{{ path('app_logout') }}">Logout</a>
         <a class="{{ app.request.attributes.get('_route') == 'participant_update' ? 'active' }}"
            href="{{ path('participant_update') }}">Modifier mon profil</a>
+       {% else %}
+        <a class="{{ app.request.attributes.get('_route') == 'app_login' ? 'active' }}"
+           href="{{ path('app_login') }}">Login</a>
+        {% endif %}
     </nav>
 </div>
 <div class="nav-actions">
