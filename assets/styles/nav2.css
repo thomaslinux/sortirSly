@@ -6,12 +6,6 @@
 /*    -webkit-font-smoothing: antialiased;*/
 /*}*/
 
-.material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    display: inline-block;
-    vertical-align: middle;
-}
-
 /* Navigation Bar */
 .top-navbar {
     position: fixed;
@@ -149,9 +143,4 @@
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--primary-container);
-}
-
-/* additional edits*/
-a {
-    text-decoration: none;
 }

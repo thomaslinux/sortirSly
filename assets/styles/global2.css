@@ -60,3 +60,8 @@ body {
     display: inline-block;
     vertical-align: middle;
 }
+
+/* additional edits*/
+a {
+    text-decoration: none;
+}
