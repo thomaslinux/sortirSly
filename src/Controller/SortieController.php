@@ -50,9 +50,7 @@ final class SortieController extends AbstractController
         ?int                   $id = null): Response
     {
         $user = $this->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
-        }
+
 
         if ($id === null) {
             $sortie = new Sortie();
@@ -71,6 +69,7 @@ final class SortieController extends AbstractController
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             if ($id === null) {
                 $sortie->setOrganisateur($user);
+                $sortie->sIncrire($user);
                 $sortie->setCampus($user->getCampus());
                 $sortie->setEtat($etatRepository->findOneBy(["nom" => "En creation"]));
                 $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' enregistrée en brouillon');
@@ -102,10 +101,7 @@ final class SortieController extends AbstractController
         int              $id,
         SortieRepository $sortieRepository): Response
     {
-        $user = $this->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour créer une sortie.');
-        }
+
         $sortie = $sortieRepository->find($id);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');

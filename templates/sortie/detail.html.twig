@@ -11,7 +11,7 @@
         Sortie : {{ sortie.nom }}
     </div>
     <div>
-        Date et heure : {{ sortie.dateHeureDebut | date ('d/m/Y, h:i:s')}}
+        Date et heure : {{ sortie.dateHeureDebut | date ('d/m/Y, h:i:s') }}
     </div>
     <div>
         Date limite d'inscription : {{ sortie.dateLimiteInscription | date ('d/m/Y') }}
@@ -31,11 +31,44 @@
     <div>
         Lieu : {{ sortie.lieu.nom }}
     </div>
-{#   TODO ajouter les infos du lieu#}
+    {#   TODO ajouter les infos du lieu #}
 
-{#    <section>#}
-{#        Liste des participants : {{ sortie.participant }}#}
-{#    </section>#}
+    <section>
+        <table>
+            <thead>
+            <tr>
+                <td colspan="2">Liste des participants :</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <th>Nom</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for participant in sortie.inscriptions %}
+                <tr>
+                    <td>
+                        <a href="{{ path('participant_profil', {'id': participant.id}) }}"> {{ participant.username }}</a>
+
+                    </td>
+
+                    <td>
+                        <a href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.prenom }} {{ participant.nom }}</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">Aucun participant</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+    </section>
 
 
 
