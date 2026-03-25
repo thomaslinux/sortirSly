@@ -38,12 +38,17 @@
         </div>
 
         <div class="nav-right">
-            <div class="nav-actions">
-                <a class="btn btn-gradient"
-                   href="{{ path('sortie_create') }}">Create event
-                </a>
-            </div>
             {% if app.user %}
+                <div class="nav-actions">
+                    <a class="btn btn-gradient"
+                       href="{{ path('sortie_create') }}">Create event
+                    </a>
+                </div>
+                <a href="{{ path('app_logout') }}" class=" icon-btn"
+                   style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.875rem;">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span>Se déconnecter</span>
+                </a>
                 <a class="user-profile" href="{{ path('participant_update') }}">
                     <span class=" material-symbols-outlined">account_circle</span>
                     <span class="user-name">{{ app.user.username }}</span>
