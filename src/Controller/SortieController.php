@@ -29,6 +29,7 @@ final class SortieController extends AbstractController
         Request                $request
     )
     {
+
         // TODO afficher les résultats de la recherche
         $sorties = $sortieRepository->findAll();
 

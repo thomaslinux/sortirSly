@@ -96,12 +96,13 @@
                         {% endif %}
 
                         {% if sortie.etat.nom == 'Ouverte' %}
-                            {% if sortie.inscriptions.contains(app_user) %}
-                            <a class="action-link"
-                               href="{{ path('sortie_subscribe', {'id': sortie.id}) }}">S'inscrire</a>
+                            {% if sortie.inscriptions.contains(app.user) %}
+                                <a class="action-link"
+                                   href="{{ path('sortie_unsubscribe', {'id': sortie.id}) }}">Se désister</a>
                             {% else %}
-                                                        <a class="action-link"
-                               href="{{ path('sortie_unsubscribe', {'id': sortie.id}) }}">Se désister</a>
+                                <a class="action-link"
+                                   href="{{ path('sortie_subscribe', {'id': sortie.id}) }}">S'inscrire</a>
+
                             {% endif %}
                         {% endif %}
                         {% if sortie.etat.nom == 'En creation' %}
