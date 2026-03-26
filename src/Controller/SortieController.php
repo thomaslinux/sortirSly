@@ -12,6 +12,7 @@ use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use App\Service\EtatService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -224,6 +225,7 @@ final class SortieController extends AbstractController
     #[Route('/subscribe/{id}', name: 'subscribe', requirements: ['id' => '\d+'])]
     public function subscribe(int                    $id,
                               EntityManagerInterface $entityManager,
+                              EtatService $etatService,
                               SortieRepository       $sortieRepository): Response
     {
 
@@ -237,9 +239,13 @@ final class SortieController extends AbstractController
         $user = $this->getUser();
         $sortie->sIncrire($user);
         $this->addFlash('success', 'Vous êtes inscrit à la sortie ' . $sortie->getNom());
+// passage à l'état cloturé ou reste à l'état ouvert
+        $sortie->setEtat($etatService->checkEtat($sortie));
 
         $entityManager->persist($sortie);
         $entityManager->flush();
+
+
 
         return $this->redirectToRoute('sortie_list');
     }
@@ -248,6 +254,7 @@ final class SortieController extends AbstractController
     #[Route('/unsubscribe/{id}', name: 'unsubscribe', requirements: ['id' => '\d+'])]
     public function unsubscribe(int                    $id,
                                 EntityManagerInterface $entityManager,
+                                EtatService $etatService,
                                 SortieRepository       $sortieRepository): Response
     {
 
@@ -260,7 +267,8 @@ final class SortieController extends AbstractController
         $user = $this->getUser();
         $sortie->seDesister($user);
         $this->addFlash('success', 'Vous vous êtes désisté de la sortie ' . $sortie->getNom());
-
+// passage à l'état ouvert si cloturée
+        $sortie->setEtat($etatService->checkEtat($sortie));
         $entityManager->persist($sortie);
         $entityManager->flush();
 
