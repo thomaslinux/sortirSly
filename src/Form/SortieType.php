@@ -37,7 +37,7 @@ class SortieType extends AbstractType
                     'min' => (new \DateTime())->format('Y-m-d\TH:i'),
                 ],
             ])
-            ->add('dateLimiteInscription', DateTimeType::class, [
+            ->add('dateLimiteInscription', DateType::class, [
                 'label' => 'Date limite d\'inscription :',
                 'attr' => [
                     'id' => 'dateLimiteInscription',
