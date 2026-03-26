@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username','email'])]
@@ -21,6 +22,8 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\NotBlank(message: "Please enter a username")]
+    #[Assert\Length(max: 180, maxMessage: "Max {{ limit }} characters allowed")]
     private ?string $username = null;
 
     /**
@@ -33,15 +36,23 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Please enter a passWord")]
+    #[Assert\Length(min: 10, minMessage: "Your password must be at least {{ limit }} characters long.")]
+    #[Assert\Regex(pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/', message: "Password must contain at least one uppercase letter, one lowercase letter, and one number.")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Please enter a valid email address.")]
+    #[Assert\Email(message: "The email '{{ value }}' is not a valid email address.", mode: 'strict')]
+    #[Assert\Length(max: 255, maxMessage: "Max {{ limit }} characters allowed")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -66,6 +77,10 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $sorties;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
+    #[Assert\Regex(
+        pattern: '/^(0\d(?:[\s\.\-\(\)]*\d){10})$/',
+        message: "Telephone must be a valid phone number.")]
     private ?string $tel = null;
 
     public function __construct()

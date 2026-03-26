@@ -3,11 +3,15 @@
 namespace App\Controller;
 
 use App\Dto\UserImport;
+use App\Entity\Participant;
+use App\Form\ParticipantType;
 use App\Form\UserImportType;
 use App\Repository\ParticipantRepository;
 use App\Service\ImportParticipantService;
+use App\utils\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -51,7 +55,7 @@ final class AdminController extends AbstractController
         $form = $this->createForm(UserImportType::class, $import);
 //        récupere le post
         $form->handleRequest($request);
-//validation du formulaire
+//      validation du formulaire
         if ($form->isSubmitted() && $form->isValid()){
 //            fichier uploadé
             $csvFile = $import->csvFile;
@@ -70,11 +74,40 @@ final class AdminController extends AbstractController
     }
     #[Route('/new/user', name: 'new_user', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
-    public function createOne(): Response
+    public function createOne(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, FileUploader $fileUploader): Response
     {
+        $participant = new Participant();
+        $participantForm = $this->createForm(ParticipantType::class, $participant);
+
+        $participantForm->handleRequest($request);
+        if ($participantForm->isSubmitted() && $participantForm->isValid()){
+
+            $plainPassword = $participantForm->get('plainPassword')->getData();
+            if ($plainPassword) {
+                $hashedPassword = $passwordHasher->hashPassword($participant, $plainPassword);
+                $participant->setPassword($hashedPassword);
+            }
+            // uploade de l'image
+            /**
+             * @var UploadedFile $file
+             */
+            $photoFile = $participantForm->get('photo')->getData();
+            if ($photoFile){
+                $participant->setPhoto($fileUploader->upload($photoFile, 'images/profil'));
+            }
+            $participant->setRoles(['ROLE_USER']);
+            // enregistrement en bdd
+            $entityManager->persist($participant);
+            $entityManager->flush();
+            // messages flash pour utilisateurs
+            $this->addFlash('success', 'Participant created successfully');
+            return $this->redirectToRoute('admin_new_user');
+        }
+
+
 
         return $this->render('admin/participant_create_unique.html.twig', [
-
+            'participant' => $participant, 'form' => $participantForm->createView(),
         ]);
     }
 }
