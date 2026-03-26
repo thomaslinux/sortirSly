@@ -17,6 +17,7 @@ php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 ```
+
 Faire un composer install car ajout du composer league/csv
 
 # TODO / Roadmap
@@ -52,8 +53,8 @@ Faire un composer install car ajout du composer league/csv
 ## V3 - CSS et JS
 
 - [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
-- [ ] Modifier le thème pour éviter de perdre de l'espace
-- [ ] Désactiver la grille au redimentionnement
+- [x] Modifier le thème pour éviter de perdre de l'espace
+- [ ] Désactiver la grille au redimensionnement
 - [ ] Trier les éléments de la liste de sorties dans le tableau de sorties
 
 # Modèle graphique html :

@@ -41,15 +41,9 @@
 }
 
 .nav-links {
-    display: none;
+    display: flex;
     align-items: center;
     gap: 1.5rem;
-}
-
-@media (min-width: 768px) {
-    .nav-links {
-        display: flex;
-    }
 }
 
 .nav-links a {
@@ -144,4 +138,14 @@
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--primary-container);
+}
+
+@media (max-width: 768px) {
+    .mobile-hidden {
+        display: none;
+    }
+
+    .nav-links {
+        display: none;
+    }
 }
