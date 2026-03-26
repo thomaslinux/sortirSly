@@ -6,7 +6,6 @@ use App\Dto\UserImport;
 use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Form\UserImportType;
-use App\Repository\ParticipantRepository;
 use App\Service\ImportParticipantService;
 use App\utils\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 #[Route('/admin', name: 'admin_')]
 final class AdminController extends AbstractController
