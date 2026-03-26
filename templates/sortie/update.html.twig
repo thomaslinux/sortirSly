@@ -15,7 +15,11 @@
             {% endblock %}
 
         {% endembed %}
+
+        {% if is_granted('DELETE', sortie) %}
         <a href="{{ path('sortie_delete', {'id': sortie.id}) }}">Supprimer</a>
+        {% endif %}
+
     </div>
 
 

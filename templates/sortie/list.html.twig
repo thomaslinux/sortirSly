@@ -13,7 +13,140 @@
         </div>
     </div>
     {% include 'views/list/pc-list-search.html.twig' %}
-    {% include 'views/list/pc-list.html.twig' %}
+    <section class="event-list">
+        <table class="event-table">
+            <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture</th>
+                <th>Inscrits/Places</th>
+                <th>État</th>
+                <th style="text-align: center;">Inscrit</th>
+                <th>Organisateur</th>
+                <th style="text-align: right;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sortie in sorties %}
+                {% if is_granted('VIEW', sortie) %}
+                    <tr>
+                        <td class="event-name">
+                            <a class="action-link"
+                               href="{{ path('sortie_detail', {'id': sortie.id}) }}">{{ sortie.nom }}</a>
+                        </td>
+                        <td class="date-de-sortie">{{ sortie.dateHeureDebut | date ('d/m/Y H:i') }}</td>
+                        <td class="cloture">{{ sortie.dateLimiteInscription | date ('d/m/Y') }}</td>
+                        <td><span
+                                class="badge badge-tertiary">{{ sortie.inscriptions.count }} / {{ sortie.nbPlaces }}</span>
+                        </td>
+                        <td class="Etat">
+                            {% if sortie.etat.nom == 'En creation' %}
+                                <div class="status status-created">
+                                    <span class="status-dot"></span> En création
+                                </div>
+                            {% endif %}
+                            {% if sortie.etat.nom == 'Ouverte' %}
+                                <div class="status status-open">
+                                    <span class="status-dot"></span> Ouverte
+                                </div>
+                            {% endif %}
+                            {% if sortie.etat.nom == 'Cloturee' %}
+                                <div class="status status-created">
+                                    <span class="status-dot"></span> Clôturée
+                                </div>
+                            {% endif %}
+                            {% if sortie.etat.nom == 'En cours' %}
+                                <div class="status status-open">
+                                    <span class="status-dot"></span> En cours
+                                </div>
+                            {% endif %}
+                            {% if sortie.etat.nom == 'Terminee' %}
+                                <div class="status status-closed">
+                                    <span class="status-dot"></span> Terminée
+                                </div>
+                            {% endif %}
+                            {% if sortie.etat.nom == 'Annulee' %}
+                                <div class="status status-closed">
+                                    <span class="status-dot"></span> Annulée
+                                </div>
+                            {% endif %}
+                            {% if sortie.etat.nom == 'Historisee' %}
+                                <div class="status status-created">
+                                    <span class="status-dot"></span> Historisée
+                                </div>
+                            {% endif %}
+
+                        </td>
+                        {% if sortie.inscriptions.contains(app.user) %}
+                            <td style="text-align: center;">
+                                                    <span class="material-symbols-outlined"
+                                                          style="color: var(--secondary); font-variation-settings: 'FILL' 1;">check_circle</span>
+                            </td>
+                        {% else %}
+                            <td style="text-align: center; color: var(--outline-variant);">—</td>
+                        {% endif %}
+                        <td><a class="organizer"
+                               href="{{ path('participant_profil', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.username }}</a>
+                        </td>
+                        <td class="actions-cell">
+                            {# La ou David travaille #}
+
+                            {% if is_granted('VIEW', sortie) %}
+                                <a class="action-link"
+                                   href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
+                            {% endif %}
+
+                            {% if is_granted('INS', sortie) %}
+                                <a class="action-link"
+                                   href="{{ path('sortie_subscribe', {'id': sortie.id}) }}">S'inscrire</a>
+
+                            {% endif %}
+
+                            {% if is_granted('DESINS', sortie) %}
+                                <a class="action-link"
+                                   href="{{ path('sortie_unsubscribe', {'id': sortie.id}) }}">Se désister</a>
+                            {% endif %}
+
+                            {% if is_granted('EDIT', sortie) %}
+                                <a class="action-link"
+                                   href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
+
+                            {% endif %}
+
+                            {% if is_granted('PUBLISH', sortie) %}
+                                <a class="action-link"
+                                   href="{{ path('sortie_publishId', {'id': sortie.id}) }}">Publier</a>
+                            {% endif %}
+
+                            {% if is_granted('CANCEL', sortie) %}
+                                <a class="action-link"
+                                   href="{{ path('sortie_cancel', {'id': sortie.id}) }}">Annuler</a>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class=" pagination">
+            <span class="page-info">Page 1 sur 4</span>
+            <div class="page-controls">
+                <button class="page-btn nav"
+                        disabled="">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn nav">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 
     {% block title %}

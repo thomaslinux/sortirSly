@@ -24,16 +24,28 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final class SortieController extends AbstractController
 {
     #[Route("/list", name: 'list', methods: ['GET', 'POST'])]
+    #[Route("/list/campus/{id}", name: 'list_by_campus', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function list(
         EntityManagerInterface $entityManager,
         SortieRepository       $sortieRepository,
         CampusRepository       $campusRepository,
+        int                    $id = null,
         Request                $request
     )
     {
-        // TODO afficher les résultats de la recherche
+        // TODO récupérer le campus du current User et l'envoyer dans le formulaire de recherche
+        // TODO changer les résultats de recherche en fonction du sélecteur de campus
+        // TODO récupérer les informations dans les paramètres de recherche
+        // TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
+
+        if ($id) {
+            $sorties = $sortieRepository->findSortieByCampus($id);
+        } else {
+
+            $sorties = $sortieRepository->findAll();
+        }
+        // TODO recherche par campus
         // TODO changer la requête sur mobile (campus utilisateur)
-        $sorties = $sortieRepository->findAll();
         $campusList = $campusRepository->findAll();
 
         return $this->render('sortie/list.html.twig', [
@@ -42,8 +54,8 @@ final class SortieController extends AbstractController
         ]);
     }
 
-// code commum pour les 3 fonction de création, de modification et de publication
-// Pour la publication => ne fonctionne que dans les page de création ou de modification (voir publishID pour différence)
+// code commum pour les 3 fonctions de création, de modification et de publication
+// Pour la publication => ne fonctionne que dans les pages de création ou de modification (voir publishID pour différence)
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     #[Route('/publish', name: 'publish', methods: ['POST'])]
@@ -66,7 +78,10 @@ final class SortieController extends AbstractController
                 throw $this->createNotFoundException('Sortie non trouvée');
             }
         }
+
         $user = $this->getUser();
+
+
         $sortieForm = $this->createForm(SortieType::class, $sortie, [
             'user' => $user
         ]);
@@ -80,14 +95,17 @@ final class SortieController extends AbstractController
                 $sortie->setEtat($etatRepository->findOneBy(["nom" => "En creation"]));
                 $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' enregistrée en brouillon');
             } else {
+                //si bouton enregister
                 if (!$sortieForm->get('publier')->isClicked()) {
+                    $this->denyAccessUnlessGranted('EDIT', $sortie);
                     $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' modifiée');
                 }
             }
+            //si bouton publier
             if ($sortieForm->get('publier')->isClicked()) {
+                $this->denyAccessUnlessGranted('PUBLISH', $sortie);
                 $sortie->setEtat($etatRepository->findOneBy(["nom" => "Ouverte"]));
                 $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' est publiée');
-
             }
             $entityManager->persist($sortie);
             $entityManager->flush();
@@ -109,9 +127,11 @@ final class SortieController extends AbstractController
     {
 
         $sortie = $sortieRepository->find($id);
+
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
+        $this->denyAccessUnlessGranted('VIEW', $sortie);
         return $this->render('sortie/detail.html.twig', ['sortie' => $sortie]);
     }
 
@@ -134,6 +154,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
+        $this->denyAccessUnlessGranted('CANCEL', $sortie);
         $cancelSortie = new CancelSortie();
         $cancelSortieForm = $this->createForm(CancelSortieType::class, $cancelSortie, [
             'user' => $user
@@ -142,7 +163,7 @@ final class SortieController extends AbstractController
 
         if ($cancelSortieForm->isSubmitted() && $cancelSortieForm->isValid()) {
             $sortie->setEtat($etatRepository->findOneBy(["nom" => "Annulee"]));
-            $sortie->setDescription($sortie->getDescription() . '. Annulée pour le motif suivant : ' . $cancelSortie->getDescriptionCancel());
+            $sortie->setDescription($sortie->getDescription() . ".\nAnnulée pour le motif suivant : " . $cancelSortie->getDescriptionCancel());
             $entityManager->persist($sortie);
             $entityManager->flush();
             $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' annulée pour le motif suivant : ' . $cancelSortie->getDescriptionCancel());
@@ -168,6 +189,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
+        $this->denyAccessUnlessGranted('DELETE', $sortie);
         $entityManager->remove($sortie);
         $entityManager->flush();
         $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' supprimée!');
@@ -188,7 +210,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
-
+        $this->denyAccessUnlessGranted('EDIT', $sortie);
         $sortie->setEtat($etatRepository->findOneBy(["nom" => "Ouverte"]));
         $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' est publiée');
 
@@ -209,6 +231,8 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
+        $this->denyAccessUnlessGranted('VIEW', $sortie);
+        $this->denyAccessUnlessGranted('INS', $sortie);
 
         $user = $this->getUser();
         $sortie->sIncrire($user);
@@ -231,7 +255,8 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
-
+        $this->denyAccessUnlessGranted('VIEW', $sortie);
+        $this->denyAccessUnlessGranted('DESINS', $sortie);
         $user = $this->getUser();
         $sortie->seDesister($user);
         $this->addFlash('success', 'Vous vous êtes désisté de la sortie ' . $sortie->getNom());
