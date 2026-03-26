@@ -22,11 +22,11 @@ class ParticipantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', TextType::class, ['label' => 'Username :'])
-            ->add('prenom', TextType::class, ['label' => 'Prenom :'])
-            ->add('nom', TextType::class, ['label' => 'Nom :'])
-            ->add('tel', TelType::class,  ['label' => 'Telephone :'])
-            ->add('email', EmailType::class, ['label' => 'Email :'])
+            ->add('username', TextType::class, ['label' => 'Username :', 'required'=>true])
+            ->add('prenom', TextType::class, ['label' => 'Prenom :', 'required'=>false])
+            ->add('nom', TextType::class, ['label' => 'Nom :', 'required'=>false])
+            ->add('tel', TelType::class,  ['label' => 'Telephone :', 'required'=>false])
+            ->add('email', EmailType::class, ['label' => 'Email :', 'required'=>true])
             ->add('campus', EntityType::class, ['class' => Campus::class, 'choice_label' => 'nom', 'required' => true, 'query_builder' => function (CampusRepository $campusRepository) {
                 return $campusRepository->createQueryBuilder('c')->addOrderBy('c.nom', 'ASC');
             }])
