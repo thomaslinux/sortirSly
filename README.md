@@ -45,6 +45,8 @@ php bin/console doctrine:fixtures:load
 ## V2 - API recherche de sorties
 
 - [ ] Cocher un critère de recherche de sortie recharge dynamiquement la liste des sorties via un appel API
+- [ ] Formulaire de création de sorties
+    - [ ] Faire un menu déroulant 'calendrier' plus fonctionnel (menu creation / modification d'une sortie
 
 ## V3 - CSS et JS
 
