@@ -41,17 +41,31 @@ class SortieType extends AbstractType
                 'label' => 'Date limite d\'inscription :',
                 'attr' => [
                     'id' => 'dateLimiteInscription',
-                    'min' => (new \DateTime())->format('Y-m-d\TH:i'),
+                    'min' => (new \DateTime())->format('Y-m-d'),
                 ],
             ])
             ->add('duree', IntegerType::class, [
-                'label' => 'Durée :'
+                'label' => 'Durée (en minutes):',
+                'attr' => [
+                    'value' => '5',
+                    'placeholder' => '5',
+                    'min' => '5'
+                ]
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description et infos :'
+                'label' => 'Description et infos :',
+                'attr' => [
+                    'rows' => 5,
+                    'cols' => 40
+                ]
             ])
             ->add('nbPlaces', IntegerType::class, [
-                'label' => 'Nombre de places :'
+                'label' => 'Nombre de places (> 2) : ',
+                'attr' => [
+                    'value' => '2',
+                    'placeholder' => '2',
+                    'min' => '2'
+                ]
             ])
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
