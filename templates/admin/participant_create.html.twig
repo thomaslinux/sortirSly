@@ -2,7 +2,7 @@
 
 {% block body %}
     <h2>Création de plusieurs utilisateurs via un fichier .csv</h2>
-
+        <br>
     {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
     <div class="mb-3">
         {{ form_label(form.csvFile) }}
@@ -18,5 +18,9 @@
     </div>
     <button type="submit" class="btn btn-primary">Importer CSV</button>
     {{ form_end(form) }}
+
+    <h2>Création d'un utilisateur via un formulaire classique</h2>
+    <br>
+    <h3>Formulaire en cours de création</h3>
 {% endblock %}
 
