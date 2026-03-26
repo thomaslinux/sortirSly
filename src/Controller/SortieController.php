@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Form\CancelSortieType;
 use App\Form\Model\CancelSortie;
 use App\Form\SortieType;
+use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
@@ -26,15 +27,18 @@ final class SortieController extends AbstractController
     public function list(
         EntityManagerInterface $entityManager,
         SortieRepository       $sortieRepository,
+        CampusRepository       $campusRepository,
         Request                $request
     )
     {
         // TODO afficher les résultats de la recherche
         // TODO changer la requête sur mobile (campus utilisateur)
         $sorties = $sortieRepository->findAll();
+        $campusList = $campusRepository->findAll();
 
         return $this->render('sortie/list.html.twig', [
-            'sorties' => $sorties
+            'sorties' => $sorties,
+            'campusList' => $campusList
         ]);
     }
 
