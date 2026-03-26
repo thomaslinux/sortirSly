@@ -23,8 +23,8 @@
                            href="{{ path('admin_villes_list') }}">Gérer les villes</a>
                         <a class="{{ app.request.attributes.get('_route') == 'admin_campus_list' ? 'active' }}"
                            href="{{ path('admin_campus_list') }}">Gérer les campus</a>
-                        <a class="{{ app.request.attributes.get('_route') == 'admin_app_new' ? 'active' }}"
-                           href="{{ path('admin_app_new') }}">Gérer les utilisateurs</a>
+                        <a class="{{ app.request.attributes.get('_route') == 'admin_manage_user' ? 'active' }}"
+                           href="{{ path('admin_manage_user') }}">Gérer les utilisateurs</a>
                     {% endif %}
 
                 {% else %}

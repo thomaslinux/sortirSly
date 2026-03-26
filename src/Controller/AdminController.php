@@ -33,7 +33,15 @@ final class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
-    #[Route('/new', name: 'app_new', methods: ['GET', 'POST'])]
+    #[Route('/manage/user', name: 'manage_user', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function manage_user(): Response
+    {
+        return $this->render('admin/manage_user.html.twig', [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+    #[Route('/new/users', name: 'new_user_csv', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, ImportParticipantService $importParticipantService): Response
     {
@@ -53,11 +61,20 @@ final class AdminController extends AbstractController
             $this->addFlash('success', sprintf(
                 'Import OK : %d créés, %d erreurs. Mot de passe par défaut : %s',
                 $results['created'], $results['errors'], $results['password']));
-            return $this->redirectToRoute('admin_app_new');
+            return $this->redirectToRoute('admin_new_user_csv');
         }
 
         return $this->render('admin/participant_create.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+    #[Route('/new/user', name: 'new_user', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function createOne(): Response
+    {
+
+        return $this->render('admin/participant_create_unique.html.twig', [
+
         ]);
     }
 }

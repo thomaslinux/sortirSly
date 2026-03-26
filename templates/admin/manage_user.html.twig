@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>Gérer les utilisateurs</h2>
+
+    <a class="btn btn-gradient" href="{{ path('admin_new_user_csv') }}">Création de plusieurs utilisateurs via un fichier .csv</a>
+    <a class="btn btn-gradient" href="{{ path('admin_new_user') }}">Création d'un utilisateur via un formulaire classique</a>
+
+{% endblock %}
+
