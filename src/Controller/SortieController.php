@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Form\CancelSortieType;
 use App\Form\Model\CancelSortie;
 use App\Form\SortieType;
+use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
@@ -23,18 +24,33 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final class SortieController extends AbstractController
 {
     #[Route("/list", name: 'list', methods: ['GET', 'POST'])]
+    #[Route("/list/campus/{id}", name: 'list_by_campus', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function list(
         EntityManagerInterface $entityManager,
         SortieRepository       $sortieRepository,
+        CampusRepository       $campusRepository,
+        int                    $id = null,
         Request                $request
     )
     {
-        // TODO afficher les résultats de la recherche
+        // TODO récupérer le campus du current User et l'envoyer dans le formulaire de recherche
+        // TODO changer les résultats de recherche en fonction du sélecteur de campus
+        // TODO récupérer les informations dans les paramètres de recherche
+        // TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
+
+        if ($id) {
+            $sorties = $sortieRepository->findSortieByCampus($id);
+        } else {
+
+            $sorties = $sortieRepository->findAll();
+        }
+        // TODO recherche par campus
         // TODO changer la requête sur mobile (campus utilisateur)
-        $sorties = $sortieRepository->findAll();
+        $campusList = $campusRepository->findAll();
 
         return $this->render('sortie/list.html.twig', [
-            'sorties' => $sorties
+            'sorties' => $sorties,
+            'campusList' => $campusList
         ]);
     }
 

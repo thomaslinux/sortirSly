@@ -1,0 +1,48 @@
+<section class="search-section">
+    <h2>
+        <span class="material-symbols-outlined">filter_list</span>
+        Filtrer les sorties
+    </h2>
+    <div class="filter-grid">
+        <div class="field-group">
+            <label>Nom de la sortie</label>
+            <div class="input-wrapper">
+                <input class="input-field" placeholder="Rechercher..." type="text"/>
+                <span class="material-symbols-outlined">search</span>
+            </div>
+        </div>
+        <div class="field-group">
+            <label>Campus</label>
+            <select class="input-field">
+                <option value="campus-0">Tous les campus</option>
+                {% for campus in campusList %}
+                    <option value="campus-{{ campus.id }}">{{ campus.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="date-range">
+            <div class="field-group">
+                <label>Entre le</label>
+                <input class="input-field" type="date"/>
+            </div>
+            <div class="field-group">
+                <label>Et le</label>
+                <input class="input-field" type="date"/>
+            </div>
+        </div>
+    </div>
+    <div class="checkbox-group">
+        <label class="checkbox-label">
+            <input type="checkbox"/> Sorties dont je suis l'organisateur/trice
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox"/> Sorties auxquelles je suis inscrit/e
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox"/> Sorties auxquelles je ne suis pas inscrit/e
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox"/> Sorties passées
+        </label>
+    </div>
+</section>
