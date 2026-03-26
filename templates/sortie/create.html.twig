@@ -21,10 +21,10 @@
     <script>
         const dateHeureDebut = document.getElementById('sortie_dateHeureDebut');
         const dateLimiteInscription = document.getElementById('sortie_dateLimiteInscription');
-
+        // TODO modifier la logique
         dateHeureDebut.addEventListener('change', () => {
-            if (dateHeureDebut.value > dateLimiteInscription.value) {
-                dateLimiteInscription.setAttribute('min', dateHeureDebut.value);
+            dateLimiteInscription.setAttribute('max', dateHeureDebut.value);
+            if (dateLimiteInscription.value > dateHeureDebut.value) {
                 dateLimiteInscription.value = dateHeureDebut.value;
             }
         });
