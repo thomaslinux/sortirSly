@@ -33,12 +33,14 @@ class SortieType extends AbstractType
                 'label' => 'Date et heure de la sortie :',
                 'widget' => 'single_text',
                 'attr' => [
+                    'id' => 'dateHeureDebut',
                     'min' => (new \DateTime())->format('Y-m-d\TH:i'),
                 ],
             ])
             ->add('dateLimiteInscription', DateTimeType::class, [
                 'label' => 'Date limite d\'inscription :',
                 'attr' => [
+                    'id' => 'dateLimiteInscription',
                     'min' => (new \DateTime())->format('Y-m-d\TH:i'),
                 ],
             ])

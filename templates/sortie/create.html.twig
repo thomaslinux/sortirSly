@@ -9,15 +9,24 @@
 {% block body %}
     <div>
         {% embed 'views/form/template-form-sortie.html.twig' %}
-        {% block formTitle %}Création d'une sortie{% endblock %}
+            {% block formTitle %}Création d'une sortie{% endblock %}
 
-        {% block buttonLabel %}
-            Enregistrer "brouillon"
-        {% endblock %}
+            {% block buttonLabel %}
+                Enregistrer "brouillon"
+            {% endblock %}
 
         {% endembed %}
     </div>
 
+    <script>
+        const dateHeureDebut = document.getElementById('sortie_dateHeureDebut');
+        const dateLimiteInscription = document.getElementById('sortie_dateLimiteInscription');
 
+        dateHeureDebut.addEventListener('change', () => {
+            if (dateHeureDebut.value > dateLimiteInscription.value) {
+                dateLimiteInscription.setAttribute('min', dateHeureDebut.value);
+                dateLimiteInscription.value = dateHeureDebut.value;
+            }
+        });
+    </script>
 {% endblock %}
-
