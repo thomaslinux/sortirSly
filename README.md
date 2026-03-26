@@ -38,7 +38,9 @@ php bin/console doctrine:fixtures:load
 ## V1
 
 - [ ] Formulaire de création de sorties
-    - [ ] dateLimiteInscription > dateHeureDebut
+    - [x] dateLimiteInscription > dateHeureDebut
+    - [x] date par défaut est aujourd'hui, front date est aujourd'hui
+    - [ ] Création d'un nouveau lieu depuis le formulaire de création de sortie
 
 ## V2 - API recherche de sorties
 

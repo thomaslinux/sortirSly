@@ -30,10 +30,17 @@ class SortieType extends AbstractType
                 'label' => 'Nom de la sortie :'
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
-                'label' => 'Date et heure de la sortie :'
+                'label' => 'Date et heure de la sortie :',
+                'widget' => 'single_text',
+                'attr' => [
+                    'min' => (new \DateTime())->format('Y-m-d\TH:i'),
+                ],
             ])
-            ->add('dateLimiteInscription', DateType::class, [
-                'label' => 'Date limite d\'inscription :'
+            ->add('dateLimiteInscription', DateTimeType::class, [
+                'label' => 'Date limite d\'inscription :',
+                'attr' => [
+                    'min' => (new \DateTime())->format('Y-m-d\TH:i'),
+                ],
             ])
             ->add('duree', IntegerType::class, [
                 'label' => 'Durée :'
@@ -58,8 +65,7 @@ class SortieType extends AbstractType
                     return $lieuRepository->createQueryBuilder('l')->addOrderBy('l.nom');
                 }
             ])
-            ->add('publier', SubmitType::class, ['label' => 'Publier'])
-           ;
+            ->add('publier', SubmitType::class, ['label' => 'Publier']);
 //        ->add('annuler', ResetType::class, ['label' => 'Annuler'])
     }
 
