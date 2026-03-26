@@ -7,7 +7,6 @@ use App\Entity\Participant;
 use App\Repository\CampusRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -16,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 class ParticipantType extends AbstractType
 {
@@ -30,6 +31,7 @@ class ParticipantType extends AbstractType
             ->add('campus', EntityType::class, ['class' => Campus::class, 'choice_label' => 'nom', 'required' => true, 'query_builder' => function (CampusRepository $campusRepository) {
                 return $campusRepository->createQueryBuilder('c')->addOrderBy('c.nom', 'ASC');
             }])
+            ->add('photo', FileType::class,  ['mapped' => false, 'required' => false])
             ->add('plainPassword', RepeatedType::class,
                 ['type' => PasswordType::class,
                     'invalid_message' => 'Les mots de passe doivent correspondre.',
@@ -43,7 +45,6 @@ class ParticipantType extends AbstractType
                         new Assert\Length([
                             'min' => 8,
                             'minMessage' => 'Le mot de passe doit faire au moins {{ limit }} caractères.',]),],])
-            ->add('photo', FileType::class,  ['mapped' => false, 'required' => false])
         ;
     }
 
