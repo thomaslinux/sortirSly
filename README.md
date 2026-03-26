@@ -48,6 +48,8 @@ Faire un composer install car ajout du composer league/csv
 
 ## V2 - API recherche de sorties
 
+- [ ] selecteur de lieu en fonction de la ville dans le créateur de sorties
+
 - [ ] Cocher un critère de recherche de sortie recharge dynamiquement la liste des sorties via un appel API
 - [ ] Formulaire de création de sorties
     - [ ] Faire un menu déroulant 'calendrier' plus fonctionnel (menu creation / modification d'une sortie
