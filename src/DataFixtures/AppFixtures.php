@@ -169,7 +169,7 @@ class AppFixtures extends Fixture
 
         foreach ($sortieList as $sortie) {
             for ($i = 0; $i < $sortie->getNbPlaces(); $i++) {
-                $sortie->addInscription($faker->randomElement($participantList));
+                $sortie->sIncrire($faker->randomElement($participantList));
             }
             $manager->persist($sortie);
         }

@@ -42,7 +42,10 @@ Faire un composer install car ajout du composer league/csv
 - [ ] Formulaire de création de sorties
     - [x] dateLimiteInscription > dateHeureDebut (back)
     - [x] date par défaut est aujourd'hui, front date est aujourd'hui
+    - [/] date en placeholder
+    - [ ] trier les dates de sorties en affichant la dernière sortie créée
     - [ ] Création d'un nouveau lieu depuis le formulaire de création de sortie
+    - [ ] réduire le nombre de query sur la liste
 - [ ] Afficher la barre de recherche multi critères dans la liste des sorties
     - [ ] Gérer un affichage par pagination (front ou back ?)
 
@@ -63,6 +66,6 @@ Faire un composer install car ajout du composer league/csv
 
 # Modèle graphique html :
 
-https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/assets/styles/template-list1.html
+https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/CONCEPTION/template-list1.html
 
-https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/assets/styles/template-list2.html
+https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/CONCEPTION/template-list2.html

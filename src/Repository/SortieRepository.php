@@ -24,8 +24,7 @@ class SortieRepository extends ServiceEntityRepository
             ->addSelect('c')
             ->andWhere('s.campus = :campusId')
             ->andWhere('s.etat')
-            ->setParameter('campusId', $id)
-            ->addOrderBy('s.dateHeureDebut', 'DESC');
+            ->setParameter('campusId', $id);
         $query = $qb->getQuery();
         return $query->getResult();
     }

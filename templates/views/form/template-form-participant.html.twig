@@ -3,5 +3,8 @@
 <h2>{% block formTitle %}{% endblock %}</h2>
 {{ form_start(form) }}
     {{ form_widget(form) }}
-<button>{% block buttonLabel %}{% endblock %}</button>
+<div>
+    <button>{% block buttonLabel %}{% endblock %}</button>
+    <a class="btn" href="{{ path('sortie_list') }}">Annuler</a>
+</div>
 {{ form_end(form) }}
