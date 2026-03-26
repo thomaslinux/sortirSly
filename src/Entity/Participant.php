@@ -36,9 +36,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Please enter a passWord")]
-    #[Assert\Length(min: 10, minMessage: "Your password must be at least {{ limit }} characters long.")]
-    #[Assert\Regex(pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/', message: "Password must contain at least one uppercase letter, one lowercase letter, and one number.")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
