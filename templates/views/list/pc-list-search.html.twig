@@ -14,7 +14,6 @@
         <div class="field-group">
             <label>Campus</label>
             <select class="input-field">
-                <option value="campus-0">Tous les campus</option>
                 {% for campus in campusList %}
                     <option value="campus-{{ campus.id }}">{{ campus.nom }}</option>
                 {% endfor %}
