@@ -65,6 +65,6 @@ Faire un composer install car ajout du composer league/csv
 
 # Modèle graphique html :
 
-https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/assets/styles/template-list1.html
+https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/CONCEPTION/template-list1.html
 
-https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/assets/styles/template-list2.html
+https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/CONCEPTION/template-list2.html
