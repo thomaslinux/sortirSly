@@ -23,7 +23,9 @@
     <div>
         {{ form_start(cancelSortieForm) }}
         {{ form_widget(cancelSortieForm) }}
+        {% if is_granted('CANCEL', sortie) %}
         <button>Valider</button>
+        {% endif %}
         {{ form_end(cancelSortieForm) }}
     </div>
 

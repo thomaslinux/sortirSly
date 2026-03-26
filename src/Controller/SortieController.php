@@ -38,8 +38,8 @@ final class SortieController extends AbstractController
         ]);
     }
 
-// code commum pour les 3 fonction de création, de modification et de publication
-// Pour la publication => ne fonctionne que dans les page de création ou de modification (voir publishID pour différence)
+// code commum pour les 3 fonctions de création, de modification et de publication
+// Pour la publication => ne fonctionne que dans les pages de création ou de modification (voir publishID pour différence)
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     #[Route('/publish', name: 'publish', methods: ['POST'])]
@@ -62,8 +62,10 @@ final class SortieController extends AbstractController
                 throw $this->createNotFoundException('Sortie non trouvée');
             }
         }
-        $this->denyAccessUnlessGranted('EDIT', $sortie);
+
         $user = $this->getUser();
+
+
         $sortieForm = $this->createForm(SortieType::class, $sortie, [
             'user' => $user
         ]);
@@ -77,14 +79,17 @@ final class SortieController extends AbstractController
                 $sortie->setEtat($etatRepository->findOneBy(["nom" => "En creation"]));
                 $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' enregistrée en brouillon');
             } else {
+                //si bouton enregister
                 if (!$sortieForm->get('publier')->isClicked()) {
+                    $this->denyAccessUnlessGranted('EDIT', $sortie);
                     $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' modifiée');
                 }
             }
+            //si bouton publier
             if ($sortieForm->get('publier')->isClicked()) {
+                $this->denyAccessUnlessGranted('PUBLISH', $sortie);
                 $sortie->setEtat($etatRepository->findOneBy(["nom" => "Ouverte"]));
                 $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' est publiée');
-
             }
             $entityManager->persist($sortie);
             $entityManager->flush();
@@ -133,7 +138,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
-        $this->denyAccessUnlessGranted('EDIT', $sortie);
+        $this->denyAccessUnlessGranted('CANCEL', $sortie);
         $cancelSortie = new CancelSortie();
         $cancelSortieForm = $this->createForm(CancelSortieType::class, $cancelSortie, [
             'user' => $user
@@ -142,7 +147,7 @@ final class SortieController extends AbstractController
 
         if ($cancelSortieForm->isSubmitted() && $cancelSortieForm->isValid()) {
             $sortie->setEtat($etatRepository->findOneBy(["nom" => "Annulee"]));
-            $sortie->setDescription($sortie->getDescription() . '. Annulée pour le motif suivant : ' . $cancelSortie->getDescriptionCancel());
+            $sortie->setDescription($sortie->getDescription() . ".\nAnnulée pour le motif suivant : " . $cancelSortie->getDescriptionCancel());
             $entityManager->persist($sortie);
             $entityManager->flush();
             $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' annulée pour le motif suivant : ' . $cancelSortie->getDescriptionCancel());
@@ -168,7 +173,7 @@ final class SortieController extends AbstractController
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
-        $this->denyAccessUnlessGranted('EDIT', $sortie);
+        $this->denyAccessUnlessGranted('DELETE', $sortie);
         $entityManager->remove($sortie);
         $entityManager->flush();
         $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' supprimée!');
@@ -211,6 +216,8 @@ final class SortieController extends AbstractController
             throw $this->createNotFoundException('Sortie non trouvée');
         }
         $this->denyAccessUnlessGranted('VIEW', $sortie);
+        $this->denyAccessUnlessGranted('INS', $sortie);
+
         $user = $this->getUser();
         $sortie->sIncrire($user);
         $this->addFlash('success', 'Vous êtes inscrit à la sortie ' . $sortie->getNom());
@@ -233,6 +240,7 @@ final class SortieController extends AbstractController
             throw $this->createNotFoundException('Sortie non trouvée');
         }
         $this->denyAccessUnlessGranted('VIEW', $sortie);
+        $this->denyAccessUnlessGranted('DESINS', $sortie);
         $user = $this->getUser();
         $sortie->seDesister($user);
         $this->addFlash('success', 'Vous vous êtes désisté de la sortie ' . $sortie->getNom());
