@@ -19,17 +19,15 @@ class Sortie
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Veuillez renseigner un nom pour la sortie')]
-    #[Assert\Length(min:3,minMessage: 'Remplir avec au moins 3 caractères')]
+    #[Assert\Length(min: 3, minMessage: 'Remplir avec au moins 3 caractères')]
     private ?string $nom = null;
 
     #[ORM\Column(nullable: true)]
-
-    #[Assert\GreaterThan('now', message:'Choisir une date/heure à partir de maintenant')]
+    #[Assert\GreaterThan('now', message: 'Choisir une date/heure à partir de maintenant')]
     private ?\DateTime $dateHeureDebut = null;
 
     #[ORM\Column(nullable: true)]
-
-    #[Assert\LessThanOrEqual( propertyPath: 'dateHeureDebut', message:'Choisir une date AVANT la date de début de la sortie')]
+    #[Assert\LessThanOrEqual(propertyPath: 'dateHeureDebut', message: 'Choisir une date AVANT la date de début de la sortie')]
     private ?\DateTime $dateLimiteInscription = null;
 
     #[ORM\Column]
@@ -38,7 +36,7 @@ class Sortie
     private ?int $duree = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Assert\Length(min:10,minMessage: 'Remplir avec au moins 10 caractères')]
+    #[Assert\Length(min: 10, minMessage: 'Remplir avec au moins 10 caractères')]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -67,6 +65,8 @@ class Sortie
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
+        $this->dateHeureDebut = new \DateTime();
+        $this->dateLimiteInscription = new \DateTime();
     }
 
     public function getId(): ?int
