@@ -448,10 +448,6 @@ a {
     .filter-grid {
         grid-template-columns: 1fr 1fr;
     }
-
-    .nav-links {
-        display: none;
-    }
 }
 
 @media (max-width: 768px) {
@@ -467,5 +463,9 @@ a {
 
     .header {
         padding: 0 1rem;
+    }
+
+    .mobile-hidden {
+        display: none;
     }
 }
