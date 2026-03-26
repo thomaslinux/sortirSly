@@ -39,9 +39,11 @@ final class SortieController extends AbstractController
         // TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
 
         $campusId = $request->query->get("campus");
+        $etatId = $request->query->get("etat");
 
         if ($campusId) {
             $sorties = $sortieRepository->findSortieByCampus($campusId);
+//            $sorties = $sortieRepository->findSortieByCampus($campusId, $etatId);
         } else {
             $idUser = ($this->getUser()->getId());
             $currentParticipant = $participantRepository->find($idUser);
