@@ -43,6 +43,8 @@ Faire un composer install car ajout du composer league/csv
     - [x] dateLimiteInscription > dateHeureDebut (back)
     - [x] date par défaut est aujourd'hui, front date est aujourd'hui
     - [ ] Création d'un nouveau lieu depuis le formulaire de création de sortie
+- [ ] Afficher la barre de recherche multi critères dans la liste des sorties
+    - [ ] Gérer un affichage par pagination (front ou back ?)
 
 ## V2 - API recherche de sorties
 
@@ -55,7 +57,7 @@ Faire un composer install car ajout du composer league/csv
 - [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
 - [x] Modifier le thème pour éviter de perdre de l'espace
 - [ ] Désactiver la grille au redimensionnement
-- [ ] Trier les éléments de la liste de sorties dans le tableau de sorties
+- [ ] Trier les éléments de la liste de sorties dans le tableau de sorties (javascript)
 
 # Modèle graphique html :
 
