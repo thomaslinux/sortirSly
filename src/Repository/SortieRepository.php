@@ -6,6 +6,7 @@ use App\Entity\Etat;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -18,7 +19,8 @@ class SortieRepository extends ServiceEntityRepository
     }
 
     public function findSortieByCampus(
-        $campusId = 1
+        $campusId,
+        $sortieNom
     )
     {
         // TODO récupérer des arguments, construire la query avec des where en fonction des arguments
@@ -31,14 +33,22 @@ class SortieRepository extends ServiceEntityRepository
             ->addSelect('e')
             ->leftJoin('s.inscriptions', 'i')
             ->addSelect('i');
-        // afficher uniquement ce qui correspond au campus
-        $qb
-            ->andWhere('s.campus = :campusId')
-            ->setParameter('campusId', $campusId);
+        if ($campusId) {
+
+            // afficher uniquement ce qui correspond au campus
+            $qb
+                ->andWhere('s.campus = :campusId')
+                ->setParameter('campusId', $campusId);
+        }
         // ne pas afficher les historisees
         $qb
             ->andWhere('e.nom != :historisee')
-            ->setParameter('historisee', 'Ouverte');
+            ->setParameter('historisee', 'Historisee');
+        if ($sortieNom) {
+            $qb
+                ->andWhere($qb->expr()->like('s.nom', ':sortieNom'))
+                ->setParameter('sortieNom', '%' . $sortieNom . '%');
+        }
         $qb
             ->orderBy('s.dateHeureDebut', 'DESC');
 
