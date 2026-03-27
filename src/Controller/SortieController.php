@@ -171,6 +171,7 @@ final class SortieController extends AbstractController
         if ($cancelSortieForm->isSubmitted() && $cancelSortieForm->isValid()) {
             $sortie->setEtat($etatRepository->findOneBy(["nom" => "Annulee"]));
             $sortie->setDescription($sortie->getDescription() . ".\nAnnulée pour le motif suivant : " . $cancelSortie->getDescriptionCancel());
+            $sortie->setDateHeureDebut(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $entityManager->persist($sortie);
             $entityManager->flush();
             $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' annulée pour le motif suivant : ' . $cancelSortie->getDescriptionCancel());
