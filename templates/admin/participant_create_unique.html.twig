@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+    Créer un user
+{% endblock %}
 
 {% block body %}
     <h2>Création d'un utilisateur via un formulaire classique</h2>
     <br>
-    <h3>Formulaire en cours de création</h3>
-{% endblock %}
+    {% embed 'views/form/template-form-participant.html.twig' with {form : form} %}
+        {% block formTitle %}  Nouveau profil :  {% endblock %}
+        {% block buttonLabel %}Valider{% endblock %}
+    {% endembed %}
+    {% endblock %}
 

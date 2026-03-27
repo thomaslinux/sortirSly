@@ -107,10 +107,22 @@ class AppFixtures extends Fixture
             ->setUsername('admin')
             ->setEmail('admin@admin.admin')
             ->setRoles(['ROLE_ADMIN'])
+            ->setCampus($campusList[0])
             ->setPassword(
                 $this->userPasswordHasher->hashPassword($admin, 'admin')
             );
         $manager->persist($admin);
+
+        $userUser = new Participant();
+        $userUser
+            ->setUsername('user')
+            ->setEmail('user@user.user')
+            ->setRoles(['ROLE_USER'])
+            ->setCampus($campusList[0])
+            ->setPassword(
+                $this->userPasswordHasher->hashPassword($userUser, 'user')
+            );
+        $manager->persist($userUser);
 
         for ($i = 0; $i < 50; $i++) {
             $user = new Participant();

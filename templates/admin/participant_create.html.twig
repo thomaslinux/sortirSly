@@ -1,19 +1,26 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+    Import users.csv
+{% endblock %}
 
 {% block body %}
     <h2>Création de plusieurs utilisateurs via un fichier .csv</h2>
-        <br>
+    <br>
     {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
     <div class="mb-3">
         {{ form_label(form.csvFile) }}
         {{ form_widget(form.csvFile) }}
+        <br>
+        {{ form_label(form.campus) }}
+        {{ form_widget(form.campus) }}
+        {{ form_widget(form.plainPassword) }}
         {{ form_errors(form.csvFile) }}
         <br>
         <small class="form-text text-muted">
             Exemple CSV : <br>
             <code>pseudo;nom;prenom;mail;telephone</code>
             <br>
-              <code>user1;Dupont;Jean;jean@test.com;0123456789</code>
+            <code>user1;Dupont;Jean;jean@test.com;0123456789</code>
         </small>
     </div>
     <button type="submit" class="btn btn-primary">Importer CSV</button>

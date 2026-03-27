@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+    Mon profil
+{% endblock %}
+
 {% block body %}
     {% embed 'views/form/template-form-participant.html.twig' with {form : form} %}
-        {% block formTitle %}  Mon profil : {{ app.user.username}} {% endblock %}
+        {% block formTitle %}  Mon profil : {{ app.user.username }} {% endblock %}
         {% block buttonLabel %}Modifier{% endblock %}
     {% endembed %}
-    <button><a href="{{ path('sortie_list') }}">Annuler</a></button>
 {% endblock %}

@@ -56,8 +56,6 @@ final class ParticipantController extends AbstractController
              * @var UploadedFile $file
              */
             $photoFile = $participantForm->get('photo')->getData();
-            //renommage du fichier
-            $newFileName = $participant->getUserIdentifier().'-'.uniqid().'.'.$photoFile->guessExtension();
             if ($photoFile){
                 $participant->setPhoto($fileUploader->upload($photoFile, 'images/profil'));
             }
