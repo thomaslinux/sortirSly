@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ parent() }} | Création d'un lieu
+{% endblock %}
+
+{% block body %}
+
+    <h2>Création un lieu de sortie</h2>
+    {{ form_start(lieuForm) }}
+    {{ form_widget(lieuForm) }}
+    <button>Enregister</button>
+    {{ form_end(lieuForm) }}
+
+
+
+
+
+
+
+    <a href="{{ path('sortie_create') }}">Annuler</a>
+
+
+
+
+
+
+{% endblock %}
+
+
+
