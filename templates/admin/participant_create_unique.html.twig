@@ -1,14 +1,29 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-    Créer un user
-{% endblock %}
+
+{% block title %}Créer un utilisateur{% endblock %}
 
 {% block body %}
-    <h2>Création d'un utilisateur via un formulaire classique</h2>
-    <br>
-    {% embed 'views/form/template-form-participant.html.twig' with {form : form} %}
-        {% block formTitle %}  Nouveau profil :  {% endblock %}
-        {% block buttonLabel %}Valider{% endblock %}
-    {% endembed %}
-    {% endblock %}
+    <div class="profile-container">
+        <div class="profile-card">
+            <header class="profile-header">
+                <h1>Nouveau profil</h1>
+                <p>Créez un compte utilisateur avec les informations nécessaires.</p>
+            </header>
 
+            <div class="form-section">
+                {% embed 'views/form/template-form-participant.html.twig' with {'form': form} %}
+                    {% block formTitle %}
+                        <div style="height:0;visibility:hidden;"></div>
+                    {% endblock %}
+                    {% block buttonLabel %}Valider{% endblock %}
+                    {% block formButtons %}
+                        <div class="full-width">
+                            {{ form_widget(form.submit, {attr: {'class': 'btn'}}) }}
+                            <a class="btn btn-annuler" href="{{ path('sortie_list') }}">Annuler</a>
+                        </div>
+                    {% endblock %}
+                {% endembed %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
