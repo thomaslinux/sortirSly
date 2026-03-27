@@ -10,6 +10,10 @@
     <div class="mb-3">
         {{ form_label(form.csvFile) }}
         {{ form_widget(form.csvFile) }}
+        <br>
+        {{ form_label(form.campus) }}
+        {{ form_widget(form.campus) }}
+        {{ form_widget(form.plainPassword) }}
         {{ form_errors(form.csvFile) }}
         <br>
         <small class="form-text text-muted">

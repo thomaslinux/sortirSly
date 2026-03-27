@@ -58,9 +58,9 @@ final class AdminController extends AbstractController
 //      validation du formulaire
         if ($form->isSubmitted() && $form->isValid()){
 //            fichier uploadé
-            $csvFile = $import->csvFile;
+//            $csvFile = $import->csvFile;
 //            envoie au service
-            $results = $importParticipantService->importFromCsv($csvFile);
+            $results = $importParticipantService->importFromCsv($import);
 
             $this->addFlash('success', sprintf(
                 'Import OK : %d créés, %d erreurs. Mot de passe par défaut : %s',
