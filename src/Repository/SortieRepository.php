@@ -33,6 +33,8 @@ class SortieRepository extends ServiceEntityRepository
         $qb
             ->andWhere('s.campus = :campusId')
             ->setParameter('campusId', $campusId);
+        $qb
+            ->orderBy('s.dateHeureDebut', 'DESC');
 
         $query = $qb->getQuery();
         return $query->getResult();
@@ -51,19 +53,18 @@ class SortieRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findSortieDemaree(\DateTime $dateTime,Etat $etat)
+    public function findSortieDemaree(\DateTime $dateTime, Etat $etat)
     {
 
         $qb = $this->createQueryBuilder('s');
         $qb
-
             ->andWhere('s.etat = :etat')
             ->andWhere('s.dateHeureDebut <= :dateTime')
             ->setParameter('dateTime', $dateTime)
             ->setParameter('etat', $etat);
 
 
-        $query=$qb->getQuery();
+        $query = $qb->getQuery();
         return $query->getResult();
     }
     public function findSortieACloturer(\DateTime $dateTime,Etat $etat)
@@ -82,13 +83,30 @@ class SortieRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    //    /**
+    //     * @return Sortie[] Returns an array of Sortie objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('s.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-
-
-
-
-
-
+    //    public function findOneBySomeField($value): ?Sortie
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 
 
 }
