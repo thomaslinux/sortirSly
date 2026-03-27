@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -17,11 +19,13 @@ class SortieRepository extends ServiceEntityRepository
     }
 
     public function findSortieByCampus(
-        $campusId = 1
+        $campusId,
+        $sortieNom
     )
     {
-        // TODO récupérer avec l'etat, le nom de la sortie et les dates
+        // TODO récupérer des arguments, construire la query avec des where en fonction des arguments
         $qb = $this->createQueryBuilder('s');
+        // jointures
         $qb
             ->leftJoin('s.campus', 'c')
             ->addSelect('c')
@@ -29,9 +33,24 @@ class SortieRepository extends ServiceEntityRepository
             ->addSelect('e')
             ->leftJoin('s.inscriptions', 'i')
             ->addSelect('i');
+        if ($campusId) {
+
+            // afficher uniquement ce qui correspond au campus
+            $qb
+                ->andWhere('s.campus = :campusId')
+                ->setParameter('campusId', $campusId);
+        }
+        // ne pas afficher les historisees
         $qb
-            ->andWhere('s.campus = :campusId')
-            ->setParameter('campusId', $campusId);
+            ->andWhere('e.nom != :historisee')
+            ->setParameter('historisee', 'Historisee');
+        if ($sortieNom) {
+            $qb
+                ->andWhere($qb->expr()->like('s.nom', ':sortieNom'))
+                ->setParameter('sortieNom', '%' . $sortieNom . '%');
+        }
+        $qb
+            ->orderBy('s.dateHeureDebut', 'DESC');
 
         $query = $qb->getQuery();
         return $query->getResult();
@@ -47,6 +66,36 @@ class SortieRepository extends ServiceEntityRepository
         ";
 
         $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
+
+    public function findSortieDemaree(\DateTime $dateTime, Etat $etat)
+    {
+
+        $qb = $this->createQueryBuilder('s');
+        $qb
+            ->andWhere('s.etat = :etat')
+            ->andWhere('s.dateHeureDebut <= :dateTime')
+            ->setParameter('dateTime', $dateTime)
+            ->setParameter('etat', $etat);
+
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function findSortieACloturer(\DateTime $dateTime, Etat $etat)
+    {
+
+        $qb = $this->createQueryBuilder('s');
+        $qb
+            ->andWhere('s.etat = :etat')
+            ->andWhere('s.dateLimiteInscription <= :dateTime')
+            ->setParameter('dateTime', $dateTime)
+            ->setParameter('etat', $etat);
+
+
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 
@@ -74,4 +123,6 @@ class SortieRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
 }

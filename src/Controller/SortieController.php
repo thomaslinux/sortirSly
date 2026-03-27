@@ -39,16 +39,16 @@ final class SortieController extends AbstractController
         // TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
 
         $campusId = $request->query->get("campus");
-        $etatId = $request->query->get("etat");
+        $sortieNom = $request->query->get("q");
 
         if ($campusId) {
-            $sorties = $sortieRepository->findSortieByCampus($campusId);
+            $sorties = $sortieRepository->findSortieByCampus($campusId, $sortieNom);
 //            $sorties = $sortieRepository->findSortieByCampus($campusId, $etatId);
         } else {
             $idUser = ($this->getUser()->getId());
             $currentParticipant = $participantRepository->find($idUser);
             $currentCampusId = ($currentParticipant->getCampus()->getId());
-            $sorties = $sortieRepository->findSortieByCampus($currentCampusId);
+            $sorties = $sortieRepository->findSortieByCampus($currentCampusId, $sortieNom);
         }
 
         // TODO recherche par campus
@@ -116,7 +116,7 @@ final class SortieController extends AbstractController
             }
             $entityManager->persist($sortie);
             $entityManager->flush();
-            return $this->redirectToRoute('main_home');
+            return $this->redirectToRoute('sortie_list');
         }
         if ($id === null) {
             return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
@@ -171,6 +171,7 @@ final class SortieController extends AbstractController
         if ($cancelSortieForm->isSubmitted() && $cancelSortieForm->isValid()) {
             $sortie->setEtat($etatRepository->findOneBy(["nom" => "Annulee"]));
             $sortie->setDescription($sortie->getDescription() . ".\nAnnulée pour le motif suivant : " . $cancelSortie->getDescriptionCancel());
+            $sortie->setDateHeureDebut(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $entityManager->persist($sortie);
             $entityManager->flush();
             $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' annulée pour le motif suivant : ' . $cancelSortie->getDescriptionCancel());
