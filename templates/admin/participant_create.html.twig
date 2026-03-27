@@ -1,29 +1,61 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-    Import users.csv
-{% endblock %}
+
+{% block title %}Importer des utilisateurs{% endblock %}
 
 {% block body %}
-    <h2>Création de plusieurs utilisateurs via un fichier .csv</h2>
-    <br>
-    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
-    <div class="mb-3">
-        {{ form_label(form.csvFile) }}
-        {{ form_widget(form.csvFile) }}
-        <br>
-        {{ form_label(form.campus) }}
-        {{ form_widget(form.campus) }}
-        {{ form_widget(form.plainPassword) }}
-        {{ form_errors(form.csvFile) }}
-        <br>
-        <small class="form-text text-muted">
-            Exemple CSV : <br>
-            <code>pseudo;nom;prenom;mail;telephone</code>
-            <br>
-            <code>user1;Dupont;Jean;jean@test.com;0123456789</code>
-        </small>
-    </div>
-    <button type="submit" class="btn btn-primary">Importer CSV</button>
-    {{ form_end(form) }}
-{% endblock %}
+    <div class="profile-container">
+        <div class="profile-card">
+            <header class="profile-header">
+                <h1>Importer des utilisateurs</h1>
+                <p>Créez plusieurs comptes en une seule opération via un fichier CSV.</p>
+            </header>
 
+            <div class="form-section">
+                {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+                <div class="form-grid">
+                    <!-- CSV Upload -->
+                    <div class="form-group full-width">
+                        {{ form_label(form.csvFile) }}
+                        <small class="form-text text-muted">
+                            Exemple CSV : <br>
+                            <code>pseudo;nom;prenom;mail;telephone</code><br>
+                            <code>user1;Dupont;Jean;jean@test.com;0123456789</code>
+                        </small>
+                        {{ form_widget(form.csvFile, {'attr': {'class': 'form-widget'}}) }}
+                        {{ form_errors(form.csvFile) }}
+
+                    </div>
+
+                    <!-- Campus Select -->
+                    <div class="form-group full-width">
+                        {{ form_label(form.campus) }}
+                        {{ form_widget(form.campus, {'attr': {'class': 'form-widget'}}) }}
+                        {{ form_errors(form.campus) }}
+                    </div>
+
+                    <!-- Mot de passe -->
+                    <div class="form-group full-width">
+                        {{ form_label(form.plainPassword.first) }}
+                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-widget'}}) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                    </div>
+
+                    <!-- Confirmation -->
+                    <div class="form-group full-width">
+                        {{ form_label(form.plainPassword.second) }}
+                        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-widget'}}) }}
+                        {{ form_errors(form.plainPassword.second) }}
+                    </div>
+                </div>
+
+                <div class="full-width">
+                    <button type="submit" class="btn">Importer CSV</button>
+                    <a class="btn btn-annuler" href="{{ path('sortie_list') }}">Annuler</a>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
