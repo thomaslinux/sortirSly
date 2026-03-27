@@ -66,7 +66,7 @@ public function MaJEtat(){
     {
         $userAgent = $request->headers->get('User-Agent');
         if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')) {
-            throw  throw new NotFoundHttpException('Accès interdit sur mobile');
+            throw new NotFoundHttpException('Accès interdit sur mobile');
         }
     }
 
