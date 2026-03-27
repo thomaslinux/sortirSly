@@ -18,8 +18,6 @@ class SortieRepository extends ServiceEntityRepository
 
     public function findSortieByCampus(
         $campusId = 1
-//        ,
-//        $etatId
     )
     {
         // TODO récupérer avec l'etat, le nom de la sortie et les dates
@@ -27,15 +25,13 @@ class SortieRepository extends ServiceEntityRepository
         $qb
             ->leftJoin('s.campus', 'c')
             ->addSelect('c')
-            ->andWhere('s.campus = :campusId')
-            ->setParameter('campusId', $campusId)
             ->leftJoin('s.etat', 'e')
             ->addSelect('e')
             ->leftJoin('s.inscriptions', 'i')
-            ->addSelect('i')
-//            ->andWhere('s.etat = :etatId')
-//            ->setParameter('etatId', $etatId)
-        ;
+            ->addSelect('i');
+        $qb
+            ->andWhere('s.campus = :campusId')
+            ->setParameter('campusId', $campusId);
 
         $query = $qb->getQuery();
         return $query->getResult();
