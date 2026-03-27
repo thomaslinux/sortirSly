@@ -3,18 +3,17 @@
     <div class="navbar-content">
         <div class="nav-left">
 
-            <a class="brand-logo" href="{{ path('main_home') }}">
+            <a class="brand-logo" href="{{ path('sortie_list') }}">
                 {#        <img alt="ENI'Where Logo" class="logo-img" #}
                 {#             src="{{ asset('images/logo.png') }}"/> #}
                 <span class="logo-text">ENI'Where</span>
             </a>
 
             <div class="nav-links">
-                <a class="{{ app.request.attributes.get('_route') == 'main_home' ? 'active' }}"
-                   href="{{ path('main_home') }}">Accueil</a>
+
                 {% if app.user %}
                     <a class="{{ app.request.attributes.get('_route') == 'sortie_list' ? 'active' }}"
-                       href="{{ path('sortie_list') }}">Liste des sorties</a>
+                       href="{{ path('sortie_list') }}">Accueil - Liste des sorties</a>
                     <a class="{{ app.request.attributes.get('_route') == 'participant_update' ? 'active' }}"
                        href="{{ path('participant_update') }}">Modifier mon profil</a>
 
@@ -28,8 +27,10 @@
                     {% endif %}
 
                 {% else %}
+                    <a class="{{ app.request.attributes.get('_route') == 'main_home' ? 'active' }}"
+                             href="{{ path('main_home') }}">Accueil</a>
                     <a class="{{ app.request.attributes.get('_route') == 'app_login' ? 'active' }}"
-                       href="{{ path('app_login') }}">Login</a>
+                       href="{{ path('app_login') }}">Se connecter</a>
                 {% endif %}
             </div>
 
@@ -39,7 +40,7 @@
             {% if app.user %}
                 <div class="nav-actions">
                     <a class="btn btn-gradient mobile-hidden"
-                       href="{{ path('sortie_create') }}">Create event
+                       href="{{ path('sortie_create') }}">Créer une sortie
                     </a>
                 </div>
                 <a href="{{ path('app_logout') }}" class=" icon-btn"
