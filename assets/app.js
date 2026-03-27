@@ -8,6 +8,6 @@ import './stimulus_bootstrap.js';
 // import './styles/app.css';
 import './styles/eniwhere2.css';
 import './styles/nav2.css';
-
+import './styles/update_profil.css'
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
