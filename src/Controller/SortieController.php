@@ -25,12 +25,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final class SortieController extends AbstractController
 {
     #[Route("/list", name: 'list', methods: ['GET', 'POST'])]
-    #[Route("/list/campus/{id}", name: 'list_by_campus', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function list(
         EntityManagerInterface $entityManager,
         SortieRepository       $sortieRepository,
         CampusRepository       $campusRepository,
-        int                    $id = null,
+        ParticipantRepository  $participantRepository,
         Request                $request
     )
     {
@@ -39,15 +38,22 @@ final class SortieController extends AbstractController
         // TODO récupérer les informations dans les paramètres de recherche
         // TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
 
-        if ($id) {
-            $sorties = $sortieRepository->findSortieByCampus($id);
-        } else {
+        $campusId = $request->query->get("campus");
+        $etatId = $request->query->get("etat");
 
-            $sorties = $sortieRepository->findAll();
+        if ($campusId) {
+            $sorties = $sortieRepository->findSortieByCampus($campusId);
+//            $sorties = $sortieRepository->findSortieByCampus($campusId, $etatId);
+        } else {
+            $idUser = ($this->getUser()->getId());
+            $currentParticipant = $participantRepository->find($idUser);
+            $currentCampusId = ($currentParticipant->getCampus()->getId());
+            $sorties = $sortieRepository->findSortieByCampus($currentCampusId);
         }
+
         // TODO recherche par campus
         // TODO changer la requête sur mobile (campus utilisateur)
-        $campusList = $campusRepository->findAll();
+        $campusList = $campusRepository->findAllFiltred();
 
         return $this->render('sortie/list.html.twig', [
             'sorties' => $sorties,
@@ -225,7 +231,7 @@ final class SortieController extends AbstractController
     #[Route('/subscribe/{id}', name: 'subscribe', requirements: ['id' => '\d+'])]
     public function subscribe(int                    $id,
                               EntityManagerInterface $entityManager,
-                              EtatService $etatService,
+                              EtatService            $etatService,
                               SortieRepository       $sortieRepository): Response
     {
 
@@ -246,7 +252,6 @@ final class SortieController extends AbstractController
         $entityManager->flush();
 
 
-
         return $this->redirectToRoute('sortie_list');
     }
 
@@ -254,7 +259,7 @@ final class SortieController extends AbstractController
     #[Route('/unsubscribe/{id}', name: 'unsubscribe', requirements: ['id' => '\d+'])]
     public function unsubscribe(int                    $id,
                                 EntityManagerInterface $entityManager,
-                                EtatService $etatService,
+                                EtatService            $etatService,
                                 SortieRepository       $sortieRepository): Response
     {
 

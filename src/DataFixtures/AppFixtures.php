@@ -107,6 +107,7 @@ class AppFixtures extends Fixture
             ->setUsername('admin')
             ->setEmail('admin@admin.admin')
             ->setRoles(['ROLE_ADMIN'])
+            ->setCampus($campusList[0])
             ->setPassword(
                 $this->userPasswordHasher->hashPassword($admin, 'admin')
             );

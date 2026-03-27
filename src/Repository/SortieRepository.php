@@ -16,16 +16,41 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    public function findSortieByCampus($id = 1)
+    public function findSortieByCampus(
+        $campusId = 1
+//        ,
+//        $etatId
+    )
     {
+        // TODO récupérer avec l'etat, le nom de la sortie et les dates
         $qb = $this->createQueryBuilder('s');
         $qb
-            ->join('s.campus', 'c')
+            ->leftJoin('s.campus', 'c')
             ->addSelect('c')
             ->andWhere('s.campus = :campusId')
-            ->andWhere('s.etat')
-            ->setParameter('campusId', $id);
+            ->setParameter('campusId', $campusId)
+            ->leftJoin('s.etat', 'e')
+            ->addSelect('e')
+            ->leftJoin('s.inscriptions', 'i')
+            ->addSelect('i')
+//            ->andWhere('s.etat = :etatId')
+//            ->setParameter('etatId', $etatId)
+        ;
+
         $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function findAllFiltred(): array
+    {
+        $dql = "
+            SELECT s, campus, etat FROM App\Entity\Sortie AS s
+            LEFT JOIN s.campus AS campus
+            LEFT JOIN s.etat AS etat
+            ORDER BY s.dateHeureDebut DESC
+        ";
+
+        $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
 
