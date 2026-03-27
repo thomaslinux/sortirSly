@@ -18,29 +18,20 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    public function findSortieByCampus(
-        $campusId,
-        $sortieNom
-    )
+    public function findSortiesBySearch($sortieSearch)
     {
-        // TODO récupérer des arguments, construire la query avec des where en fonction des arguments
+        $sortieNom = $sortieSearch->getNom();
+        $campus = $sortieSearch->getCampus();
+        $dateHeureDebut = $sortieSearch->getDateHeureDebut();
+        $dateHeureFin = $sortieSearch->getDateHeureFin();
         $qb = $this->createQueryBuilder('s');
-        // jointures
         $qb
             ->leftJoin('s.campus', 'c')
-            ->addSelect('c')
             ->leftJoin('s.etat', 'e')
-            ->addSelect('e')
             ->leftJoin('s.inscriptions', 'i')
+            ->addSelect('c')
+            ->addSelect('e')
             ->addSelect('i');
-        if ($campusId) {
-
-            // afficher uniquement ce qui correspond au campus
-            $qb
-                ->andWhere('s.campus = :campusId')
-                ->setParameter('campusId', $campusId);
-        }
-        // ne pas afficher les historisees
         $qb
             ->andWhere('e.nom != :historisee')
             ->setParameter('historisee', 'Historisee');
@@ -48,6 +39,21 @@ class SortieRepository extends ServiceEntityRepository
             $qb
                 ->andWhere($qb->expr()->like('s.nom', ':sortieNom'))
                 ->setParameter('sortieNom', '%' . $sortieNom . '%');
+        }
+        if ($campus) {
+            $qb
+                ->andWhere('s.campus = :campus')
+                ->setParameter('campus', $campus);
+        }
+        if ($dateHeureDebut) {
+            $qb
+                ->andWhere('s.dateHeureDebut >= :dateHeureDebut')
+                ->setParameter('dateHeureDebut', $dateHeureDebut);
+        }
+        if ($dateHeureFin) {
+            $qb
+                ->andWhere('s.dateHeureDebut <= :dateHeureFin')
+                ->setParameter('dateHeureFin', $dateHeureFin);
         }
         $qb
             ->orderBy('s.dateHeureDebut', 'DESC');
