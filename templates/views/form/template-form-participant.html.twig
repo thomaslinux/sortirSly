@@ -1,10 +1,29 @@
 {% form_theme form 'views/form/form-theme.html.twig' %}
 
 <h2>{% block formTitle %}{% endblock %}</h2>
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-<div>
-    <button>{% block buttonLabel %}{% endblock %}</button>
-    <a class="btn" href="{{ path('sortie_list') }}">Annuler</a>
+
+<div class="form-grid">
+    {{ form_row(form.username) }}
+    {{ form_row(form.campus) }}
+
+    {{ form_row(form.prenom) }}
+    {{ form_row(form.nom) }}
+
+    {{ form_row(form.tel) }}
+    {{ form_row(form.email) }}
+    <div class="full-width">
+    {{ form_row(form.photo) }}
+    </div>
+    <div class="full-width">
+    {{ form_row(form.plainPassword) }}
+    </div>
 </div>
+
+<div class="full-width">
+    <button>{% block buttonLabel %}{% endblock %}</button>
+    <a class="btn btn-annuler" href="{{ path('sortie_list') }}">Annuler</a>
+</div>
+
 {{ form_end(form) }}
