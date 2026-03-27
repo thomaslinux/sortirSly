@@ -31,7 +31,7 @@ final class SortieController extends AbstractController
         SortieRepository       $sortieRepository,
         CampusRepository       $campusRepository,
         ParticipantRepository  $participantRepository,
-        SortieService $sortieService,
+        SortieService          $sortieService,
         Request                $request
     )
     {
@@ -75,12 +75,11 @@ final class SortieController extends AbstractController
         SortieRepository       $sortieRepository,
         EtatRepository         $etatRepository,
         Request                $request,
-        SortieService $sortieService,
+        SortieService          $sortieService,
         ?int                   $id = null): Response
     {
         if ($id === null) {
             $sortieService->checkDevice($request);
-
             $sortie = new Sortie();
         } else {
             $sortie = $sortieRepository->find($id);
@@ -90,7 +89,6 @@ final class SortieController extends AbstractController
         }
 
         $user = $this->getUser();
-
 
         $sortieForm = $this->createForm(SortieType::class, $sortie, [
             'user' => $user
@@ -114,8 +112,8 @@ final class SortieController extends AbstractController
             //si bouton publier
             if ($sortieForm->get('publier')->isClicked()) {
                 $this->denyAccessUnlessGranted('PUBLISH', $sortie);
-                $sortie->setEtat($etatRepository->findOneBy(["nom" => "Ouverte"]));
                 $this->addFlash('success', 'Sortie ' . $sortie->getNom() . ' est publiée');
+                $sortie->setEtat($etatRepository->findOneBy(["nom" => "Ouverte"]));
             }
             $entityManager->persist($sortie);
             $entityManager->flush();
@@ -135,11 +133,7 @@ final class SortieController extends AbstractController
         int              $id,
         SortieRepository $sortieRepository): Response
     {
-
-
-
         $sortie = $sortieRepository->find($id);
-        dump($sortie);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
@@ -154,7 +148,7 @@ final class SortieController extends AbstractController
         Request                $request,
         EntityManagerInterface $entityManager,
         EtatRepository         $etatRepository,
-        SortieService $sortieService,
+        SortieService          $sortieService,
         SortieRepository       $sortieRepository): Response
     {
         $sortieService->checkDevice($request);
@@ -189,7 +183,7 @@ final class SortieController extends AbstractController
         int                    $id,
         EntityManagerInterface $entityManager,
         SortieRepository       $sortieRepository,
-        SortieService $sortieService,
+        SortieService          $sortieService,
         Request                $request
     ): Response
     {
@@ -275,7 +269,7 @@ final class SortieController extends AbstractController
         $user = $this->getUser();
         $sortie->seDesister($user);
         $this->addFlash('success', 'Vous vous êtes désisté de la sortie ' . $sortie->getNom());
-// passage à l'état ouvert si cloturée
+    // passage à l'état ouvert si cloturée
         $sortie->setEtat($etatService->checkEtat($sortie));
         $entityManager->persist($sortie);
         $entityManager->flush();
