@@ -22,34 +22,55 @@ class UserImportType extends AbstractType
             ->add('csvFile', FileType::class, [
                 'label' => 'Fichier CSV (pseudo;nom;prenom;mail;telephones)',
                 'required' => true,
-                'mapped' => true
+                'mapped' => true,
+                'attr' => ['class' => 'form-widget form-control'],
+                'row_attr' => ['class' => 'form-group full-width']
             ])
-            ->add('campus', EntityType::class, ['class' => Campus::class, 'choice_label' => 'nom', 'required' => true,'mapped'=> true,
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'nom',
+                'required' => true,
+                'mapped'=> true,
                 'query_builder' => function (CampusRepository $campusRepository) {
-                    return $campusRepository->createQueryBuilder('c')->addOrderBy('c.nom', 'ASC');
-                }])
-            ->add('plainPassword', RepeatedType::class,
-                ['type' => PasswordType::class,
-                    'invalid_message' => 'Les mots de passe doivent correspondre.',
-                    'options' => ['attr' => ['class' => 'password-field']],
-                    'required' => true,
-                    'first_options' => ['label' => 'Mot de passe : '],
-                    'second_options' => ['label' => 'Confirmation Mot de passe : '],
-                    'mapped' => true,
-                    'constraints' => [new Assert\NotBlank(), new Assert\Regex(['pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/',
-                        'message' => 'Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.',]),
-                        new Assert\Length([
-                            'min' => 8,
-                            'minMessage' => 'Le mot de passe doit faire au moins {{ limit }} caractères.'])
-                ]]);
+                    return $campusRepository->createQueryBuilder('c')
+                        ->addOrderBy('c.nom', 'ASC');
+                },
+                'attr' => ['class' => 'form-widget form-control'],
+                'row_attr' => ['class' => 'form-group full-width'] // forcer la ligne complète
+            ])
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passe doivent correspondre.',
+                'required' => true,
+                'mapped' => true,
+                'first_options' => [
+                    'label' => 'Mot de passe',
+                    'attr' => ['class' => 'form-widget form-control'],
+                    'row_attr' => ['class' => 'form-group full-width']
+                ],
+                'second_options' => [
+                    'label' => 'Confirmation Mot de passe',
+                    'attr' => ['class' => 'form-widget'],
+                    'row_attr' => ['class' => 'form-group full-width']
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Regex([
+                        'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/',
+                        'message' => 'Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.',
+                    ]),
+                    new Assert\Length([
+                        'min' => 8,
+                        'minMessage' => 'Le mot de passe doit faire au moins {{ limit }} caractères.'
+                    ])
+                ]
+            ]);
+    }
 
-}
-
-public
-function configureOptions(OptionsResolver $resolver): void
-{
-    $resolver->setDefaults([
-        'data_class' => UserImport::class
-    ]);
-}
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => UserImport::class
+        ]);
+    }
 }
