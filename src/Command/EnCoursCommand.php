@@ -41,7 +41,7 @@ class EnCoursCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $now = new \DateTime('now');
 
         $SortieRepository = $this->entityManager->getRepository(Sortie::class);
         $etatRepository = $this->entityManager->getRepository(Etat::class);
@@ -52,14 +52,16 @@ class EnCoursCommand extends Command
 
         foreach ($etatSortieAModifier as $sortie) {
 
-            $dateLimite = (clone $sortie->getDateHeureDebut())->modify('+' . $sortie->getDuree() . ' minutes');
-            $dateLimite->setTimezone(new \DateTimeZone('Europe/Paris'));
+            if($sortie->getId() == 2){
+                dd($sortie);
+            }
 
+
+            $dateLimite = (clone $sortie->getDateHeureDebut())->modify('+' . $sortie->getDuree() . ' minutes');
+dump($dateLimite);
             $dateLimiteHisto = (clone $sortie->getDateHeureDebut())->modify('+1 month');
-            $dateLimiteHisto->setTimezone(new \DateTimeZone('Europe/Paris'));
 
             $dateLimiteIns = (clone $sortie->getDateLimiteInscription());
-            $dateLimiteIns->setTimezone(new \DateTimeZone('Europe/Paris'));
 
             if ($dateLimiteIns <= $now && $sortie->getEtat()->getnom() == 'Ouverte') {
                 $sortie->setEtat($etats[1]);
