@@ -116,7 +116,7 @@ final class SortieController extends AbstractController
             }
             $entityManager->persist($sortie);
             $entityManager->flush();
-            return $this->redirectToRoute('main_home');
+            return $this->redirectToRoute('sortie_list');
         }
         if ($id === null) {
             return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
