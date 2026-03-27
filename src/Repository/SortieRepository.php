@@ -21,8 +21,9 @@ class SortieRepository extends ServiceEntityRepository
         $campusId = 1
     )
     {
-        // TODO récupérer avec l'etat, le nom de la sortie et les dates
+        // TODO récupérer des arguments, construire la query avec des where en fonction des arguments
         $qb = $this->createQueryBuilder('s');
+        // jointures
         $qb
             ->leftJoin('s.campus', 'c')
             ->addSelect('c')
@@ -30,9 +31,14 @@ class SortieRepository extends ServiceEntityRepository
             ->addSelect('e')
             ->leftJoin('s.inscriptions', 'i')
             ->addSelect('i');
+        // afficher uniquement ce qui correspond au campus
         $qb
             ->andWhere('s.campus = :campusId')
             ->setParameter('campusId', $campusId);
+        // ne pas afficher les historisees
+        $qb
+            ->andWhere('e.nom != :historisee')
+            ->setParameter('historisee', 'Ouverte');
         $qb
             ->orderBy('s.dateHeureDebut', 'DESC');
 
@@ -67,19 +73,19 @@ class SortieRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
-    public function findSortieACloturer(\DateTime $dateTime,Etat $etat)
+
+    public function findSortieACloturer(\DateTime $dateTime, Etat $etat)
     {
 
         $qb = $this->createQueryBuilder('s');
         $qb
-
             ->andWhere('s.etat = :etat')
             ->andWhere('s.dateLimiteInscription <= :dateTime')
             ->setParameter('dateTime', $dateTime)
             ->setParameter('etat', $etat);
 
 
-        $query=$qb->getQuery();
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 
