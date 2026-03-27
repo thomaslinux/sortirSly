@@ -66,6 +66,21 @@ class SortieRepository extends ServiceEntityRepository
         $query=$qb->getQuery();
         return $query->getResult();
     }
+    public function findSortieACloturer(\DateTime $dateTime,Etat $etat)
+    {
+
+        $qb = $this->createQueryBuilder('s');
+        $qb
+
+            ->andWhere('s.etat = :etat')
+            ->andWhere('s.dateLimiteInscription <= :dateTime')
+            ->setParameter('dateTime', $dateTime)
+            ->setParameter('etat', $etat);
+
+
+        $query=$qb->getQuery();
+        return $query->getResult();
+    }
 
 
 
