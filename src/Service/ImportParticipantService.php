@@ -1,11 +1,11 @@
 <?php
 namespace App\Service;
 
+use App\Dto\UserImport;
 use App\Entity\Participant;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ImportParticipantService
@@ -18,10 +18,17 @@ class ImportParticipantService
         private ParticipantRepository $participantRepository,
     ) {}
 
-    public function importFromCsv(File $csvFile): array
+    public function importFromCsv(UserImport $import): array
     {
+        $file = $import->getCsvFile();
+        $campus = $import->getCampus();
+        $defaultPassword = $import->getPlainPassword();
+
+        if (!$file || !$campus || !$defaultPassword){
+            throw new \InvalidArgumentException('CSV, campus ou mot de passe manquant.');
+        }
 //        lecture du csv
-        $csvContent = file_get_contents($csvFile->getPathname());
+        $csvContent = file_get_contents($file->getPathname());
         $reader = Reader::fromString($csvContent);
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
@@ -30,8 +37,6 @@ class ImportParticipantService
         $created = $errors = 0;
 //        tableau tampon car flush tous les 50 entités
         $batch = [];
-//        mdp par defaut il va etre hashé
-        $defaultPassword = '123456';
 // $row est un tableau associatif
         foreach ($reader as $row) {
 //            saute la ligne si pseudo vide
@@ -52,8 +57,10 @@ class ImportParticipantService
             $participant->setTel($row['telephone'] ?? null);
             $participant->setRoles(['ROLE_USER']);
             $participant->setActif(true);
+            $participant->setCampus($campus);
 //            hashage du mot de passe
-            $participant->setPassword($this->passwordHasher->hashPassword($participant, $defaultPassword));
+            $hashedPassword = $this->passwordHasher->hashPassword($participant, $defaultPassword);
+            $participant->setPassword($hashedPassword);
 
             $this->entityManager->persist($participant);
             $batch[] = $participant;
