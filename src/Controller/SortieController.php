@@ -13,6 +13,7 @@ use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Service\EtatService;
+use App\Service\SortieService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ final class SortieController extends AbstractController
         SortieRepository       $sortieRepository,
         CampusRepository       $campusRepository,
         ParticipantRepository  $participantRepository,
+        SortieService $sortieService,
         Request                $request
     )
     {
@@ -37,6 +39,8 @@ final class SortieController extends AbstractController
         // TODO changer les résultats de recherche en fonction du sélecteur de campus
         // TODO récupérer les informations dans les paramètres de recherche
         // TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
+
+        $sortieService->MaJEtat();
 
         $campusId = $request->query->get("campus");
         $sortieNom = $request->query->get("q");
@@ -71,13 +75,12 @@ final class SortieController extends AbstractController
         SortieRepository       $sortieRepository,
         EtatRepository         $etatRepository,
         Request                $request,
+        SortieService $sortieService,
         ?int                   $id = null): Response
     {
         if ($id === null) {
-            $userAgent = $request->headers->get('User-Agent');
-            if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')) {
-                throw $this->createNotFoundException('Accès interdit sur mobile');
-            }
+            $sortieService->checkDevice($request);
+
             $sortie = new Sortie();
         } else {
             $sortie = $sortieRepository->find($id);
@@ -133,8 +136,10 @@ final class SortieController extends AbstractController
         SortieRepository $sortieRepository): Response
     {
 
-        $sortie = $sortieRepository->find($id);
 
+
+        $sortie = $sortieRepository->find($id);
+        dump($sortie);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
         }
@@ -149,12 +154,10 @@ final class SortieController extends AbstractController
         Request                $request,
         EntityManagerInterface $entityManager,
         EtatRepository         $etatRepository,
+        SortieService $sortieService,
         SortieRepository       $sortieRepository): Response
     {
-        $userAgent = $request->headers->get('User-Agent');
-        if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')) {
-            throw $this->createNotFoundException('Accès interdit sur mobile');
-        }
+        $sortieService->checkDevice($request);
         $user = $this->getUser();
 
         $sortie = $sortieRepository->find($id);
@@ -186,13 +189,12 @@ final class SortieController extends AbstractController
         int                    $id,
         EntityManagerInterface $entityManager,
         SortieRepository       $sortieRepository,
+        SortieService $sortieService,
         Request                $request
     ): Response
     {
-        $userAgent = $request->headers->get('User-Agent');
-        if (preg_match('/Mobile|Android|iPhone|BlackBerry|IEMobile/i', $userAgent ?? '')) {
-            throw $this->createNotFoundException('Accès interdit sur mobile');
-        }
+        $sortieService->checkDevice($request);
+
         $sortie = $sortieRepository->find($id);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');

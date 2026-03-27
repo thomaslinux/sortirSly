@@ -37,78 +37,58 @@ class EnCoursCommand extends Command
         InputInterface  $input,
         OutputInterface $output,
 
-
     ): int
     {
         $io = new SymfonyStyle($input, $output);
 
-        $repository = $this->entityManager->getRepository(Sortie::class);
+        $now = new \DateTime('now');
+
+        $SortieRepository = $this->entityManager->getRepository(Sortie::class);
         $etatRepository = $this->entityManager->getRepository(Etat::class);
-        $etatEnCours = $etatRepository->findOneBy(['nom' => 'En cours']);
-        $etatCloturee = $etatRepository->findOneBy(['nom' => 'Cloturee']);
-        $etatTermine = $etatRepository->findOneBy(['nom' => 'Terminee']);
-        $etatHisto = $etatRepository->findOneBy(['nom' => 'Historisee']);
 
-        $now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-
-        $sortiesDateInsDepassee =
-            $repository->findSortieACloturer($now, $etatRepository->findOneBy(["nom" => "Ouverte"]));
-        foreach ($sortiesDateInsDepassee as $sortie) {
-            $dateLimite = (clone $sortie->getDateLimiteInscription());
-            $dateLimite->setTimezone(new \DateTimeZone('Europe/Paris'));
-            dump($sortie->getDateLimiteInscription(), $dateLimite, $now);
-            if($dateLimite <= $now) {
-                $sortie->setEtat($etatCloturee);
-            }}
+        $etats = $etatRepository->findEtat();
+        $etatSortieAModifier = $SortieRepository->findSortieEtatAModifier($now, $now, $etats);
 
 
+        foreach ($etatSortieAModifier as $sortie) {
 
-        $sortiesOuvertes =
-            $repository->findSortieDemaree($now, $etatRepository->findOneBy(["nom" => "Ouverte"]));
-        foreach ($sortiesOuvertes as $sortie) {
-            $sortie->setEtat($etatEnCours);
-        }
+            if($sortie->getId() == 2){
+                dd($sortie);
+            }
 
-        $sortiesCloturees =
-            $repository->findSortieDemaree($now, $etatRepository->findOneBy(["nom" => 'Cloturee']));
-        foreach ($sortiesCloturees as $sortie) {
-            $sortie->setEtat($etatEnCours);
-        }
 
-        $sortiesEnCours =
-            $repository->findSortieDemaree($now, $etatRepository->findOneBy(["nom" => 'En cours']));
-        foreach ($sortiesEnCours as $sortie) {
-            $dateLimite = (clone $sortie->getDateHeureDebut())->modify('+'.$sortie->getDuree().' minutes');
-            $dateLimite->setTimezone(new \DateTimeZone('Europe/Paris'));
-            if($dateLimite <= $now) {
-                $sortie->setEtat($etatTermine);
-            }}
+            $dateLimite = (clone $sortie->getDateHeureDebut())->modify('+' . $sortie->getDuree() . ' minutes');
+dump($dateLimite);
+            $dateLimiteHisto = (clone $sortie->getDateHeureDebut())->modify('+1 month');
 
-        $sortiesTerminees =
-            $repository->findSortieDemaree($now, $etatRepository->findOneBy(["nom" => 'Terminee']));
-        foreach ($sortiesTerminees as $sortie) {
-            $dateLimite = (clone $sortie->getDateHeureDebut())->modify('+1 month');
-            $dateLimite->setTimezone(new \DateTimeZone('Europe/Paris'));
+            $dateLimiteIns = (clone $sortie->getDateLimiteInscription());
+
+            if ($dateLimiteIns <= $now && $sortie->getEtat()->getnom() == 'Ouverte') {
+                $sortie->setEtat($etats[1]);
+            }
+
             if ($dateLimite <= $now) {
-                $sortie->setEtat($etatHisto);
+                if (
+                    $sortie->getEtat()->getnom() == 'Ouverte' || $sortie->getEtat()->getnom() == 'Cloturee'
+                ) {
+                    $sortie->setEtat($etats[2]);
+                }
+                if ($sortie->getEtat()->getnom() == 'En cours'
+                ) {
+                    $sortie->setEtat($etats[3]);
+                }
+            }
+
+            if ($dateLimiteHisto <= $now &&
+                (
+                    $sortie->getEtat()->getnom() == 'Terminee' || $sortie->getEtat()->getnom() == 'Annulee')
+            ) {
+                $sortie->setEtat($etats[4]);
             }
         }
-
-        $sortiesAnnulee =
-            $repository->findSortieDemaree($now, $etatRepository->findOneBy(["nom" => 'Annulee']));
-        foreach ($sortiesAnnulee as $sortie) {
-            $dateLimite = (clone $sortie->getDateHeureDebut())->modify('+1 month');
-            $dateLimite->setTimezone(new \DateTimeZone('Europe/Paris'));
-            if ($dateLimite <= $now) {
-                $sortie->setEtat($etatHisto);
-            }
-        }
-
 
         $this->entityManager->flush();
-
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
         return Command::SUCCESS;
     }
 
