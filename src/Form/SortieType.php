@@ -85,9 +85,15 @@ class SortieType extends AbstractType
                     return $villeRepository->createQueryBuilder('v')->addOrderBy('v.nom');
                 }
             ])
+
             ->add('lieu', ChoiceType::class, [
                 'label' => 'lieu de sortie',
-                'mapped' => false
+                'mapped' => false,
+                'choices' => []
+            ])
+            ->add('lieu2', LieuType::class, [
+                'label' => 'Ajoute un lieu de sortie',
+                'mapped' => false,
             ])
             ->add('publier', SubmitType::class, ['label' => 'Publier']);
 
