@@ -17,10 +17,14 @@
         </div>
     </div>
     {#    {% include 'views/list/pc-list-search.html.twig' %} #}
-    {{ form_start(sortieForm) }}
-    {{ form_widget(sortieForm) }}
-    <button>Search</button>
-    {{ form_end(sortieForm) }}
+    {% embed 'views/form/template-form-search-sortie.html.twig' with {form : sortieForm} %}
+        {% block formTitle %}Filtrer les sorties{% endblock %}
+
+        {% block buttonLabel %}
+            Rechercher
+        {% endblock %}
+
+    {% endembed %}
     <section class="event-list">
         <table class="event-table">
             <thead>
