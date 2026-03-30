@@ -41,16 +41,14 @@ final class SortieController extends AbstractController
         // TODO changer les résultats de recherche en fonction du sélecteur de campus
         // TODO récupérer les informations dans les paramètres de recherche
         // TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
+        $sortieService->MaJEtat();
 
         $sortieSearch = new SortieSearch();
         $sortieForm = $this->createForm(SortieSearchType::class, $sortieSearch);
         $sortieForm->handleRequest($request);
-        $sortieService->MaJEtat();
 
-        $campusId = $request->query->get("campus");
-        $sortieNom = $request->query->get("q");
-
-        $sorties = $sortieRepository->findSortiesBySearch($sortieSearch);
+        $user = $this->getUser();
+        $sorties = $sortieRepository->findSortiesBySearch($sortieSearch, $user);
 
         return $this->render('sortie/list.html.twig', [
             'sorties' => $sorties,
@@ -262,7 +260,7 @@ final class SortieController extends AbstractController
         $user = $this->getUser();
         $sortie->seDesister($user);
         $this->addFlash('success', 'Vous vous êtes désisté de la sortie ' . $sortie->getNom());
-    // passage à l'état ouvert si cloturée
+        // passage à l'état ouvert si cloturée
         $sortie->setEtat($etatService->checkEtat($sortie));
         $entityManager->persist($sortie);
         $entityManager->flush();

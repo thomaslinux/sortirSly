@@ -151,12 +151,12 @@ class AppFixtures extends Fixture
         $etatList = $manager->getRepository(Etat::class)->findAll();
         $lieuList = $manager->getRepository(Lieu::class)->findAll();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             $sortie = new Sortie();
             $sortie
                 ->setNom($faker->realText(30))
-                ->setDateHeureDebut($faker->dateTimeBetween('now', '+2 months', 'Europe/Paris'))
-                ->setDateLimiteInscription($faker->dateTimeBetween('now', $sortie->getDateHeureDebut(), 'Europe/Paris'))
+                ->setDateHeureDebut($faker->dateTimeBetween('-2 month', '+2 months', 'Europe/Paris'))
+                ->setDateLimiteInscription($faker->dateTimeBetween($sortie->getDateHeureDebut()->modify('-14 days'), $sortie->getDateHeureDebut()->modify('-1 days'), 'Europe/Paris'))
                 ->setDuree($faker->numberBetween(15, 180))
                 ->setNbPlaces($faker->numberBetween(2, 40))
                 ->setDescription($faker->realText(255));
