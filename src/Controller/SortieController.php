@@ -18,6 +18,7 @@ use App\Service\EtatService;
 use App\Service\SortieService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -86,16 +87,22 @@ final class SortieController extends AbstractController
         ]);
 
         $sortieForm->handleRequest($request);
+        $lieuSelectionne = $sortieForm->get('lieu')->getData(); // récupère le lieu sélectionné
+        $lieuAjoute = $sortieForm->get('lieu2')->getData(); // récupère le nouveau lieu
+
+        if ($lieuSelectionne) {
+            $sortie->setLieu($lieuSelectionne);
+        } elseif ($lieuAjoute && $lieuAjoute->getNom()) {
+            $entityManager->persist($lieuAjoute);
+           $sortie->setLieu($lieuAjoute);
+        } else {
+            $sortieForm->get('lieu')->addError(
+                new FormError('Veuillez sélectionner ou créer un lieu.')
+            );
+        }
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             if ($id === null) {
-
-                $lieuData = $sortieForm->get('lieu2')->getData(); // récupère le nouveau lieu
-
-                if ($lieuData->getNom()) {
-                    $entityManager->persist($lieuData);
-                    $sortie->setLieu($lieuData);
-                }
                 $sortie->setOrganisateur($user);
                 $sortie->sIncrire($user);
                 $sortie->setCampus($user->getCampus());
@@ -121,7 +128,7 @@ final class SortieController extends AbstractController
         if ($id === null) {
             return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
         } else {
-            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm]);
+            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm,'sortie' => $sortie]);
         }
 
     }

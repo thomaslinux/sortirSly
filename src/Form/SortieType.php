@@ -9,11 +9,13 @@ use App\Entity\Ville;
 use App\Repository\CampusRepository;
 use App\Repository\LieuRepository;
 use App\Repository\VilleRepository;
+use App\Service\SortieService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
@@ -25,9 +27,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieType extends AbstractType
 {
+
+    public function __construct()
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $user = $options['user'];
+
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Nom de la sortie :'
@@ -80,20 +87,27 @@ class SortieType extends AbstractType
             ->add('villes', EntityType::class, [
                 'class' => Ville::class,
                 'mapped' => false,
+                'choice_value' => 'id',
                 'choice_label' => 'nom',
+                'placeholder' => '- Choisir une ville -',
                 'query_builder' => function (VilleRepository $villeRepository) {
                     return $villeRepository->createQueryBuilder('v')->addOrderBy('v.nom');
                 }
             ])
-
-            ->add('lieu', ChoiceType::class, [
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class,
                 'label' => 'lieu de sortie',
                 'mapped' => false,
-                'choices' => []
+                'choice_label' => 'nom',
+                'choice_value' => 'id',
+                'placeholder' => '- Choisir lieu -',
+                'required' => false
+
             ])
             ->add('lieu2', LieuType::class, [
                 'label' => 'Ajoute un lieu de sortie',
                 'mapped' => false,
+                'required' => false,
             ])
             ->add('publier', SubmitType::class, ['label' => 'Publier']);
 
