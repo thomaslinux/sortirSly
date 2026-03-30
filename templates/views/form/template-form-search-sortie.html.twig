@@ -45,7 +45,8 @@
         </label>
         <button>{% block buttonLabel %}{% endblock %}</button>
     </div>
-    <p class="sortie-length"><span>{% block sortieLength %}{% endblock %}</span> sorties trouvées</p>
+    <p class="sortie-length"><span id="nbSortiesTrouvees">{% block sortieLength %}{% endblock %}</span> sorties trouvées
+    </p>
 
 
     {{ form_end(form) }}
