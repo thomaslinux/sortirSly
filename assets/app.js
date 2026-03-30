@@ -57,7 +57,7 @@ async function displayLieu() {
     })
 }
 
-
+// https://github.com/VFDouglas/HTML-Order-Table-By-Column/blob/main/index.html
 (function trierLesTablesParTh() {
     document.querySelectorAll('th').forEach((element) => { // Table headers
         element.addEventListener('click', function () {
