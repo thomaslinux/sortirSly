@@ -84,10 +84,18 @@ final class SortieController extends AbstractController
         $sortieForm = $this->createForm(SortieType::class, $sortie, [
             'user' => $user
         ]);
+
         $sortieForm->handleRequest($request);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             if ($id === null) {
+
+                $lieuData = $sortieForm->get('lieu2')->getData(); // récupère le nouveau lieu
+
+                if ($lieuData->getNom()) {
+                    $entityManager->persist($lieuData);
+                    $sortie->setLieu($lieuData);
+                }
                 $sortie->setOrganisateur($user);
                 $sortie->sIncrire($user);
                 $sortie->setCampus($user->getCampus());
@@ -113,7 +121,7 @@ final class SortieController extends AbstractController
         if ($id === null) {
             return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
         } else {
-            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm, 'sortie' => $sortie]);
+            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm]);
         }
 
     }

@@ -17,12 +17,10 @@ final class LieuController extends AbstractController
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     public function createLieu(
         EntityManagerInterface $entityManager,
-        LieuRepository         $lieuRepository,
         Request                $request
     ): Response
     {
         $lieu = new Lieu();
-        $user = $this->getUser();
         $lieuForm = $this->createForm(LieuType::class, $lieu);
         $lieuForm->handleRequest($request);
 
@@ -32,9 +30,6 @@ final class LieuController extends AbstractController
         $entityManager->persist($lieu);
         $entityManager->flush();
         return $this->redirectToRoute('sortie_create');
-
-
-
     }
 
 

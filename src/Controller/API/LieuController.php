@@ -3,6 +3,7 @@
 namespace App\Controller\API;
 
 use App\Entity\Ville;
+use App\Repository\LieuRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,16 +13,16 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/api/villes', name: "api_villes_")]
-final class VilleController extends AbstractController
+#[Route('/api/lieux', name: "api_lieux_")]
+final class LieuController extends AbstractController
 {
     #[Route('', name: 'retrieve_all', methods: 'GET')]
     public function retrieveAll(
 
-        VilleRepository     $villeRepository): Response
+        LieuRepository $lieuRepository): Response
     {
-        $villes = $villeRepository->findAll();
-        return $this->json($villes, Response::HTTP_OK, [], ['groups' => 'villes-api']);
+        $lieux = $lieuRepository->findAll();
+        return $this->json($lieux, Response::HTTP_OK, [], ['groups' => 'lieux-api']);
     }
 
     #[Route('/{id}', name: 'retrieve_one', methods: ['GET'])]
@@ -64,9 +65,10 @@ final class VilleController extends AbstractController
         $entityManager->remove($ville);
         $entityManager->flush();
         return $this->json(['success' => 'Ville supprimée!'], Response::HTTP_ACCEPTED);
+
     }
 
-    #[Route('/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
+    #[Route('/{id}', name: 'update', methods: ['Put', 'PATCH'])]
     public function update(
         Request                $request,
         EntityManagerInterface $entityManager,
@@ -87,8 +89,10 @@ final class VilleController extends AbstractController
         if (isset($data['codePostal'])) {
             $ville->setCodePostal($data['codePostal']);
         }
+
         $entityManager->flush();
         return $this->json($ville, Response::HTTP_OK, [], ['groups' => 'villes-api']);
+
     }
 
 

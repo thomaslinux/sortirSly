@@ -24,7 +24,13 @@ async function callAPI(url){
 }
 
 async function init(){
+
     selectVille = document.getElementById("sortie_villes");
+    const opt = document.createElement("option");
+    opt.value = '';
+    opt.selected = 'hidden';
+    opt.textContent = `- Choisir une ville -`;
+    selectVille.appendChild(opt);
     selectLieu = document.getElementById("sortie_lieu");
     selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
     villes = await callAPI("http://localhost:8081/projet_sortir/public/api/villes");
@@ -34,19 +40,20 @@ async function init(){
 
 async function displayLieu(){
 
-  selectVille.addEventListener("change", async (event) => {
-        selectLieu.innerHTML = "";
-        selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
-        let idVille = parseInt(event.target.value);
-        let ville = villes.find(v=>v.id===idVille);
+  selectVille.addEventListener("change", async (event) =>{
+      selectLieu.innerHTML = "";
+      selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
+      let idVille = parseInt(event.target.value);
+      let ville = villes.find(v=>v.id===idVille);
 
-for (const l of ville.lieux){
-    const opt = document.createElement("option");
-    opt.value = l.nom;
-    opt.textContent = `${l.nom}`;
-    selectLieu.appendChild(opt);
+      for (const l of ville.lieux){
+          const opt = document.createElement("option");
+          opt.value = l.nom;
+          opt.textContent = `${l.nom}`;
+          selectLieu.appendChild(opt);
+      }
+  } )
 }
-})}
 
 
 
