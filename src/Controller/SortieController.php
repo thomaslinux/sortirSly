@@ -90,12 +90,16 @@ final class SortieController extends AbstractController
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             if ($id === null) {
 
-                $lieuData = $sortieForm->get('lieu2')->getData(); // récupère le nouveau lieu
+            //    $lieuSelect = $sortieForm->get('lieu')->getData(); // récupère le lieu sélectionné
+             //   $lieuData = $sortieForm->get('lieu2')->getData(); // récupère le nouveau lieu
+//
+//                if ($lieuSelect) {
+//                    $sortie->setLieu($lieuData);
+//                } elseif ($lieuData->getNom()) {
+//                    $entityManager->persist($lieuData);
+//                    $sortie->setLieu($lieuData);
+//                }
 
-                if ($lieuData->getNom()) {
-                    $entityManager->persist($lieuData);
-                    $sortie->setLieu($lieuData);
-                }
                 $sortie->setOrganisateur($user);
                 $sortie->sIncrire($user);
                 $sortie->setCampus($user->getCampus());
