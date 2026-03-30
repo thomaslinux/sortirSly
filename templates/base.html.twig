@@ -17,6 +17,7 @@
     {% block javascripts %}
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
+
 </head>
 <body>
 
@@ -34,4 +35,5 @@
 </main>
 {% block footer %}{% endblock %}
 </body>
+{% block bonusjavascripts %}{% endblock %}
 </html>
