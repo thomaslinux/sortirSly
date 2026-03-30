@@ -1,9 +1,14 @@
 # Projet sorties
 
-Projets d'organisations de sorties pour les élèves de l'ENI. Ce projet est conçu pour fonctionner avec wamp. Vous pouvez
+Projets d'organisations de sorties pour les élèves de l'ENI.
+
+Ce projet est conçu pour fonctionner avec wamp. Vous pouvez
 télécharger wamp ici :
 
 https://wampserver.aviatechno.net/
+
+Et télécharger composer ici :
+https://getcomposer.org/download/
 
 # Installation du projet
 
