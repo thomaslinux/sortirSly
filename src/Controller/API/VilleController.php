@@ -17,7 +17,7 @@ final class VilleController extends AbstractController
 {
     #[Route('', name: 'retrieve_all', methods: 'GET')]
     public function retrieveAll(
-        SerializerInterface $serializer,
+
         VilleRepository     $villeRepository): Response
     {
         $villes = $villeRepository->findAll();
