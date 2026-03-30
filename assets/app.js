@@ -14,8 +14,8 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
 window.onload = init;
 
-let selectVille;
-let selectLieu;
+let selectVille=   document.getElementById("sortie_villes") ;
+let selectLieu=document.getElementById("sortie_lieu");
 let villes = [];
 
 async function callAPI(url) {
@@ -24,37 +24,26 @@ async function callAPI(url) {
         return val.json();
     }
 }
-
-async function init() {
-
-    selectVille = document.getElementById("sortie_villes");
-    const opt = document.createElement("option");
-    opt.value = '';
-    opt.selected = 'hidden';
-    opt.textContent = `- Choisir une ville -`;
-    selectVille.appendChild(opt);
-    selectLieu = document.getElementById("sortie_lieu");
-    selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
-    villes = await callAPI("http://localhost:8081/projet_sortir/public/api/villes");
-
+function init(){
     displayLieu();
 }
 
-async function displayLieu() {
+async function displayLieu(){
 
-    selectVille.addEventListener("change", async (event) => {
+    selectVille.addEventListener("change", async (event) =>{
         selectLieu.innerHTML = "";
         selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
-        let idVille = parseInt(event.target.value);
-        let ville = villes.find(v => v.id === idVille);
+      let idVille = parseInt(event.target.value);
 
-        for (const l of ville.lieux) {
-            const opt = document.createElement("option");
-            opt.value = l.nom;
-            opt.textContent = `${l.nom}`;
-            selectLieu.appendChild(opt);
-        }
-    })
+      let lieux = await callAPI(`http://localhost:8081/projet_sortir/public/api/villes/${idVille}/lieux`)
+
+      for (const l of lieux){
+          const opt = document.createElement("option");
+          opt.value = l.id;
+          opt.textContent = `${l.nom}`;
+          document.getElementById("sortie_lieu").appendChild(opt);
+      }
+  } )
 }
 
 

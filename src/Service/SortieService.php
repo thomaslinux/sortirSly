@@ -9,6 +9,7 @@ use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SortieService
 {
@@ -20,6 +21,9 @@ class SortieService
         private EntityManagerInterface $entityManager,
         private SortieRepository $sortieRepository,
         private EtatRepository $etatRepository,
+       private HttpClientInterface $client
+
+
     ) {}
 public function MaJEtat(){
 
@@ -70,6 +74,11 @@ public function MaJEtat(){
         }
     }
 
+    public function requestAPI(    ):array
+    {
+$response = $this->client->request('get',);
+    return $response->toArray();
+    }
 
 
 

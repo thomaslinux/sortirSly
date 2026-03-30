@@ -3,6 +3,7 @@
 namespace App\Controller\API;
 
 use App\Entity\Ville;
+use App\Repository\LieuRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,10 +16,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/api/villes', name: "api_villes_")]
 final class VilleController extends AbstractController
 {
-    #[Route('', name: 'retrieve_all', methods: 'GET')]
+    #[Route('', name: 'retrieve_all', methods: ['GET'])]
     public function retrieveAll(
 
-        VilleRepository     $villeRepository): Response
+        VilleRepository $villeRepository): Response
     {
         $villes = $villeRepository->findAll();
         return $this->json($villes, Response::HTTP_OK, [], ['groups' => 'villes-api']);
@@ -32,6 +33,22 @@ final class VilleController extends AbstractController
         $ville = $villeRepository->find($id);
         return $this->json($ville, Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
+
+    #[Route('/{id}/lieux', name: 'api_ville_lieux', methods: ['GET'])]
+    public function LieuxAll(
+        VilleRepository $villeRepository,
+        int             $id
+        ): Response
+    {
+        $ville = $villeRepository->find($id);
+        return $this->json($ville->getLieux(), Response::HTTP_OK, [], ['groups' => 'villes-api']);
+    }
+
+
+
+
+
+
 
     #[Route('', name: 'create', methods: ['POST'])]
     public function create(SerializerInterface    $serializer,
@@ -90,6 +107,7 @@ final class VilleController extends AbstractController
         $entityManager->flush();
         return $this->json($ville, Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
+
 
 
 }

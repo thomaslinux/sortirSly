@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/lieu', name: 'lieu_')]
 final class LieuController extends AbstractController
 {
+
+    // ITERATION 1 - n'est plus utilisée avec l'API
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     public function createLieu(
         EntityManagerInterface $entityManager,
