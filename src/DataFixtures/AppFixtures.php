@@ -156,7 +156,7 @@ class AppFixtures extends Fixture
             $sortie
                 ->setNom($faker->realText(30))
                 ->setDateHeureDebut($faker->dateTimeBetween('-2 month', '+2 months', 'Europe/Paris'))
-                ->setDateLimiteInscription($faker->dateTimeBetween('$sortie->getDateHeureDebut()', 'now', 'Europe/Paris'))
+                ->setDateLimiteInscription($faker->dateTimeBetween($sortie->getDateHeureDebut()->modify('-14 days'), $sortie->getDateHeureDebut()->modify('-1 days'), 'Europe/Paris'))
                 ->setDuree($faker->numberBetween(15, 180))
                 ->setNbPlaces($faker->numberBetween(2, 40))
                 ->setDescription($faker->realText(255));
