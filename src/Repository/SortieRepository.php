@@ -18,20 +18,26 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    public function findSortiesBySearch($sortieSearch)
+    public function findSortiesBySearch($sortieSearch, $user)
     {
         $sortieNom = $sortieSearch->getNom();
         $campus = $sortieSearch->getCampus();
         $dateHeureDebut = $sortieSearch->getDateHeureDebut();
         $dateHeureFin = $sortieSearch->getDateHeureFin();
+        $organisateur = $sortieSearch->getOrganisateur();
+        $inscrit = $sortieSearch->getInscrit();
+        $pasInscrit = $sortieSearch->getPasInscrit();
+        $sortiesPassees = $sortieSearch->getSortiesPassees();
         $qb = $this->createQueryBuilder('s');
         $qb
             ->leftJoin('s.campus', 'c')
             ->leftJoin('s.etat', 'e')
             ->leftJoin('s.inscriptions', 'i')
+            ->leftJoin('s.organisateur', 'o')
             ->addSelect('c')
             ->addSelect('e')
-            ->addSelect('i');
+            ->addSelect('i')
+            ->addSelect('o');
         $qb
             ->andWhere('e.nom != :historisee')
             ->setParameter('historisee', 'Historisee');
@@ -55,6 +61,28 @@ class SortieRepository extends ServiceEntityRepository
                 ->andWhere('s.dateHeureDebut <= :dateHeureFin')
                 ->setParameter('dateHeureFin', $dateHeureFin);
         }
+        if ($organisateur) {
+            $qb
+                ->andWhere('s.organisateur = :organisateur')
+                ->setParameter('organisateur', $user);
+        }
+        if ($inscrit) {
+            $qb
+                ->andWhere(':user MEMBER OF s.inscriptions')
+                ->setParameter('user', $user);
+        }
+        if ($pasInscrit) {
+            $qb
+                ->andWhere(':user NOT MEMBER OF s.inscriptions')
+                ->setParameter('user', $user);
+        }
+        if ($sortiesPassees) {
+            $date = new \DateTime();
+            date_format($date, 'd-m-Y');
+
+            $qb->andWhere('s.dateHeureDebut < :today')
+                ->setParameter('today', $date);
+        }
         $qb
             ->orderBy('s.dateHeureDebut', 'DESC');
 
@@ -75,7 +103,7 @@ class SortieRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-   public function findSortieEtatAModifier(\DateTime $dateTime, \DateTime $dateTime2, array $etat)
+    public function findSortieEtatAModifier(\DateTime $dateTime, \DateTime $dateTime2, array $etat)
     {
 
         $qb = $this->createQueryBuilder('s');
