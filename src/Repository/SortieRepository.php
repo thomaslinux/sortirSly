@@ -75,60 +75,55 @@ class SortieRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findSortieDemaree(\DateTime $dateTime, Etat $etat)
+   public function findSortieEtatAModifier(\DateTime $dateTime, \DateTime $dateTime2, array $etat)
     {
 
         $qb = $this->createQueryBuilder('s');
         $qb
-            ->andWhere('s.etat = :etat')
-            ->andWhere('s.dateHeureDebut <= :dateTime')
+            ->andWhere('s.etat IN (:etats)')
+            ->andWhere(
+                $qb->expr()->orX(
+                    's.dateHeureDebut <= :dateTime',
+                    's.dateLimiteInscription <= :dateTime2'
+                )
+            )
+            ->setParameter('etats', $etat)
             ->setParameter('dateTime', $dateTime)
-            ->setParameter('etat', $etat);
+            ->setParameter('dateTime2', $dateTime2);
 
 
         $query = $qb->getQuery();
         return $query->getResult();
     }
 
-    public function findSortieACloturer(\DateTime $dateTime, Etat $etat)
-    {
-
-        $qb = $this->createQueryBuilder('s');
-        $qb
-            ->andWhere('s.etat = :etat')
-            ->andWhere('s.dateLimiteInscription <= :dateTime')
-            ->setParameter('dateTime', $dateTime)
-            ->setParameter('etat', $etat);
 
 
-        $query = $qb->getQuery();
-        return $query->getResult();
-    }
 
-    //    /**
-    //     * @return Sortie[] Returns an array of Sortie objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?Sortie
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+//    /**
+//     * @return Sortie[] Returns an array of Sortie objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('s.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
+
+//    public function findOneBySomeField($value): ?Sortie
+//    {
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
 
 
 }

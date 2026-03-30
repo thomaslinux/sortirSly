@@ -1,11 +1,24 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-    Mon profil
-{% endblock %}
+
+{% block title %}Mon profil{% endblock %}
 
 {% block body %}
-    {% embed 'views/form/template-form-participant.html.twig' with {form : form} %}
-        {% block formTitle %}  Mon profil : {{ app.user.username }} {% endblock %}
-        {% block buttonLabel %}Modifier{% endblock %}
-    {% endembed %}
+    <div class="profile-container">
+        <div class="profile-card">
+            <header class="profile-header">
+                <h1>Mon profil : {{ app.user.username }}</h1>
+                <p>Gérez vos informations personnelles et préférences de compte.</p>
+            </header>
+            <div class="form-section">
+                    {% embed 'views/form/template-form-participant.html.twig' with {'form': form} %}
+                        {% block formTitle %}
+                            <div style="height: 0; visibility: hidden;"></div>
+                        {% endblock %}
+                        {% block buttonLabel %}
+                            Enregistrer
+                        {% endblock %}
+                    {% endembed %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -64,6 +64,7 @@ Faire un composer install car ajout du composer league/csv
 - [x] Modifier le thème pour éviter de perdre de l'espace
 - [ ] Désactiver la grille au redimensionnement
 - [ ] Trier les éléments de la liste de sorties dans le tableau de sorties (javascript)
+- [ ] Recupérer les etat historisées uniquement pour l'admin
 
 # Modèle graphique html :
 
