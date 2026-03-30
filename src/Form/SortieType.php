@@ -5,10 +5,13 @@ namespace App\Form;
 use App\Entity\Campus;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use App\Repository\CampusRepository;
 use App\Repository\LieuRepository;
+use App\Repository\VilleRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -74,17 +77,27 @@ class SortieType extends AbstractType
                     return $campusRepository->createQueryBuilder('c')->addOrderBy('c.nom');
                 }
             ])
-            ->add('lieu', EntityType::class, [
-                'class' => Lieu::class,
+            ->add('villes', EntityType::class, [
+                'class' => Ville::class,
+                'mapped' => false,
                 'choice_label' => 'nom',
-                'query_builder' => function (LieuRepository $lieuRepository) {
-                    return $lieuRepository->createQueryBuilder('l')->addOrderBy('l.nom');
+                'query_builder' => function (VilleRepository $villeRepository) {
+                    return $villeRepository->createQueryBuilder('v')->addOrderBy('v.nom');
                 }
             ])
-            ->add('publier', SubmitType::class, ['label' => 'Publier']);
-//        ->add('annuler', ResetType::class, ['label' => 'Annuler'])
-    }
 
+            ->add('lieu', ChoiceType::class, [
+                'label' => 'lieu de sortie',
+                'mapped' => false,
+                'choices' => []
+            ])
+            ->add('lieu2', LieuType::class, [
+                'label' => 'Ajoute un lieu de sortie',
+                'mapped' => false,
+            ])
+            ->add('publier', SubmitType::class, ['label' => 'Publier']);
+
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

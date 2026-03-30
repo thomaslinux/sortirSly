@@ -1,0 +1,5 @@
+{% block form_row %}
+    {{ form_label(form) }}
+    {{ form_widget(form, {'attr': {'class': 'input-field'}}) }}
+    {{ form_errors(form) }}
+{% endblock %}

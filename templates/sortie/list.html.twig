@@ -8,7 +8,7 @@
     <div class="list-header">
         <div>
             <h1>Les sorties</h1>
-            <p class="current-date">Mardi 21 Mai 2024</p>
+            <p class="current-date">{{ date() | date ('d/m/Y H:i', "Europe/Paris") }}</p>
         </div>
         <div class="stats-display">
             <span>Affichage</span>
@@ -17,10 +17,14 @@
         </div>
     </div>
     {#    {% include 'views/list/pc-list-search.html.twig' %} #}
-    {{ form_start(sortieForm) }}
-    {{ form_widget(sortieForm) }}
-    <button>Search</button>
-    {{ form_end(sortieForm) }}
+    {% embed 'views/form/template-form-search-sortie.html.twig' with {form : sortieForm} %}
+        {% block formTitle %}Filtrer les sorties{% endblock %}
+
+        {% block buttonLabel %}
+            Rechercher
+        {% endblock %}
+
+    {% endembed %}
     <section class="event-list">
         <table class="event-table">
             <thead>

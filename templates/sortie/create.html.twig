@@ -10,15 +10,21 @@
     <div>
         {% embed 'views/form/template-form-sortie.html.twig' %}
             {% block formTitle %}Création d'une sortie{% endblock %}
-
             {% block buttonLabel %}
                 Enregistrer "brouillon"
             {% endblock %}
-
         {% endembed %}
-
-
     </div>
+
+{#    <div id ="afficher_lieu" style="display: none">#}
+{#        <h2>Création un nouveau lieu de sortie</h2>#}
+{#        {{ form_start(lieuForm) }}#}
+{#        {{ form_widget(lieuForm) }}#}
+{#        <button>Enregister</button>#}
+{#        {{ form_end(lieuForm) }}#}
+
+{#        <a href="{{ path('sortie_create') }}">Annuler</a>#}
+{#    </div>#}
 
     <script>
         const dateHeureDebut = document.getElementById('sortie_dateHeureDebut');
@@ -31,4 +37,5 @@
             }
         });
     </script>
+
 {% endblock %}

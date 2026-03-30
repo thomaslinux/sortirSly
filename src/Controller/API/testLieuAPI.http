@@ -1,0 +1,11 @@
+### Create lieu
+POST http://localhost:8081/projet_sortir/public/api/lieu
+Content-Type: application/json
+
+{
+
+
+
+}
+
+###

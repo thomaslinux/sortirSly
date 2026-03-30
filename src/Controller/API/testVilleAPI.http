@@ -1,0 +1,29 @@
+### Create VILLE
+POST http://localhost:8081/projet_sortir/public/api/villes
+Content-Type: application/json
+
+{
+    "nom": "Fougères",
+    "codePostal": 35300
+
+
+}
+
+###
+
+
+### DELETE Ville
+DELETE http://localhost:8081/projet_sortir/public/api/villes/8
+####
+### UPDATE VILLE
+PUT http://localhost:8081/projet_sortir/public/api/villes/9
+Content-Type: application/json
+
+{
+    "nom": "FOUGERES",
+    "codePostal": 35300
+
+
+}
+
+###
