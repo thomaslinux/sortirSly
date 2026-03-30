@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username','email'])]
 #[UniqueEntity(fields: ['email', 'username'], message: 'There is already an account with this email')]
 class Participant implements UserInterface, PasswordAuthenticatedUserInterface
+
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -64,13 +65,13 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Sortie>
      */
-    #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'organisateur')]
+    #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'organisateur', cascade: ['persist', 'remove'])]
     private Collection $organisateur;
 
     /**
      * @var Collection<int, Sortie>
      */
-    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'inscriptions')]
+    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'inscriptions', cascade: ['remove'])]
     private Collection $sorties;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -114,8 +115,16 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @see AdvancedUserInterface
+     */
+    public function isEnabled(): bool
+    {
+        return $this->actif;  // Utilise votre champ existant !
+    }
+    /**
      * @see UserInterface
      */
+
     public function getRoles(): array
     {
         $roles = $this->roles;
