@@ -16,7 +16,11 @@
             <p><span>{{ sorties | length }}</span> sorties trouvées</p>
         </div>
     </div>
-    {% include 'views/list/pc-list-search.html.twig' %}
+    {#    {% include 'views/list/pc-list-search.html.twig' %} #}
+    {{ form_start(sortieForm) }}
+    {{ form_widget(sortieForm) }}
+    <button>Search</button>
+    {{ form_end(sortieForm) }}
     <section class="event-list">
         <table class="event-table">
             <thead>

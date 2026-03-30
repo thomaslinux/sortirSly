@@ -7,6 +7,8 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\CancelSortieType;
 use App\Form\Model\CancelSortie;
+use App\Form\Model\SortieSearch;
+use App\Form\SortieSearchType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
@@ -40,28 +42,19 @@ final class SortieController extends AbstractController
         // TODO récupérer les informations dans les paramètres de recherche
         // TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
 
+        $sortieSearch = new SortieSearch();
+        $sortieForm = $this->createForm(SortieSearchType::class, $sortieSearch);
+        $sortieForm->handleRequest($request);
         $sortieService->MaJEtat();
 
         $campusId = $request->query->get("campus");
         $sortieNom = $request->query->get("q");
 
-        if ($campusId) {
-            $sorties = $sortieRepository->findSortieByCampus($campusId, $sortieNom);
-//            $sorties = $sortieRepository->findSortieByCampus($campusId, $etatId);
-        } else {
-            $idUser = ($this->getUser()->getId());
-            $currentParticipant = $participantRepository->find($idUser);
-            $currentCampusId = ($currentParticipant->getCampus()->getId());
-            $sorties = $sortieRepository->findSortieByCampus($currentCampusId, $sortieNom);
-        }
-
-        // TODO recherche par campus
-        // TODO changer la requête sur mobile (campus utilisateur)
-        $campusList = $campusRepository->findAllFiltred();
+        $sorties = $sortieRepository->findSortiesBySearch($sortieSearch);
 
         return $this->render('sortie/list.html.twig', [
             'sorties' => $sorties,
-            'campusList' => $campusList
+            'sortieForm' => $sortieForm
         ]);
     }
 
