@@ -46,14 +46,15 @@ Faire un composer install car ajout du composer league/csv
     - [ ] trier les dates de sorties en affichant la dernière sortie créée
     - [ ] Création d'un nouveau lieu depuis le formulaire de création de sortie
     - [x] réduire le nombre de query sur la liste
-- [ ] Afficher la barre de recherche multi critères dans la liste des sorties
-    - [ ] Gérer un affichage par pagination (front ou back ?)
-- [ ] Afficher les dates au format (europe/paris) car en UTC dans la database...
+- [x] Liste des sorties
+    - [x] Afficher la barre de recherche multi critères dans la liste des sorties
+        - [-] Gérer un affichage par pagination (front ou back ?)
+    - [x] Afficher les dates au format (europe/paris) car en UTC dans la database
+    - [x] Trier les éléments de la liste de sorties dans le tableau de sorties (javascript)
 
 ## V2 - API recherche de sorties
 
 - [ ] selecteur de lieu en fonction de la ville dans le créateur de sorties
-
 - [ ] Cocher un critère de recherche de sortie recharge dynamiquement la liste des sorties via un appel API
 - [ ] Formulaire de création de sorties
     - [ ] Faire un menu déroulant 'calendrier' plus fonctionnel (menu creation / modification d'une sortie
@@ -63,8 +64,12 @@ Faire un composer install car ajout du composer league/csv
 - [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
 - [x] Modifier le thème pour éviter de perdre de l'espace
 - [ ] Désactiver la grille au redimensionnement
-- [ ] Trier les éléments de la liste de sorties dans le tableau de sorties (javascript)
-- [ ] Recupérer les etat historisées uniquement pour l'admin
+  ~~Récupérer les états historisés uniquement pour l'admin~~ (uniquement en BDD même pour les admins pas visibles dans
+  la liste des sorties)
+
+## V4 - Bonus
+
+- [ ] Afficher des sorties en fonction de leur Etat
 
 # Modèle graphique html :
 
