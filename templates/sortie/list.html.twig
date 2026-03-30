@@ -4,26 +4,15 @@
 {% endblock %}
 
 {% block body %}
-    <!-- Results Table -->
-    <div class="list-header">
-        <div>
-            <h1>Les sorties</h1>
-            <p class="current-date">{{ date() | date ('d/m/Y H:i', "Europe/Paris") }}</p>
-        </div>
-        <div class="stats-display">
-            <span>Affichage</span>
-            {# sortie length doit correspondre aux résultats #}
-            <p><span>{{ sorties | length }}</span> sorties trouvées</p>
-        </div>
-    </div>
     {#    {% include 'views/list/pc-list-search.html.twig' %} #}
     {% embed 'views/form/template-form-search-sortie.html.twig' with {form : sortieForm} %}
         {% block formTitle %}Filtrer les sorties{% endblock %}
-
         {% block buttonLabel %}
             Rechercher
         {% endblock %}
-
+        {% block sortieLength %}
+            {{ sorties | length }}
+        {% endblock %}
     {% endembed %}
     <section class="event-list">
         <table class="event-table">
