@@ -8,7 +8,7 @@
     <div class="list-header">
         <div>
             <h1>Les sorties</h1>
-            <p class="current-date">Mardi 21 Mai 2024</p>
+            <p class="current-date">{{ date() | date ('d/m/Y H:i', "Europe/Paris") }}</p>
         </div>
         <div class="stats-display">
             <span>Affichage</span>

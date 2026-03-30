@@ -5,8 +5,8 @@
                 <a class="action-link"
                    href="{{ path('sortie_detail', {'id': sortie.id}) }}">{{ sortie.nom }}</a>
             </td>
-            <td class="date-de-sortie">{{ sortie.dateHeureDebut | date ('d/m/Y H:i') }}</td>
-            <td class="cloture">{{ sortie.dateLimiteInscription | date ('d/m/Y') }}</td>
+            <td class="date-de-sortie">{{ sortie.dateHeureDebut | date ('d/m/Y H:i', "Europe/Paris") }}</td>
+            <td class="cloture">{{ sortie.dateLimiteInscription | date ('d/m/Y', "Europe/Paris") }}</td>
             <td><span
                     class="badge badge-tertiary">{{ sortie.inscriptions.count }} / {{ sortie.nbPlaces }}</span>
             </td>
