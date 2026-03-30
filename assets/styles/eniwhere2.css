@@ -444,6 +444,11 @@ a {
     text-decoration: underline;
 }
 
+.sortie-length {
+    position: absolute;
+    right: 50px;
+}
+
 @media (max-width: 1024px) {
     .filter-grid {
         grid-template-columns: 1fr 1fr;
