@@ -59,8 +59,8 @@
                 <td class="pasInscrit" style="text-align: center; color: var(--outline-variant);">—</td>
             {% endif %}
             <td
-                {% if sortie.organisateur.id == app.user.id %}
-                    class="organisateur"
+                {% if sortie.organisateur.id != app.user.id %}
+                    class="pasOrganisateur"
                 {% endif %}
             >
                 <a class="organizer"

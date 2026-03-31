@@ -6,7 +6,7 @@ body:has(#sortie_search_pasInscrit:checked) tr:has(.inscrit) {
     display: none;
 }
 
-body:has(#sortie_search_organisateur:checked) tr:not(:has(.organisateur)) {
+body:has(#sortie_search_organisateur:checked) tr:has(.pasOrganisateur) {
     display: none;
 }
 
