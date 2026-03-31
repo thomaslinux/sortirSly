@@ -170,7 +170,7 @@ class AppFixtures extends Fixture
                 ->setCampus($faker->randomElement($campusList))
                 ->setEtat($faker->randomElement($etatList))
                 ->setLieu($faker->randomElement($lieuList))
-                ->setNom($sortie->getLieu()->getNom() . ' - ' . $sortie->getLieu()->getVille()->getNom());
+                ->setNom($sortie->getLieu()->getNom() . ' - ' . $sortie->getOrganisateur()->getNom() . ' - ' . $sortie->getLieu()->getVille()->getNom());
             $manager->persist($sortie);
         }
         $manager->flush();
