@@ -7,8 +7,12 @@
     <div class="filter-grid">
         <div class="field-group">
             {{ form_label(form.nom) }}
-            <div class="input-wrapper">
-                {{ form_widget(form.nom, {'attr': {'class': 'input-field'}}) }}
+            <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
+                {{ form_widget(form.nom, {'attr': {'class': 'input-field', 'id': 'search-input'}}) }}
+                <span class="material-symbols-outlined clear-icon" id="clear-btn"
+                      style="appearance: checkbox; display: none; position: absolute; right: 40px; cursor: pointer;">
+                    close
+                </span>
                 <span class="material-symbols-outlined">search</span>
             </div>
             {{ form_errors(form.nom) }}
@@ -45,8 +49,12 @@
         </label>
         <button>{% block buttonLabel %}{% endblock %}</button>
     </div>
-    <p class="sortie-length"><span id="nbSortiesTrouvees">{% block sortieLength %}{% endblock %}</span> sorties trouvées
-    </p>
+    <div class="sortie-length"><span id="nbSortiesTrouvees">{% block sortieLength %}{% endblock %}</span> sorties
+        trouvées
+        <label class="checkbox-label">
+            <input id="client_search" type="checkbox" checked>javascript search
+        </label>
+    </div>
 
 
     {{ form_end(form) }}
