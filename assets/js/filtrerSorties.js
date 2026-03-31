@@ -16,19 +16,22 @@ function filterSorties() {
             if (query === '' || a.innerText.trim().toLowerCase().includes(query)) {
                 tr.style.display = '';
                 i++;
-                HTML_nbSortiesTrouvees.innerText = i;
             } else {
                 tr.style.display = 'none';
             }
         });
+        HTML_nbSortiesTrouvees.innerText = i;
     }
 }
 
 client_search.addEventListener('click', () => {
     if (!client_search.checked) {
+        let i = 0;
         document.querySelectorAll("tr").forEach(tr => {
             tr.style.display = '';
+            i++;
         })
+        HTML_nbSortiesTrouvees.innerText = i;
         clearInput();
     } else {
         filterSorties();
