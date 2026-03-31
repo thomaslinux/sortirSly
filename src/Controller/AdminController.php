@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Dto\UserImport;
 use App\Entity\Participant;
+use App\Entity\Ville;
 use App\Form\ParticipantType;
 use App\Form\UserImportType;
+use App\Form\VilleSearchType;
 use App\Repository\ParticipantRepository;
+use App\Repository\VilleRepository;
 use App\Service\ImportParticipantService;
 use App\utils\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,12 +27,29 @@ final class AdminController extends AbstractController
 {
     #[Route('/villes/list', name: 'villes_list')]
     #[IsGranted('ROLE_ADMIN')]
-    public function villes_list(): Response
+    public function villes_list(
+        EntityManagerInterface $entityManager,
+        villeRepository       $villeRepository,
+        Request                $request): Response
     {
-        return $this->render('admin/villes_list.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
+
+        $villeSearch = new Ville();
+        $villeForm=$this->createForm(VilleSearchType::class,$villeSearch);
+        $villeForm->handleRequest($request);
+        $villeSearch = $villeForm->getData();
+        $ville = $villeRepository->findVillesBySearch($villeSearch);
+
+        return $this->render('admin/villes_list.html.twig', ['ville'=>$ville,'villeForm'=>$villeForm]);
     }
+
+
+
+
+
+
+
+
+
     #[Route('/campus/list', name: 'campus_list')]
     #[IsGranted('ROLE_ADMIN')]
     public function campus_list(): Response

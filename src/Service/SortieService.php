@@ -74,11 +74,6 @@ public function MaJEtat(){
         }
     }
 
-    public function requestAPI(    ):array
-    {
-$response = $this->client->request('get',);
-    return $response->toArray();
-    }
 
 
 

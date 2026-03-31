@@ -1,0 +1,42 @@
+{% for v in ville %}
+    {% if is_granted('VIEW', v) %}
+        <tr>
+            <td class="event-name">
+                <a href="#">{{ v.nom }}</a>
+{#                <a class="action-link"#}
+{#                   href="{{ path('sortie_detail', {'id': sortie.id}) }}">{{ sortie.nom }}</a>#}
+            </td>
+
+
+
+            <td>{{ v.codePostal }}            </td>
+            <td class="actions-cell">
+                {# La ou David travaille #}
+
+                {% if is_granted('EDIT', v) %}
+                    <a class="action-link"
+                       href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
+
+                {% endif %}
+
+
+
+                {% if is_granted('VIEW', v) %}
+                    <a class="action-link"
+                       href="{{ path('sortie_detail', {'id': sortie.id}) }}">Supp</a>
+                {% endif %}
+
+                {% if is_granted('INS', v) %}
+                    <a class="action-link"
+                       href="{{ path('sortie_subscribe', {'id': sortie.id}) }}">Ajouter</a>
+
+                {% endif %}
+
+            </td>
+        </tr>
+    {% endif %}
+{% endfor %}
+
+
+
+
