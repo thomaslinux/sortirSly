@@ -76,6 +76,16 @@ document.getElementById('mask').addEventListener("click", () => {
     selectLieu.innerHTML = "";
     selectVille.value = '';
     selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
+
+ if(document.getElementById('mask').innerHTML === "Ajouter un lieu"){
+     document.getElementById('mask').innerHTML="Revenir au choix par défaut"
+ } else{
+     document.getElementById('mask').innerHTML="Ajouter un lieu"
+ }
+
+
+
+
 })
 
 
