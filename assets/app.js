@@ -16,7 +16,7 @@ window.onload = init;
 
 let selectVille=   document.getElementById("sortie_villes") ;
 let selectLieu=document.getElementById("sortie_lieu");
-let villes = [];
+
 
 async function callAPI(url) {
     let val = await fetch(url)
@@ -25,7 +25,7 @@ async function callAPI(url) {
     }
 }
 function init(){
-    displayLieu();
+       displayLieu();
 }
 
 async function displayLieu(){
@@ -43,7 +43,14 @@ async function displayLieu(){
           opt.textContent = `${l.nom}`;
           document.getElementById("sortie_lieu").appendChild(opt);
       }
-  } )
+    });
+
+
+
+
+
+
+
 }
 
 
