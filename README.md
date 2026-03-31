@@ -53,7 +53,7 @@ Faire un composer install car ajout du composer league/csv
     - [x] réduire le nombre de query sur la liste
 - [x] Liste des sorties
     - [x] Afficher la barre de recherche multi critères dans la liste des sorties
-        - [-] Gérer un affichage par pagination (front ou back ?)
+        - [/] Gérer un affichage par pagination (front ou back ?)
     - [x] Afficher les dates au format (europe/paris) car en UTC dans la database
 
 ## V2 - API recherche de sorties
@@ -65,6 +65,7 @@ Faire un composer install car ajout du composer league/csv
 
 ## V3 - CSS et JS
 
+- [x] Styliser la page de détails de la sortie (URGENT)
 - [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
 - [x] Modifier le thème pour éviter de perdre de l'espace
 - [ ] Désactiver la grille au redimensionnement
