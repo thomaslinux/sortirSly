@@ -6,6 +6,7 @@ use App\Dto\UserImport;
 use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Form\UserImportType;
+use App\Repository\ParticipantRepository;
 use App\Service\ImportParticipantService;
 use App\utils\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -108,6 +109,55 @@ final class AdminController extends AbstractController
 
         return $this->render('admin/participant_create_unique.html.twig', [
             'participant' => $participant, 'form' => $participantForm->createView(),
+        ]);
+    }
+    #[Route('/manage/deleteOrInactive', name: 'deleteOrInactive', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteOrInactive(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
+    {
+        $participants = $participantRepository->findAll();
+        if ($request->isMethod('POST')){
+            //activer utilisateurs sélectionnés
+            if ($request->request->has('activate')){
+                $ids = $request->request->all('activate');
+                foreach ($ids as $id){
+                    $participant = $participantRepository->find($id);
+                    if ($participant) {
+                        $participant->setActif(true);
+                    }
+                }
+                $entityManager->flush();
+            }
+//            Désactiver un utilisateurs sélectionnés
+            if ($request->request->has('inactive')){
+                $ids = $request->request->all('inactive');
+                foreach ($ids as $id){
+                    $participant = $participantRepository->find($id);
+                    if ($participant){
+                        $participant->setActif(false);
+                    }
+                }
+                $entityManager->flush();
+            }
+//            Supprimer les utilisateurs sélectionnés
+            if ($request->request->has('delete')){
+                $ids = $request->request->all('delete');
+                foreach ($ids as $id){
+                    $participant = $participantRepository->find($id);
+                    if ($participant){
+                        $entityManager->remove($participant);
+                    }
+                }
+                $entityManager->flush();
+            }
+            $this->addFlash('success', 'Actions appliquées avec succès.');
+            return $this->redirectToRoute('admin_deleteOrInactive');
+        }
+
+
+
+        return $this->render('admin/participant_deleteOrInactive.html.twig', [
+            'participants' => $participants,
         ]);
     }
 }
