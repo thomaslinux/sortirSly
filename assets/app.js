@@ -44,7 +44,7 @@ async function displayLieu() {
         selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
         let idVille = parseInt(event.target.value);
 
-        let lieux = await callAPI(`http://localhost:8081/projet_sortir/public/api/villes/${idVille}/lieux`)
+        let lieux = await callAPI(`api/villes/${idVille}/lieux`)
 
         for (const l of lieux) {
             const opt = document.createElement("option");

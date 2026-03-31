@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/api/lieux', name: "api_lieux_")]
+#[Route('/sortie/api/lieux', name: "api_lieux_")]
 final class LieuController extends AbstractController
 {
     #[Route('', name: 'retrieve_all', methods: 'GET')]

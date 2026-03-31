@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/api/villes', name: "api_villes_")]
+#[Route('/sortie/api/villes', name: "api_villes_")]
 final class VilleController extends AbstractController
 {
     #[Route('', name: 'retrieve_all', methods: ['GET'])]
@@ -38,16 +38,11 @@ final class VilleController extends AbstractController
     public function LieuxAll(
         VilleRepository $villeRepository,
         int             $id
-        ): Response
+    ): Response
     {
         $ville = $villeRepository->find($id);
         return $this->json($ville->getLieux(), Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
-
-
-
-
-
 
 
     #[Route('', name: 'create', methods: ['POST'])]
@@ -107,7 +102,6 @@ final class VilleController extends AbstractController
         $entityManager->flush();
         return $this->json($ville, Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
-
 
 
 }
