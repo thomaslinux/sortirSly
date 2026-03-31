@@ -2,61 +2,101 @@
 {% block title %}Gestion des utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Gestion des utilisateurs</h1>
-
-    {% for message in app.flashes('success') %}
-        <div>{{ message }}</div>
-    {% endfor %}
-
-    <table>
-        <thead>
-        <tr>
-            <th>Pseudo</th>
-            <th>Nom</th>
-            <th>État</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for participant in participants %}
-            <tr>
-                <td>
-                    <a href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.username }}</a>
-                </td>
-                <td>
-                    <a href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.prenom }} {{ participant.nom }}</a>
-                </td>
-                <td>
-                    {% if participant.isActif() %}
-                        Actif
-                    {% else %}
-                        Inactif
-                    {% endif %}
-                </td>
-                <td>
-                    {% if participant.isActif() %}
-                        <form method="post" style="display: inline;">
-                            <input type="hidden" name="action" value="inactive">
-                            <input type="hidden" name="id" value="{{ participant.id }}">
-                            <button type="submit">Désactiver</button>
-                        </form>
-                    {% else %}
-                        <form method="post" style="display: inline;">
-                            <input type="hidden" name="action" value="activate">
-                            <input type="hidden" name="id" value="{{ participant.id }}">
-                            <button type="submit">Activer</button>
-                        </form>
-                    {% endif %}
-                    <form method="post" style="display: inline;" onsubmit="return confirm('Supprimer définitivement l\'utilisateur ainsi que ses sorties et supprimez toutes ses participations ?')">
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="id" value="{{ participant.id }}">
-                        <button type="submit">Supprimer</button>
-                    </form>
-                </td>
-            </tr>
-        {% else %}
-            <tr><td colspan="4">Aucun participant</td></tr>
+    <div class="page-header">
+        <h1>Gestion des utilisateurs</h1>
+        <p>Consultez, gérez et modifiez les comptes de la plateforme.</p>
+        {% for message in app.flashes('success') %}
+            <div class="flash-messages">
+                <div>{{ message }}</div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
+    {#   Statistique #}
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="material-symbols-outlined stat-icon">group</span>
+            <span class="stat-badge badge-total">Total</span>
+            <span class="stat-value">{{ participants|length }}</span>
+            <span class="stat-label">Utilisateurs</span>
+        </div>
+        <div class="stat-card">
+            <span class="material-symbols-outlined stat-icon actifs">how_to_reg</span>
+            <span class="stat-badge badge-actifs">Actifs</span>
+            <span class="stat-value">{{ participants|filter(p => p.isActif())|length }}</span>
+            <span class="stat-label">Comptes actifs</span>
+        </div>
+        <div class="stat-card">
+            <span class="material-symbols-outlined stat-icon suspendus">person_off</span>
+            <span class="stat-badge badge-suspendus">Inactifs</span>
+            <span class="stat-value">{{ participants|filter(p => not p.isActif())|length }}</span>
+            <span class="stat-label">Comptes inactifs</span>
+        </div>
+    </div>
+    <div class="content-card">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Pseudo<span>&uarr;</span></th>
+                    <th>Nom<span>&uarr;</span></th>
+                    <th>État<span>&uarr;</span></th>
+                    <th style="text-align: right;">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for participant in participants %}
+                    <tr>
+                        <td class="cell-pseudo">
+                            <a href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.username }}</a>
+                        </td>
+                        <td class="cell-nom">
+                            <a href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.prenom }} {{ participant.nom }}</a>
+                        </td>
+                        <td>
+                    <span class="status-badge status-{{ participant.isActif() ? 'active' : 'inactive' }}">
+                            <span class="dot dot-{{ participant.isActif() ? 'active' : 'inactive' }}"></span>
+                            {{ participant.isActif() ? 'Actif' : 'Inactif' }}
+                        </span>
+                        </td>
+                        <td>
+                            <div class="action-group">
+                                {% if participant.isActif() %}
+                                    <form method="post" style="display: inline;"
+                                          onsubmit="return confirm('Désactiver cet utilisateur ?')">
+                                        <input type="hidden" name="action" value="inactive">
+                                        <input type="hidden" name="id" value="{{ participant.id }}">
+                                        <button type="submit" class="btn-action btn-toggle" title="Désactiver"><span
+                                                class="material-symbols-outlined">block</span></button>
+                                    </form>
+                                {% else %}
+                                    <form method="post" style="display: inline;"
+                                          onsubmit="return confirm('Activer cet utilisateur ?')">
+                                        <input type="hidden" name="action" value="activate">
+                                        <input type="hidden" name="id" value="{{ participant.id }}">
+                                        <button type="submit" class="btn-action btn-toggle inactive" title="Activer">
+                                            <span class="material-symbols-outlined">check_circle</span></button>
+                                    </form>
+                                {% endif %}
+                                <form method="post" style="display: inline;"
+                                      onsubmit="return confirm('Supprimer définitivement l\'utilisateur ainsi que ses sorties et supprimez toutes ses participations ?')">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="id" value="{{ participant.id }}">
+                                    <button type="submit" class="btn-action btn-delete" title="Supprimer"><span
+                                            class="material-symbols-outlined">delete</span></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 2rem;">Aucun participant</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/participant_deleteOrInactive.css') }}">
+        {% endblock %}
