@@ -4,6 +4,42 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Villes list</h2>
-    <h3>Page a faire</h3>
-{% endblock %}
+    <h2>Gérer les villes</h2>
+
+
+        {% embed 'views/form/template-form-search-ville.html.twig' with {form : villeForm} %}
+            {% block formTitle %}Filtrer les villes{% endblock %}
+            {% block buttonLabel %}
+                Rechercher
+            {% endblock %}
+            {% block sortieLength %}
+                {{ ville | length }}
+            {% endblock %}
+        {% endembed %}
+
+        <section class="event-list">
+            <table class="event-table sortable">
+                <thead>
+                <tr>
+                    <th>Nom<span>&uarr;</span></th>
+                    <th>Code Postal <span>&uarr;</span></th>
+
+                    <th style="text-align: right;">Actions <span>&uarr;</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% include 'views/list/toutes-villes-list.html.twig' %}
+                </tbody>
+            </table>
+        </section>
+    {% endblock %}
+{#    {% block bonusjavascripts %}#}
+{#        <script defer src="{{ asset('js/trierLesTablesParTh.js') }}"></script>#}
+{#        <script defer src="{{ asset('js/filtrerSorties.js') }}"></script>#}
+{#    {% endblock %}#}
+
+
+
+
+
+

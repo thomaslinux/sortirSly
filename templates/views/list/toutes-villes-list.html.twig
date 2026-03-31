@@ -1,0 +1,29 @@
+{% for v in ville %}
+
+    <tr>
+        <td class="event-name">
+            {{ v.nom }}
+        </td>
+        <td>
+            {{ v.codePostal }}
+        </td>
+        <td class="actions-cell">
+            <a class="action-link"
+               href="{{ path('api_villes_update', {'id': v.id}) }}">Modifier</a>
+            <a class="action-link"
+               href="{{ path('api_villes_delete', {'id': v.id}) }}">Supprimer</a>
+            <a class="action-link"
+               href="{{ path('api_villes_create')}}">Ajouter</a>
+        </td>
+    </tr>
+
+{% endfor %}
+
+{#TODO faire des cases vides pour ajouter une ville#}
+
+
+{#<td class="actions-cell">#}
+
+{#    <a class="action-link"#}
+{#       href="{{ path('api_villes_create')}}">Ajouter</a>#}
+{#</td>#}

@@ -1,0 +1,22 @@
+{% form_theme form 'views/form/form-search-theme.html.twig' %}
+
+<section class="search-section">
+    <h2><span class="material-symbols-outlined">filter_list</span>{% block formTitle %}{% endblock %}</h2>
+
+    {{ form_start(form) }}
+    <div class="filter-grid">
+        <div class="field-group">
+            {{ form_label(form.nom) }}
+            <div class="input-wrapper">
+                {{ form_widget(form.nom, {'attr': {'class': 'input-field'}}) }}
+                <span class="material-symbols-outlined">search</span>
+            </div>
+            {{ form_errors(form.nom) }}
+        </div>
+
+
+        <button>{% block buttonLabel %}{% endblock %}</button>
+    </div>
+
+    {{ form_end(form) }}
+</section>

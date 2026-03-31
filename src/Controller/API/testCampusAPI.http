@@ -1,0 +1,30 @@
+### Create campus
+POST http://localhost:8081/projet_sortir/public/api/campus
+Content-Type: application/json
+
+{
+    "nom": "Saint-Malo"
+}
+
+###
+
+### DELETE campus
+DELETE http://localhost:8081/projet_sortir/public/api/campus/6
+####
+
+###
+PUT http://localhost:8081/projet_sortir/public/api/campus/7
+Content-Type: application/json
+
+{
+    "nom": "SAINT-MALO"
+
+}
+####
+
+### get campus
+GET http://localhost:8081/projet_sortir/public/api/campus/7
+###
+### get campus
+GET http://localhost:8081/projet_sortir/public/api/campus
+###

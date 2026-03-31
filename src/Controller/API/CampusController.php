@@ -2,9 +2,8 @@
 
 namespace App\Controller\API;
 
-use App\Entity\Ville;
-use App\Repository\LieuRepository;
-use App\Repository\VilleRepository;
+use App\Entity\Campus;
+use App\Repository\CampusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,25 +12,24 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/api/lieux', name: "api_lieux_")]
-final class LieuController extends AbstractController
+#[Route('/api/campus', name: "api_campus_")]
+final class CampusController extends AbstractController
 {
     #[Route('', name: 'retrieve_all', methods: 'GET')]
     public function retrieveAll(
-
-        LieuRepository $lieuRepository): Response
+        CampusRepository $campusRepository): Response
     {
-        $lieux = $lieuRepository->findAll();
-        return $this->json($lieux, Response::HTTP_OK, [], ['groups' => 'lieux-api']);
+        $campus = $campusRepository->findAll();
+        return $this->json($campus, Response::HTTP_OK, [],['groups' => 'campus-api']);
     }
 
     #[Route('/{id}', name: 'retrieve_one', methods: ['GET'])]
-    public function retrieveOne(SerializerInterface $serializer,
-                                VilleRepository     $villeRepository,
-                                int                 $id): Response
+    public function retrieveOne(
+        CampusRepository $campusRepository,
+        int              $id): Response
     {
-        $ville = $villeRepository->find($id);
-        return $this->json($ville, Response::HTTP_OK, [], ['groups' => 'villes-api']);
+        $campus = $campusRepository->find($id);
+        return $this->json($campus, Response::HTTP_OK, [],['groups' => 'campus-api']);
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
@@ -41,14 +39,14 @@ final class LieuController extends AbstractController
                            Request                $request): Response
     {
         $json = $request->getContent();
-        $ville = $serializer->deserialize($json, Ville::class, 'json');
-        $errors = $validator->validate($ville);
+        $campus = $serializer->deserialize($json, Campus::class, 'json');
+        $errors = $validator->validate($campus);
         if ($errors->count() == 0) {
-            $entityManager->persist($ville);
+            $entityManager->persist($campus);
             $entityManager->flush();
-            return $this->json($ville, Response::HTTP_CREATED, [], ['groups' => 'villes-api']);
+            return $this->json($campus, Response::HTTP_CREATED, [],['groups' => 'campus-api']);
         } else {
-            return $this->json($errors, Response::HTTP_CREATED, [], ['groups' => 'villes-api']);
+            return $this->json($errors, Response::HTTP_CREATED, [],['groups' => 'campus-api']);
         }
     }
 
@@ -56,15 +54,15 @@ final class LieuController extends AbstractController
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(
         EntityManagerInterface $entityManager,
-        VilleRepository        $villeRepository,
+        CampusRepository       $campusRepository,
         int                    $id
     ): Response
     {
-        $ville = $villeRepository->find($id);
+        $campus = $campusRepository->find($id);
 
-        $entityManager->remove($ville);
+        $entityManager->remove($campus);
         $entityManager->flush();
-        return $this->json(['success' => 'Ville supprimée!'], Response::HTTP_ACCEPTED);
+        return $this->json(['success' => 'Campus supprimée!'], Response::HTTP_ACCEPTED);
 
     }
 
@@ -72,26 +70,22 @@ final class LieuController extends AbstractController
     public function update(
         Request                $request,
         EntityManagerInterface $entityManager,
-        VilleRepository        $villeRepository,
+        CampusRepository       $campusRepository,
         int                    $id
     ): Response
     {
-        $ville = $villeRepository->find($id);
+        $campus = $campusRepository->find($id);
         $data = json_decode($request->getContent(), true);
 
-        if (!$ville) {
+        if (!$campus) {
             return $this->json(['error' => 'Ville non trouvée'], Response::HTTP_NOT_FOUND);
         }
 
         if (isset($data['nom'])) {
-            $ville->setNom($data['nom']);
+            $campus->setNom($data['nom']);
         }
-        if (isset($data['codePostal'])) {
-            $ville->setCodePostal($data['codePostal']);
-        }
-
         $entityManager->flush();
-        return $this->json($ville, Response::HTTP_OK, [], ['groups' => 'villes-api']);
+        return $this->json($campus, Response::HTTP_OK, [],['groups' => 'campus-api']);
 
     }
 

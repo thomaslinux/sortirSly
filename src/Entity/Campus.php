@@ -22,12 +22,14 @@ class Campus
      * @var Collection<int, Participant>
      */
     #[ORM\OneToMany(targetEntity: Participant::class, mappedBy: 'campus')]
+//    #[Groups('campus-api')]
     private Collection $participants;
 
     /**
      * @var Collection<int, Sortie>
      */
     #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'campus')]
+//    #[Groups('campus-api')]
     private Collection $sorties;
 
     public function __construct()
