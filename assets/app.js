@@ -10,6 +10,8 @@ import './styles/eniwhere2.css';
 import './styles/nav2.css';
 import './styles/style_formulaire.css'
 
+import './js/trierLesTablesParTh.js'
+
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
@@ -77,13 +79,11 @@ document.getElementById('mask').addEventListener("click", () => {
     selectVille.value = '';
     selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
 
- if(document.getElementById('mask').innerHTML === "Ajouter un lieu"){
-     document.getElementById('mask').innerHTML="Revenir au choix par défaut"
- } else{
-     document.getElementById('mask').innerHTML="Ajouter un lieu"
- }
-
-
+    if (document.getElementById('mask').innerHTML === "Ajouter un lieu") {
+        document.getElementById('mask').innerHTML = "Revenir au choix par défaut"
+    } else {
+        document.getElementById('mask').innerHTML = "Ajouter un lieu"
+    }
 
 
 })
