@@ -55,7 +55,6 @@ Faire un composer install car ajout du composer league/csv
     - [x] Afficher la barre de recherche multi critères dans la liste des sorties
         - [-] Gérer un affichage par pagination (front ou back ?)
     - [x] Afficher les dates au format (europe/paris) car en UTC dans la database
-   
 
 ## V2 - API recherche de sorties
 
@@ -74,9 +73,13 @@ Faire un composer install car ajout du composer league/csv
 
 ## V4 - Bonus
 
-- [ ] Afficher des sorties en fonction de leur Etat
 - [x] Trier les éléments de la liste de sorties dans le tableau de sorties (javascript)
-- [ ] Croix pour effacer le champ de recherche actuel
+- [-] Masquer des sorties en fonction de leur Etat
+- [x] Recherche Javascript
+    - [x] Recherche javascript désactivable côté client
+    - [x] Croix pour effacer le champ de recherche actuel
+    - [ ] Recherche rapide utilisateurs inscrits
+    - [ ] Recherche rapide organisateur
 
 # Modèle graphique html :
 
