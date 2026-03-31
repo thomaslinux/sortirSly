@@ -87,6 +87,11 @@ Faire un composer install car ajout du composer league/csv
     - [ ] Recherche rapide utilisateurs inscrits
     - [ ] Recherche rapide organisateur
 
+## V5 - Après test utilisateur
+- [ ] Gestion des utilisateur
+  - [ ] Chaque action dans sa colonne nommée plus que la colonne nommée action ?
+  - [ ] Rendre inactif plus que désactiver comme texte on hover
+
 # Modèle graphique html :
 
 https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/CONCEPTION/template-list1.html
