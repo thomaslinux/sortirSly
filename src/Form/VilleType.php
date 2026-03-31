@@ -2,27 +2,34 @@
 
 namespace App\Form;
 
-use App\Form\Model\VilleSearch;
+use App\Entity\Ville;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VilleSearchType extends AbstractType
+class VilleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',TextType::class, [
-        'label' => 'Ville :'
-    ]);
+            ->add('nom', TextType::class, [
+                'label' => 'Nouvelle ville :'
+            ])
+            ->add('codePostal', IntegerType::class, [
+                'label' => 'Code postal associé :',
+                'required' => false,
+            ]);
 
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => VilleSearch::class,
+            'data_class' => Ville::class,
+            'required'=>false
         ]);
     }
 }
