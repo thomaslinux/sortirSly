@@ -44,12 +44,6 @@ final class VilleController extends AbstractController
         return $this->json($ville->getLieux(), Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
 
-
-
-
-
-
-
     #[Route('', name: 'create', methods: ['POST'])]
     public function create(SerializerInterface    $serializer,
                            EntityManagerInterface $entityManager,
