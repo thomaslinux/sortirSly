@@ -1,23 +1,28 @@
 {% for c in campus %}
 
     <tr>
-
-        <td class="event-name">{{ c.nom }}</td>
+        <td class="event-name">
+            {{ c.nom }}
+        </td>
         <td class="actions-cell">
-            <a class="action-link"
-               href="{{ path('admin_campus_modify', {'id': c.id}) }}">
+            <button class="action-link edit-btn"
+                    data-id="{{ c.id }}"
+                    data-nom="{{ c.nom }}"
+            >
                 Modifier
-            </a>
-            <a class="action-link"
-               href="{{ path('admin_campus_delete', {'id': c.id}) }}">
-                Supprimer
-            </a>
+            </button>
 
+            <button class="action-link delete-btn"
+                    data-id="{{ c.id }}"
+                    data-nom="{{ c.nom }}"
+            >
+                Supprimer
+            </button>
         </td>
     </tr>
 {% endfor %}
 
-        {# TODO faire des cases vides pour ajouter une ville #}
+
 
 {{ form_start(campusForm2) }}
 <tr>
@@ -32,3 +37,121 @@
 </tr>
 {{ form_end(campusForm2) }}
 
+
+{#Modal de modification#}
+<div id="editModal"
+     style="display: none; position:fixed; top:50%; left:35%;">
+    <h4>Modifier le campus</h4>
+    <input type="hidden"
+           id="campusId">
+    <div>
+        <label for="campusNom">Nom : </label><input type="text"
+                                                    id="campusNom">
+    </div>
+
+    <br>
+    <button id="saveBtn">Modifier</button>
+    <button onclick="closeModal()">Annuler</button>
+</div>
+
+{#Modal de suppression#}
+<div id="editModal2"
+     style="display: none; position:fixed; top:50%; left:35%;">
+    <h4>Supprimer le campus</h4>
+    <input type="hidden"
+           id="campusId2">
+    <div> <label for="campusNom"></label><input type="text"
+                                                 id="campusNom2"
+                                                 readonly></div>
+
+    <br>
+    <button id="saveBtn2">Supprimer</button>
+    <button onclick="closeModal2()">Annuler</button>
+</div>
+
+<script>
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('editModal').style.display = 'block';
+            document.getElementById('campusId').value = button.dataset.id;
+            document.getElementById('campusNom').value = button.dataset.nom;
+
+        });
+    });
+
+
+    function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+        const id = document.getElementById('campusId').value;
+        const nom = document.getElementById('campusNom').value;
+
+
+
+        fetch('{{ path('api_campus_update') }}/' + id, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({nom})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erreur HTTP " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                location.reload(); // refresh la liste
+            })
+            .catch(error => console.error(error));
+    });
+
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('editModal2').style.display = 'block';
+            document.getElementById('campusId2').value = button.dataset.id;
+            document.getElementById('campusNom2').value = button.dataset.nom;
+
+        });
+    });
+
+    function closeModal2() {
+        document.getElementById('editModal2').style.display = 'none';
+    }
+
+    document.getElementById('saveBtn2').addEventListener('click', () => {
+
+        const id = document.getElementById('campusId2').value;
+        const nom = document.getElementById('campusNom2').value;
+
+
+        console.log('Envoi fetch avec id =', id, 'nom =', nom);
+
+        fetch('{{ path('api_campus_delete') }}/' + id, {
+
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+             // body: JSON.stringify({nom})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erreur HTTP " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                location.reload(); // refresh la liste
+            })
+            .catch(error => console.error(error));
+    });
+
+
+</script>

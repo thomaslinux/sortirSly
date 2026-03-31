@@ -73,10 +73,6 @@ final class AdminController extends AbstractController
         CampusRepository $campusRepository
     ): Response
     {
-        $campusList = $campusRepository->findAll();
-
-
-
 
         $campusSearch = new CampusSearch();
         $campusNew = new Campus();
@@ -101,21 +97,7 @@ final class AdminController extends AbstractController
 
         return $this->render('admin/campus_list.html.twig', ['campus' => $campus, 'campusForm' => $campusForm, 'campusForm2' => $campusForm2]);
 
-
-
-
-
-
-
-
-
-
-
-
-        return $this->render('admin/campus_list.html.twig', [
-            'campusList' => $campusList
-        ]);
-    }
+   }
 
     #[Route('/campus/delete/{id}', name: 'campus_delete')]
     public function campus_delete(): Response
