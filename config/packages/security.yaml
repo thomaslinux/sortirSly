@@ -9,14 +9,6 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\Participant
-                property: username
-        app_user_provider1:
-            entity:
-                class: App\Entity\Participant
-                property: email
-        all:
-            chain:
-                providers: ['app_user_provider','app_user_provider1']
     firewalls:
         dev:
             # Ensure dev tools and static assets are always allowed
@@ -24,7 +16,7 @@ security:
             security: false
         main:
             lazy: true
-            provider: all
+            provider: app_user_provider
             form_login:
                 login_path: app_login
                 check_path: app_login_check

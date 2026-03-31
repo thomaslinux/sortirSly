@@ -65,7 +65,6 @@ final class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
-
     #[Route('/new/users', name: 'new_user_csv', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, ImportParticipantService $importParticipantService): Response
@@ -136,42 +135,28 @@ final class AdminController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function deleteOrInactive(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
     {
+//        trouve tout les utilisateurs
         $participants = $participantRepository->findAll();
         if ($request->isMethod('POST')) {
-            //activer utilisateurs sélectionnés
-            if ($request->request->has('activate')) {
-                $ids = $request->request->all('activate');
-                foreach ($ids as $id) {
-                    $participant = $participantRepository->find($id);
-                    if ($participant) {
-                        $participant->setActif(true);
-                    }
-                }
+            $action = $request->request->get('action');
+            $id = (int)$request->request->get('id');
+            $participant = $participantRepository->find($id);
+            if (!$participant) {
+                $this->addFlash('error', 'User introuvable');
+            } else {
+                match ($action) {
+                    'activate' => $participant->setActif(true),
+                    'inactive' => $participant->setActif(false),
+                    'delete' => $entityManager->remove($participant),
+                    default => null
+                };
                 $entityManager->flush();
+                $this->addFlash('success', match ($action) {
+                    'activate' => 'User activé',
+                    'inactive' => 'User désactivé',
+                    'delete' => 'User supprimé (avec ses sorties)'
+                });
             }
-//            Désactiver un utilisateurs sélectionnés
-            if ($request->request->has('inactive')) {
-                $ids = $request->request->all('inactive');
-                foreach ($ids as $id) {
-                    $participant = $participantRepository->find($id);
-                    if ($participant) {
-                        $participant->setActif(false);
-                    }
-                }
-                $entityManager->flush();
-            }
-//            Supprimer les utilisateurs sélectionnés
-            if ($request->request->has('delete')) {
-                $ids = $request->request->all('delete');
-                foreach ($ids as $id) {
-                    $participant = $participantRepository->find($id);
-                    if ($participant) {
-                        $entityManager->remove($participant);
-                    }
-                }
-                $entityManager->flush();
-            }
-            $this->addFlash('success', 'Actions appliquées avec succès.');
             return $this->redirectToRoute('admin_deleteOrInactive');
         }
 
