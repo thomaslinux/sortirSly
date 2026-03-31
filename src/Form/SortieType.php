@@ -101,7 +101,7 @@ class SortieType extends AbstractType
                 'choice_label' => 'nom',
                 'choice_value' => 'id',
                 'placeholder' => '- Choisir lieu -',
-                'required' => false
+                                'required' => false
 
             ])
             ->add('lieu2', LieuType::class, [
