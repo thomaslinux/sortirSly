@@ -55,7 +55,7 @@ final class CampusController extends AbstractController
     public function delete(
         EntityManagerInterface $entityManager,
         CampusRepository       $campusRepository,
-        int                    $id
+        int                    $id=null
     ): Response
     {
         $campus = $campusRepository->find($id);
@@ -66,19 +66,19 @@ final class CampusController extends AbstractController
 
     }
 
-    #[Route('/{id}', name: 'update', methods: ['Put', 'PATCH'])]
+    #[Route('/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
     public function update(
         Request                $request,
         EntityManagerInterface $entityManager,
         CampusRepository       $campusRepository,
-        int                    $id
+        int                    $id = null
     ): Response
     {
         $campus = $campusRepository->find($id);
         $data = json_decode($request->getContent(), true);
 
         if (!$campus) {
-            return $this->json(['error' => 'Ville non trouvée'], Response::HTTP_NOT_FOUND);
+            return $this->json(['error' => 'Campus non trouvée'], Response::HTTP_NOT_FOUND);
         }
 
         if (isset($data['nom'])) {
