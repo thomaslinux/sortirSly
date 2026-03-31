@@ -4,32 +4,87 @@
     {{ parent() }} | Annulation de sortie
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/cancel-sortie.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h2>test</h2>
-    <div>
-        Sortie : {{ sortie.nom }}
-    </div>
-    <div>
-        Date : {{ sortie.dateHeureDebut | date ('d/m/Y')}}
-    </div>
+    <main class="cancel-event-page">
+        <section class="hero-section">
+            <h1>Annuler une sortie</h1>
+            <p>Vous êtes sur le point d'annuler une sortie programmée. Veuillez vérifier les détails ci-dessous et
+                indiquer
+                le motif de l'annulation.</p>
+        </section>
+        <div class="content-grid">
+            <!-- Left Column: Event Context -->
+            <aside class="event-summary-card">
+                <h2>Récapitulatif de l'événement</h2>
+                <div class="detail-item">
+                    <span class="detail-label">Nom de la sortie</span>
+                    <div class="detail-value">{{ sortie.nom }}</div>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Date de la sortie</span>
+                    <div class="detail-value">
+                        <span class="material-symbols-outlined">calendar_today</span>
+                        {{ sortie.dateHeureDebut | date ('d/m/Y') }}
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Campus</span>
+                        <div class="detail-value">
+                            <span class="material-symbols-outlined">school</span>
+                            {{ sortie.campus.nom }}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Lieu</span>
+                        <div class="detail-value" style="align-items: flex-start; line-height: 1.3;">
+                            <span class="material-symbols-outlined" style="margin-top: 2px;">location_on</span>
+                            Pont Caf rue des compagnons 44900 Château-Thebaud
+                            {{ sortie.lieu.nom }}
+                        </div>
+                        <div style="display: none" class="map-placeholder">
+                            <div class="map-pin">
+                                <span class="material-symbols-outlined">map</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- Right Column: Cancellation Form -->
+            <section class="cancellation-details-card">
+                <div class="card-header">
+                    <div class="icon-badge">
+                        <span class="material-symbols-outlined">cancel_presentation</span>
+                    </div>
+                    <h2>Détails de l'annulation</h2>
+                </div>
+                {{ form_start(cancelSortieForm, {'attr': {'class': 'reason-input-section'}}) }}
+                <label for="{{ field_id(cancelSortieForm.descriptionCancel) }}">Motif de l'annulation *</label>
+                <textarea
+                    class="reason-textarea"
+                    id="{{ field_id(cancelSortieForm.descriptionCancel) }}"
+                    name="{{ field_name(cancelSortieForm.descriptionCancel) }}"
+                    placeholder="Expliquez brièvement pourquoi cette sortie doit être annulée..."></textarea>
+                <p class="helper-text">Ce message sera envoyé à tous les participants inscrits.</p>
 
-    <div>
-        Campus : {{ sortie.campus.nom }}
-    </div>
-    <div>
-        Lieu : {{ sortie.lieu.nom }}
-    </div>
+                {{ form_errors(cancelSortieForm) }}
+                <div class="form-actions">
 
-    <div>
-        {{ form_start(cancelSortieForm) }}
-        {{ form_widget(cancelSortieForm) }}
-        {% if is_granted('CANCEL', sortie) %}
-        <button>Valider</button>
-        {% endif %}
-        {{ form_end(cancelSortieForm) }}
-    </div>
-
-   <a href="{{ path('main_home') }}">Annuler</a>
+                    <button class="btn-confirm" type="submit">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        Enregistrer
+                    </button>
+                    <a href="{{ path('sortie_list') }}" class="btn-cancel">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        Annuler
+                    </a>
+                    {{ form_end(cancelSortieForm) }}
+                </div>
+            </section>
+        </div>
+    </main>
 
 
 {% endblock %}

@@ -1,0 +1,331 @@
+/* ==============================================
+   GESTION UTILISATEURS - ENIMove Design System
+   Version finale propre & compacte
+   ============================================== */
+
+/* Page Header */
+.page-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-container));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-header p {
+    color: var(--on-surface-variant);
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+/* Flash Messages */
+.flash-messages {
+    margin-top: 1.5rem;
+}
+
+.flash-messages > div {
+    background: var(--surface-container);
+    color: var(--tertiary);
+    border: 1px solid var(--tertiary-container);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: var(--surface-container-lowest);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(207, 195, 202, 0.15);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+}
+
+.stat-icon {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stat-icon.actifs {
+    color: var(--tertiary);
+}
+
+.stat-icon.suspendus {
+    color: var(--error);
+}
+
+.stat-badge {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    align-self: center;
+}
+
+.badge-total {
+    background: var(--tertiary-fixed);
+    color: var(--on-tertiary-fixed);
+}
+
+.badge-actifs {
+    background: var(--secondary-container);
+    color: var(--on-secondary);
+}
+
+.badge-suspendus {
+    background: var(--error-container);
+    color: var(--error);
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.stat-label {
+    color: var(--on-surface-variant);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+
+
+
+/* Table Container */
+.content-card {
+    background: var(--surface-container-lowest);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(207, 195, 202, 0.15);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+/* Table Styles - Compacte */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+thead {
+    background: var(--primary);
+}
+
+th {
+    padding: 1rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--on-primary);
+    text-align: left;
+    white-space: nowrap;
+    background: var(--primary);
+}
+
+th span {
+    font-size: 0.7rem;
+    opacity: 0.6;
+    margin-left: 0.25rem;
+}
+
+td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(207, 195, 202, 0.1);
+    vertical-align: middle;
+}
+
+tr:hover td {
+    background: rgba(204, 246, 247, 0.3);
+}
+
+/* Liens Table */
+td a {
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.cell-pseudo {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.cell-pseudo a {
+    color: var(--primary);
+}
+
+.cell-pseudo a:hover {
+    color: var(--primary-container);
+    opacity: 0.9;
+}
+
+.cell-nom {
+    color: var(--on-surface-variant);
+    font-weight: 500;
+}
+
+.cell-nom a {
+    color: var(--on-surface-variant);
+}
+
+.cell-nom a:hover {
+    color: var(--primary-container);
+    opacity: 0.9;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.status-active {
+    background: var(--surface-container);
+    color: var(--tertiary);
+}
+
+.status-inactive {
+    background: var(--error-container);
+    color: var(--error);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.dot-active {
+    background: var(--tertiary);
+}
+
+.dot-inactive {
+    background: var(--error);
+}
+
+/* Action Buttons ENIMove */
+.action-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.btn-action {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    font-size: 18px;
+}
+
+.btn-toggle {
+    background: var(--surface-container-highest);
+    color: var(--primary-container);
+}
+
+.btn-toggle.inactive {
+    background: var(--secondary-container);
+    color: var(--on-secondary);
+}
+
+.btn-delete {
+    background: var(--error-container);
+    color: var(--error);
+}
+
+.btn-toggle:hover {
+    background: var(--primary-container);
+    color: white;
+}
+
+.btn-toggle.inactive:hover {
+    background: var(--secondary);
+    color: white;
+}
+
+.btn-delete:hover {
+    background: var(--error);
+    color: white;
+}
+
+/* Material Icons */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    th, td {
+        padding: 0.875rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .page-header h1 {
+        font-size: 2.25rem;
+    }
+    th, td {
+        padding: 0.75rem 0.875rem;
+    }
+    .action-group {
+        gap: 0.5rem;
+    }
+}

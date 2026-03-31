@@ -14,17 +14,19 @@ class CancelSortieType extends AbstractType
     {
         $user = $options['user'];
         $builder
-            ->add('descriptionCancel',TextareaType::class,[
-                'label' => 'Motif d\'annulation :'
-            ])
-        ;
+            ->add('descriptionCancel', TextareaType::class, [
+                'label' => 'Motif de l\'annulation :',
+                'attr' => [
+                    'class' => 'reason-textarea'
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => CancelSortie::class,
-            'required'=>true,
+            'required' => false,
             'user' => null
         ]);
     }

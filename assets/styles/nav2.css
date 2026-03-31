@@ -164,3 +164,19 @@ button:focus {
         display: none;
     }
 }
+.brand-logo img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .brand-logo img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .brand-logo .logo-text {
+        font-size: 1.2rem;
+    }
+}
