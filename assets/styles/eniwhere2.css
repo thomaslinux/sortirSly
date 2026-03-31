@@ -217,38 +217,72 @@ a {
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     border: 1px solid rgba(207, 195, 202, 0.15);
+    margin-bottom: 2rem;
 }
 
-.event-table {
+
+/* ==============================================
+   TABLES GLOBALES - Style ENIMove
+   ============================================== */
+
+/* Tous les tableaux */
+table {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
+    font-size: 0.95rem;
+    background: var(--surface-container-lowest);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(207, 195, 202, 0.15);
 }
 
-.event-table th {
-    background: rgba(210, 251, 252, 0.5);
-    padding: 1.25rem 1.5rem;
-    font-size: 0.7rem;
+/* THEAD = VIOLET FONCÉ + TEXTE BLANC */
+thead {
+    background: var(--primary);
+}
+
+thead th {
+    padding: 1rem 1.5rem;
+    font-size: 0.75rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--on-surface-variant);
+    color: var(--on-primary); /* BLANC */
+    text-align: left;
+    white-space: nowrap;
+    background: var(--primary);
 }
 
-.event-table td {
-    padding: 1.25rem 1.5rem;
+/* CORPS TABLEAU = BLANC */
+tbody {
+    background: white;
+}
+
+tbody td {
+    padding: 1rem 1.5rem;
     border-bottom: 1px solid rgba(207, 195, 202, 0.1);
     vertical-align: middle;
+    background: white;
 }
 
-.event-table tr:last-child td {
-    border-bottom: none;
+/* Hover lignes */
+tbody tr:hover td {
+    background: rgba(204, 246, 247, 0.3);
 }
 
-.event-table tr:hover {
-    background: rgba(210, 251, 252, 0.3);
+/* Liens dans les tableaux */
+tbody td a {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
+tbody td a:hover {
+    color: var(--primary-container);
+    opacity: 0.9;
+}
 .event-name {
     font-weight: 700;
     color: var(--primary);
@@ -463,6 +497,9 @@ a {
     .filter-grid {
         grid-template-columns: 1fr 1fr;
     }
+    thead th, tbody td {
+        padding: 0.875rem 1rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -482,5 +519,11 @@ a {
 
     .mobile-hidden {
         display: none;
+    }
+    thead th, tbody td {
+        padding: 0.75rem 0.875rem;
+    }
+    table {
+        font-size: 0.9rem;
     }
 }
