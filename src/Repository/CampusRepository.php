@@ -26,29 +26,23 @@ class CampusRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findCampusBySearch(mixed $campusSearch)
+    {
+        $campusNom = $campusSearch->getNom();
 
-    //    /**
-    //     * @return Campus[] Returns an array of Campus objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?Campus
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $qb = $this->createQueryBuilder('c');
+        if ($campusNom) {
+            $qb
+                ->andWhere($qb->expr()->like('c.nom', ':campusNom'))
+                ->setParameter('campusNom', '%' . $campusNom . '%');
+        }
+        $qb
+            ->orderBy('c.nom', 'DESC');
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+
 }

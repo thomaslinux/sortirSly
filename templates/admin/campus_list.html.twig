@@ -4,31 +4,32 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Campus list</h2>
+    <h2>Gérer les Campus</h2>
+
+
+    {% embed 'views/form/template-form-search-ville.html.twig' with {form : campusForm} %}
+        {% block formTitle %}Filtrer les campus{% endblock %}
+        {% block buttonLabel %}
+            Rechercher
+        {% endblock %}
+        {% block sortieLength %}
+            {{ campus | length }}
+        {% endblock %}
+    {% endembed %}
+
+<section class="event-list">
     <table class="event-table sortable">
         <thead>
         <tr>
-            <th>Campus <span>&uarr;</span></th>
-            <th>Action</th>
+            <th>Nom<span>&uarr;</span></th>
+            <th style="text-align: right;">Actions <span>&uarr;</span></th>
         </tr>
         </thead>
         <tbody>
-        {% for campus in campusList %}
-            <tr>
 
-                <td>{{ campus.nom }}</td>
-                <td class="actions-cell">
-                    <a class="action-link" href="{{ path('admin_campus_modify', {'id': campus.id}) }}">
-                        Modifier
-                    </a>
-                    <a class="action-link" href="{{ path('admin_campus_delete', {'id': campus.id}) }}">
-                        Supprimer
-                    </a>
 
-                </td>
-            </tr>
-        {% endfor %}
+        {% include 'views/list/tous-campus-list.html.twig' %}
+
         </tbody>
     </table>
 {% endblock %}
-

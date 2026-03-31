@@ -1,0 +1,34 @@
+{% for c in campus %}
+
+    <tr>
+
+        <td class="event-name">{{ c.nom }}</td>
+        <td class="actions-cell">
+            <a class="action-link"
+               href="{{ path('admin_campus_modify', {'id': c.id}) }}">
+                Modifier
+            </a>
+            <a class="action-link"
+               href="{{ path('admin_campus_delete', {'id': c.id}) }}">
+                Supprimer
+            </a>
+
+        </td>
+    </tr>
+{% endfor %}
+
+        {# TODO faire des cases vides pour ajouter une ville #}
+
+{{ form_start(campusForm2) }}
+<tr>
+    <td>{{ form_row(campusForm2.nom , {'attr': {'class': 'input-field'}}) }}</td>
+
+    <td class="actions-cell">
+
+        <button type="submit"
+                class="action-link">Ajouter
+        </button>
+    </td>
+</tr>
+{{ form_end(campusForm2) }}
+
