@@ -5,75 +5,165 @@
     {{ parent() }} |  {{ sortie.nom }}
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/details-sortie.css') }}">
+{% endblock %}
 
 {% block body %}
-    <div>
-        Sortie : {{ sortie.nom }}
-    </div>
-    <div>
-        Date et heure : {{ sortie.dateHeureDebut | date ('d/m/Y, h:i:s') }}
-    </div>
-    <div>
-        Date limite d'inscription : {{ sortie.dateLimiteInscription | date ('d/m/Y') }}
-    </div>
-    <div>
-        Nombre de places : {{ sortie.nbPlaces }}
-    </div>
-    <div>
-        Durée : {{ sortie.duree }}
-    </div>
-    <div>
-        Description et infos : {{ sortie.description }}
-    </div>
-    <div>
-        Campus : {{ sortie.campus.nom }}
-    </div>
-    <div>
-        Lieu : {{ sortie.lieu.nom }}
-    </div>
-    {#   TODO ajouter les infos du lieu #}
+    <main class="page-container">
+        <a class="back-button" href="{{ path('sortie_list') }}">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Retour à la liste des sorties
+        </a>
+        <div class="event-details-grid">
+            <div class="content-left">
+                <section>
+                    <div class="section-header">
+                        <div class="icon-box icon-box-primary">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                        </div>
+                        <h2 class="section-title">{{ sortie.nom }}</h2>
 
-    <section>
-        <table>
-            <thead>
-            <tr>
-                <td colspan="2">Liste des participants :</td>
-            </tr>
-            <tr>
-                <th>Pseudo</th>
-                <th>Nom</th>
-            </tr>
-            </thead>
-            <tbody>
+                    </div>
+                    <div>
+                        {% if is_granted('INS', sortie) %}
+                            <a class="btn"
+                               href="{{ path('sortie_subscribe', {'id': sortie.id}) }}">S'inscrire</a>
 
-            {% for participant in sortie.inscriptions %}
+                        {% endif %}
+
+                        {% if is_granted('DESINS', sortie) %}
+                            <a class="btn"
+                               href="{{ path('sortie_unsubscribe', {'id': sortie.id}) }}">Se désister</a>
+                        {% endif %}
+
+                        {% if is_granted('EDIT', sortie) %}
+                            <a class="btn"
+                               href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
+
+                        {% endif %}
+
+                        {% if is_granted('PUBLISH', sortie) %}
+                            <a class="btn"
+                               href="{{ path('sortie_publishId', {'id': sortie.id}) }}">Publier</a>
+                        {% endif %}
+
+                        {% if is_granted('CANCEL', sortie) %}
+                            <a class="btn"
+                               href="{{ path('sortie_cancel', {'id': sortie.id}) }}">Annuler</a>
+                        {% endif %}
+                    </div>
+                    <div class="info-card">
+                        <div class="info-item">
+                            <label>Date et heure</label>
+                            <p>{{ sortie.dateHeureDebut | date ('d/m/Y, h:i:s') }}</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Date limite d'inscription</label>
+                            <p>{{ sortie.dateLimiteInscription | date ('d/m/Y') }}</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Participants</label>
+                            <p>{{ sortie.inscriptions.count }} / {{ sortie.nbPlaces }}</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Durée</label>
+                            <p><span id="dureeSortie">{{ sortie.duree }}</span> Minutes</p>
+                        </div>
+                    </div>
+                    <div class="description-section">
+                        <label
+                            style="display: block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--tertiary); opacity: 0.6; margin-bottom: 1rem;">Description</label>
+                        <p class="description-text">
+                            {{ sortie.description }}
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="logistics-sidebar">
+                <div class="section-header">
+                    <div class="icon-box icon-box-dark">
+                        <span class="material-symbols-outlined">location_on</span>
+                    </div>
+                    <h2 class="section-title">Logistics</h2>
+                </div>
+                <div class="logistics-item">
+                    <label
+                        style="font-size: 0.65rem; font-weight: 800; color: var(--tertiary); opacity: 0.6; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem;">Campus</label>
+                    <p style="font-weight: 700; color: var(--primary); font-size: 1.1rem;">{{ sortie.campus.nom }}</p>
+                </div>
+                <div class="logistics-item">
+                    <label
+                        style="font-size: 0.65rem; font-weight: 800; color: var(--tertiary); opacity: 0.6; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem;">Lieu
+                        et rue</label>
+                    <p style="font-weight: 700; color: var(--primary); font-size: 1.1rem;">{{ sortie.lieu.nom }}
+                        , {{ sortie.lieu.rue }}</p>
+                </div>
+                <div class="logistics-item">
+                    <label
+                        style="font-size: 0.65rem; font-weight: 800; color: var(--tertiary); opacity: 0.6; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem;">Zip
+                        Code</label>
+                    <p style="font-weight: 700; color: var(--primary); font-size: 1.1rem;">{{ sortie.lieu.ville.codePostal }} {{ sortie.lieu.ville.nom }}</p>
+                </div>
+                <div class="coords-grid">
+                    <div class="coord-pill">
+                        <label>Latitude</label>
+                        <p><span id="latitude">{{ sortie.lieu.latitude }}</span>° N</p>
+                    </div>
+                    <div class="coord-pill">
+                        <label>Longitude</label>
+                        <p><span id="longitude">{{ sortie.lieu.longitude }}</span>° W</p>
+                    </div>
+                    <div style="display: none" class="map-preview">
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+
+    <section class="participants-section">
+        <div class="participants-section-top">
+            <div class="section-header" style="margin-bottom: 0;">
+                <div class="icon-box icon-box-secondary">
+                    <span class="material-symbols-outlined">group</span>
+                </div>
+                <h2 class="section-title">Participants</h2>
+            </div>
+
+        </div>
+        <div class="table-container">
+            <table class="participants-table">
+                <thead>
                 <tr>
-                    <td>
-                        <a href="{{ path('participant_profil', {'id': participant.id}) }}"> {{ participant.username }}</a>
-
-                    </td>
-
-                    <td>
-                        <a href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.prenom }} {{ participant.nom }}</a>
-                    </td>
+                    <th>Pseudo</th>
+                    <th>Name</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="2">Aucun participant</td>
-                </tr>
-            {% endfor %}
+                </thead>
+                <tbody>
 
-            </tbody>
+                {% for participant in sortie.inscriptions %}
+                    <tr>
+                        <td class="pseudo-cell">
+                            <a href="{{ path('participant_profil', {'id': participant.id}) }}"> {{ participant.username }}</a>
+                        </td>
+                        <td class="name-cell">
+                            <a href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.prenom }} {{ participant.nom }}</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">Aucun participant</td>
+                    </tr>
+                {% endfor %}
 
-        </table>
+                </tbody>
 
+            </table>
+        </div>
 
     </section>
-
-
-
-
-
 
 
 {% endblock %}

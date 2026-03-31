@@ -63,13 +63,20 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        $villes = "Chartres-de-Bretagne; Bruz; Rennes; Quimper; Brest; Niort; Nantes";
-        $villeList = explode("; ", $villes);
+        $villeList = array(
+            '35131' => 'Chartres-de-Bretagne',
+            '35170' => 'Bruz',
+            '35000' => 'Rennes',
+            '29000' => 'Quimper',
+            '29200' => 'Brest',
+            '79000' => 'Niort',
+            '44000' => 'Nantes',
+        );
 
-        foreach ($villeList as $element) {
+        foreach ($villeList as $codePostal => $nom) {
             $ville = new Ville();
-            $ville->setNom($element);
-            $ville->setCodePostal($faker->numberBetween(10000, 99999));
+            $ville->setNom($nom);
+            $ville->setCodePostal($codePostal);
 
             $manager->persist($ville);
         }
