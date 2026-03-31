@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Dto\UserImport;
 use App\Entity\Participant;
 use App\Entity\Ville;
+use App\Form\Model\VilleSearch;
 use App\Form\ParticipantType;
 use App\Form\UserImportType;
-use App\Repository\CampusRepository;
 use App\Form\VilleSearchType;
+use App\Repository\CampusRepository;
+use App\Form\VilleType;
 use App\Repository\ParticipantRepository;
 use App\Repository\VilleRepository;
 use App\Service\ImportParticipantService;
@@ -30,17 +32,33 @@ final class AdminController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function villes_list(
         EntityManagerInterface $entityManager,
-        villeRepository       $villeRepository,
+        villeRepository        $villeRepository,
         Request                $request): Response
     {
 
-        $villeSearch = new Ville();
-        $villeForm=$this->createForm(VilleSearchType::class,$villeSearch);
-        $villeForm->handleRequest($request);
-        $villeSearch = $villeForm->getData();
-        $ville = $villeRepository->findVillesBySearch($villeSearch);
+        $villeSearch = new VilleSearch();
+        $villeNew = new Ville();
+        $ville = $villeRepository->findAll();
 
-        return $this->render('admin/villes_list.html.twig', ['ville'=>$ville,'villeForm'=>$villeForm]);
+        $villeForm = $this->createForm(VilleSearchType::class, $villeSearch);
+        $villeForm2 = $this->createForm(VilleType::class, $villeNew);
+        $villeForm->handleRequest($request);
+        $villeForm2->handleRequest($request);
+
+
+        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
+            $villeSearch = $villeForm->getData();
+            $ville = $villeRepository->findVillesBySearch($villeSearch);
+
+        }
+
+        if ($villeForm2->isSubmitted() && $villeForm2->isValid()) {
+            $villeNew = $villeForm2->getData();
+            $entityManager->persist($villeNew);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_villes_list');
+        }
+        return $this->render('admin/villes_list.html.twig', ['ville' => $ville, 'villeForm' => $villeForm, 'villeForm2' => $villeForm2]);
     }
 
     #[Route('/campus/list', name: 'campus_list')]
@@ -76,6 +94,7 @@ final class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
     #[Route('/new/users', name: 'new_user_csv', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, ImportParticipantService $importParticipantService): Response
