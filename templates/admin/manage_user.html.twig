@@ -4,13 +4,58 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Gérer les utilisateurs</h2>
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label">Espace Administration</span>
+            <h2>Gérer les utilisateurs</h2>
+            <p>
+                Organisez votre communauté, importez massivement vos membres ou créez des accès individuels en toute simplicité.
+            </p>
+        </div>
+    </section>
 
-    <a class="btn btn-gradient" href="{{ path('admin_new_user_csv') }}">Création de plusieurs utilisateurs via un
-        fichier .csv</a>
-    <a class="btn btn-gradient" href="{{ path('admin_new_user') }}">Création d'un utilisateur via un formulaire
-        classique</a>
-    <a class="btn btn-gradient" href="{{ path('admin_deleteOrInactive') }}">Gestion des utilisateurs </a>
+    <section class="action-grid">
+        <!-- Card 1: CSV -->
+        <a href="{{ path('admin_new_user_csv') }}" class="card">
+            <div class="card-icon icon-csv">
+                <span class="material-symbols-outlined">upload_file</span>
+            </div>
+            <h3>Création multiple via CSV</h3>
+            <p>Importez rapidement de larges listes de contacts. Regardez notre gabarit pour une compatibilité parfaite.</p>
+            <div class="card-btn">
+                <span>Importer un fichier</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </div>
+        </a>
 
+        <!-- Card 2: Formulaire -->
+        <a href="{{ path('admin_new_user') }}" class="card">
+            <div class="card-icon icon-form">
+                <span class="material-symbols-outlined">person_add</span>
+            </div>
+            <h3>Création utilisateur</h3>
+            <p>Ajoutez manuellement un nouvel utilisateur en renseignant toutes ses informations dès la création, notamment son mot de passe, le campus affilié et une photo de profil.</p>
+            <div class="card-btn">
+                <span>Ouvrir formulaire</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </div>
+        </a>
+
+        <!-- Card 3: Gestion -->
+        <a href="{{ path('admin_deleteOrInactive') }}" class="card">
+            <div class="card-icon icon-manage">
+                <span class="material-symbols-outlined">manage_accounts</span>
+            </div>
+            <h3>Gestion utilisateurs</h3>
+            <p>Supprimez, suspendez ou réactivez les comptes de tous vos utilisateurs actifs pour une gestion simplifiée des utilisateurs.</p>
+            <div class="card-btn">
+                <span>Accéder répertoire</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </div>
+        </a>
+    </section>
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/manage_user.css') }}">
+{% endblock %}
