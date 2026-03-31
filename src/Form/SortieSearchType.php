@@ -21,7 +21,10 @@ class SortieSearchType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Nom de la sortie',
-                'attr' => ['placeholder' => 'Rechercher...'],
+                'attr' => [
+                    'placeholder' => 'Rechercher...',
+                    'autofocus' => 'true'
+                ],
             ])
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
