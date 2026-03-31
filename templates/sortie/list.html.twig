@@ -3,6 +3,10 @@
     Liste des sorties
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/css-search-checkbox.css') }}">
+{% endblock %}
+
 {% block body %}
     {#    {% include 'views/list/pc-list-search.html.twig' %} #}
     {% embed 'views/form/template-form-search-sortie.html.twig' with {form : sortieForm} %}
