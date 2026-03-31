@@ -215,3 +215,24 @@ input[type="file"].form-widget {
         grid-template-columns: 1fr;
     }
 }
+    /* ==============================================
+   David - cacher les lieux
+   ============================================== */
+
+ .show-me{
+     display: block;
+ }
+
+ .hide-me{
+    display: none   ;
+ }
+
+
+
+
+
+
+
+
+
+

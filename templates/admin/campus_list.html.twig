@@ -5,6 +5,30 @@
 
 {% block body %}
     <h2>Campus list</h2>
-    <h3>Page a faire</h3>
+    <table class="event-table sortable">
+        <thead>
+        <tr>
+            <th>Campus <span>&uarr;</span></th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for campus in campusList %}
+            <tr>
+
+                <td>{{ campus.nom }}</td>
+                <td class="actions-cell">
+                    <a class="action-link" href="{{ path('admin_campus_modify', {'id': campus.id}) }}">
+                        Modifier
+                    </a>
+                    <a class="action-link" href="{{ path('admin_campus_delete', {'id': campus.id}) }}">
+                        Supprimer
+                    </a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
 

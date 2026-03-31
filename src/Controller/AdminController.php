@@ -6,6 +6,7 @@ use App\Dto\UserImport;
 use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Form\UserImportType;
+use App\Repository\CampusRepository;
 use App\Repository\ParticipantRepository;
 use App\Service\ImportParticipantService;
 use App\utils\FileUploader;
@@ -33,11 +34,27 @@ final class AdminController extends AbstractController
 
     #[Route('/campus/list', name: 'campus_list')]
     #[IsGranted('ROLE_ADMIN')]
-    public function campus_list(): Response
+    public function campus_list(
+        CampusRepository $campusRepository
+    ): Response
     {
+        $campusList = $campusRepository->findAll();
         return $this->render('admin/campus_list.html.twig', [
-            'controller_name' => 'AdminController',
+            'campusList' => $campusList
         ]);
+    }
+
+    #[Route('/campus/delete/{id}', name: 'campus_delete')]
+    public function campus_delete(): Response
+    {
+        // TODO logique de suppression
+        // TODO delete on cascade
+    }
+
+    #[Route('/campus/modify/{id}', name: 'campus_modify')]
+    public function campus_modify(): Response
+    {
+        // TODO logique de modification
     }
 
     #[Route('/manage/user', name: 'manage_user', methods: ['GET'])]
@@ -48,7 +65,6 @@ final class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
-
     #[Route('/new/users', name: 'new_user_csv', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, ImportParticipantService $importParticipantService): Response
@@ -143,6 +159,8 @@ final class AdminController extends AbstractController
             }
             return $this->redirectToRoute('admin_deleteOrInactive');
         }
+
+
         return $this->render('admin/participant_deleteOrInactive.html.twig', [
             'participants' => $participants,
         ]);

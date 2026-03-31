@@ -105,7 +105,11 @@ button,
 }
 
 button:hover,
-.btn:hover {
+.btn:hover,
+.btn:focus,
+button:focus {
+    background: var(--secondary);
+    /*color: var(--primary);*/
     box-shadow: 0 6px 20px rgba(65, 43, 64, 0.3);
     cursor: pointer;
 }

@@ -30,12 +30,9 @@ final class SortieController extends AbstractController
 {
     #[Route("/list", name: 'list', methods: ['GET', 'POST'])]
     public function list(
-        EntityManagerInterface $entityManager,
-        SortieRepository       $sortieRepository,
-        CampusRepository       $campusRepository,
-        ParticipantRepository  $participantRepository,
-        SortieService          $sortieService,
-        Request                $request
+        SortieRepository $sortieRepository,
+        SortieService    $sortieService,
+        Request          $request
     )
     {
         // TODO récupérer le campus du current User et l'envoyer dans le formulaire de recherche
@@ -94,7 +91,7 @@ final class SortieController extends AbstractController
             $sortie->setLieu($lieuSelectionne);
         } elseif ($lieuAjoute && $lieuAjoute->getNom()) {
             $entityManager->persist($lieuAjoute);
-           $sortie->setLieu($lieuAjoute);
+            $sortie->setLieu($lieuAjoute);
         } else {
             $sortieForm->get('lieu')->addError(
                 new FormError('Veuillez sélectionner ou créer un lieu.')
@@ -128,7 +125,7 @@ final class SortieController extends AbstractController
         if ($id === null) {
             return $this->render('sortie/create.html.twig', ['sortieForm' => $sortieForm]);
         } else {
-            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm,'sortie' => $sortie]);
+            return $this->render('sortie/update.html.twig', ['sortieForm' => $sortieForm, 'sortie' => $sortie]);
         }
 
     }

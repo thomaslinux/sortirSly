@@ -1,9 +1,14 @@
 # Projet sorties
 
-Projets d'organisations de sorties pour les élèves de l'ENI. Ce projet est conçu pour fonctionner avec wamp. Vous pouvez
+Projets d'organisations de sorties pour les élèves de l'ENI.
+
+Ce projet est conçu pour fonctionner avec wamp. Vous pouvez
 télécharger wamp ici :
 
 https://wampserver.aviatechno.net/
+
+Et télécharger composer ici :
+https://getcomposer.org/download/
 
 # Installation du projet
 
@@ -50,7 +55,6 @@ Faire un composer install car ajout du composer league/csv
     - [x] Afficher la barre de recherche multi critères dans la liste des sorties
         - [-] Gérer un affichage par pagination (front ou back ?)
     - [x] Afficher les dates au format (europe/paris) car en UTC dans la database
-    - [x] Trier les éléments de la liste de sorties dans le tableau de sorties (javascript)
 
 ## V2 - API recherche de sorties
 
@@ -69,7 +73,13 @@ Faire un composer install car ajout du composer league/csv
 
 ## V4 - Bonus
 
-- [ ] Afficher des sorties en fonction de leur Etat
+- [x] Trier les éléments de la liste de sorties dans le tableau de sorties (javascript)
+- [-] Masquer des sorties en fonction de leur Etat
+- [x] Recherche Javascript
+    - [x] Recherche javascript désactivable côté client
+    - [x] Croix pour effacer le champ de recherche actuel
+    - [ ] Recherche rapide utilisateurs inscrits
+    - [ ] Recherche rapide organisateur
 
 # Modèle graphique html :
 
