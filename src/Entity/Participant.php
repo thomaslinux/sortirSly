@@ -119,7 +119,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function isEnabled(): bool
     {
-        return $this->actif;  // Utilise votre champ existant !
+        return $this->actif;
     }
     /**
      * @see UserInterface
