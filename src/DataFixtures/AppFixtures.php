@@ -63,13 +63,20 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        $villes = "Chartres-de-Bretagne; Bruz; Rennes; Quimper; Brest; Niort; Nantes";
-        $villeList = explode("; ", $villes);
+        $villeList = array(
+            '35131' => 'Chartres-de-Bretagne',
+            '35170' => 'Bruz',
+            '35000' => 'Rennes',
+            '29000' => 'Quimper',
+            '29200' => 'Brest',
+            '79000' => 'Niort',
+            '44000' => 'Nantes',
+        );
 
-        foreach ($villeList as $element) {
+        foreach ($villeList as $codePostal => $nom) {
             $ville = new Ville();
-            $ville->setNom($element);
-            $ville->setCodePostal($faker->numberBetween(10000, 99999));
+            $ville->setNom($nom);
+            $ville->setCodePostal($codePostal);
 
             $manager->persist($ville);
         }
@@ -154,17 +161,16 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 200; $i++) {
             $sortie = new Sortie();
             $sortie
-                ->setNom($faker->realText(30))
                 ->setDateHeureDebut($faker->dateTimeBetween('-2 month', '+2 months', 'Europe/Paris'))
                 ->setDateLimiteInscription($faker->dateTimeBetween($sortie->getDateHeureDebut()->modify('-14 days'), $sortie->getDateHeureDebut()->modify('-1 days'), 'Europe/Paris'))
                 ->setDuree($faker->numberBetween(15, 180))
                 ->setNbPlaces($faker->numberBetween(2, 40))
-                ->setDescription($faker->realText(255));
-            $sortie
+                ->setDescription($faker->realText(255))
                 ->setOrganisateur($faker->randomElement($participantList))
                 ->setCampus($faker->randomElement($campusList))
                 ->setEtat($faker->randomElement($etatList))
-                ->setLieu($faker->randomElement($lieuList));
+                ->setLieu($faker->randomElement($lieuList))
+                ->setNom($sortie->getLieu()->getNom() . ' - ' . $sortie->getLieu()->getVille()->getNom());
             $manager->persist($sortie);
         }
         $manager->flush();

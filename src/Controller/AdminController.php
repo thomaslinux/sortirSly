@@ -3,12 +3,18 @@
 namespace App\Controller;
 
 use App\Dto\UserImport;
+use App\Entity\Campus;
 use App\Entity\Participant;
 use App\Entity\Ville;
+use App\Form\CampusSearchType;
+use App\Form\CampusType;
+use App\Form\Model\CampusSearch;
+use App\Form\Model\VilleSearch;
 use App\Form\ParticipantType;
 use App\Form\UserImportType;
-use App\Repository\CampusRepository;
 use App\Form\VilleSearchType;
+use App\Repository\CampusRepository;
+use App\Form\VilleType;
 use App\Repository\ParticipantRepository;
 use App\Repository\VilleRepository;
 use App\Service\ImportParticipantService;
@@ -30,26 +36,82 @@ final class AdminController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function villes_list(
         EntityManagerInterface $entityManager,
-        villeRepository       $villeRepository,
+        villeRepository        $villeRepository,
         Request                $request): Response
     {
 
-        $villeSearch = new Ville();
-        $villeForm=$this->createForm(VilleSearchType::class,$villeSearch);
-        $villeForm->handleRequest($request);
-        $villeSearch = $villeForm->getData();
-        $ville = $villeRepository->findVillesBySearch($villeSearch);
+        $villeSearch = new VilleSearch();
+        $villeNew = new Ville();
+        $ville = $villeRepository->findAll();
 
-        return $this->render('admin/villes_list.html.twig', ['ville'=>$ville,'villeForm'=>$villeForm]);
+        $villeForm = $this->createForm(VilleSearchType::class, $villeSearch);
+        $villeForm2 = $this->createForm(VilleType::class, $villeNew);
+        $villeForm->handleRequest($request);
+        $villeForm2->handleRequest($request);
+
+
+        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
+            $villeSearch = $villeForm->getData();
+            $ville = $villeRepository->findVillesBySearch($villeSearch);
+
+        }
+
+        if ($villeForm2->isSubmitted() && $villeForm2->isValid()) {
+            $villeNew = $villeForm2->getData();
+            $entityManager->persist($villeNew);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_villes_list');
+        }
+        return $this->render('admin/villes_list.html.twig', ['ville' => $ville, 'villeForm' => $villeForm, 'villeForm2' => $villeForm2]);
     }
 
     #[Route('/campus/list', name: 'campus_list')]
     #[IsGranted('ROLE_ADMIN')]
     public function campus_list(
+        EntityManagerInterface $entityManager,
+        Request                $request,
         CampusRepository $campusRepository
     ): Response
     {
         $campusList = $campusRepository->findAll();
+
+
+
+
+        $campusSearch = new CampusSearch();
+        $campusNew = new Campus();
+        $campus = $campusRepository->findAll();
+
+        $campusForm = $this->createForm(CampusSearchType::class, $campusSearch);
+        $campusForm2 = $this->createForm(CampusType::class, $campusNew);
+        $campusForm->handleRequest($request);
+        $campusForm2->handleRequest($request);
+
+        if ($campusForm->isSubmitted() && $campusForm->isValid()) {
+            $campusSearch = $campusForm->getData();
+            $campus = $campusRepository->findCampusBySearch($campusSearch);
+        }
+
+        if ($campusForm2->isSubmitted() && $campusForm2->isValid()) {
+            $campusNew = $campusForm2->getData();
+            $entityManager->persist($campusNew);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_campus_list');
+        }
+
+        return $this->render('admin/campus_list.html.twig', ['campus' => $campus, 'campusForm' => $campusForm, 'campusForm2' => $campusForm2]);
+
+
+
+
+
+
+
+
+
+
+
+
         return $this->render('admin/campus_list.html.twig', [
             'campusList' => $campusList
         ]);
@@ -76,6 +138,7 @@ final class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
     #[Route('/new/users', name: 'new_user_csv', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, ImportParticipantService $importParticipantService): Response
