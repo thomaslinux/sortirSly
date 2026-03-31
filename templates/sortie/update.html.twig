@@ -4,6 +4,10 @@
     {{ parent() }} | Modification de sortie
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/style_formulaire.css') }}">
+{% endblock %}
+
 {% block body %}
     <div>
         {% embed 'views/form/template-form-sortie.html.twig' %}
