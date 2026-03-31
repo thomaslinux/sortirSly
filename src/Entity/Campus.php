@@ -21,13 +21,13 @@ class Campus
     /**
      * @var Collection<int, Participant>
      */
-    #[ORM\OneToMany(targetEntity: Participant::class, mappedBy: 'campus')]
+    #[ORM\OneToMany(targetEntity: Participant::class, mappedBy: 'campus', cascade: ['remove'])]
     private Collection $participants;
 
     /**
      * @var Collection<int, Sortie>
      */
-    #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'campus')]
+    #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'campus', cascade: ['remove'])]
     private Collection $sorties;
 
     public function __construct()
