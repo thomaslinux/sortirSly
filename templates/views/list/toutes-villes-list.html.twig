@@ -12,8 +12,7 @@
                href="{{ path('api_villes_update', {'id': v.id}) }}">Modifier</a>
             <a class="action-link"
                href="{{ path('api_villes_delete', {'id': v.id}) }}">Supprimer</a>
-            <a class="action-link"
-               href="{{ path('api_villes_create')}}">Ajouter</a>
+
         </td>
     </tr>
 
@@ -21,9 +20,14 @@
 
 {#TODO faire des cases vides pour ajouter une ville#}
 
+{{ form_start(villeForm2) }}
+<tr>
+    <td>{{ form_row(villeForm2.nom , {'attr': {'class': 'input-field'}}) }}</td>
+    <td>{{ form_row(villeForm2.codePostal, {'attr': {'class': 'input-field'}}) }}</td>
+    <td class="actions-cell">
 
-{#<td class="actions-cell">#}
+        <button type="submit" class="action-link">Ajouter</button>
+    </td>
+</tr>
+{{ form_end(villeForm2) }}
 
-{#    <a class="action-link"#}
-{#       href="{{ path('api_villes_create')}}">Ajouter</a>#}
-{#</td>#}
