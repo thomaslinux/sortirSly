@@ -24,3 +24,4 @@ services:
     App\Service\JWTService:
         arguments:
             $secret: '%env(APP_JWT_SECRET)%'
+
