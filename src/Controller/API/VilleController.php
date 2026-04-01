@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 // Controller API de gestion des "Villes"
 #[Route('/sortie/api/villes', name: "api_villes_")]
-#[IsGranted("ROLE_ADMIN")]
+//#[IsGranted("ROLE_ADMIN")]
 final class VilleController extends AbstractController
 {
     #[Route('', name: 'retrieve_all', methods: ['GET'])]
@@ -30,9 +30,9 @@ final class VilleController extends AbstractController
 
 
     #[Route('/{id}', name: 'retrieve_one', methods: ['GET'])]
-    public function retrieveOne(SerializerInterface $serializer,
-                                VilleRepository     $villeRepository,
-                                int                 $id): Response
+    public function retrieveOne(
+        VilleRepository $villeRepository,
+        int             $id): Response
     {
         $ville = $villeRepository->find($id);
         return $this->json($ville, Response::HTTP_OK, [], ['groups' => 'villes-api']);

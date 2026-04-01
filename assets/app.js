@@ -11,10 +11,12 @@ import './styles/nav2.css';
 // import './styles/style_formulaire.css'
 import './js/filtrerRecherchables.js'
 import './js/trierLesTablesParTh.js'
+import './js/apiVilleEtLieux.js'
+import './js/controleDatesJS.js'
+
 
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
-
 
 
 
