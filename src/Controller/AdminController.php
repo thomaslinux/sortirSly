@@ -9,9 +9,11 @@ use App\Entity\Ville;
 use App\Form\CampusSearchType;
 use App\Form\CampusType;
 use App\Form\Model\CampusSearch;
+use App\Form\Model\UserSearch;
 use App\Form\Model\VilleSearch;
 use App\Form\ParticipantType;
 use App\Form\UserImportType;
+use App\Form\UserSearchType;
 use App\Form\VilleSearchType;
 use App\Repository\CampusRepository;
 use App\Form\VilleType;
@@ -57,14 +59,15 @@ final class AdminController extends AbstractController
         }
 
         if ($request->request->has('create')) {
-        $villeForm2->handleRequest($request);
+            $villeForm2->handleRequest($request);
 
-        if ($villeForm2->isSubmitted() && $villeForm2->isValid()) {
-            $villeNew = $villeForm2->getData();
-            $entityManager->persist($villeNew);
-            $entityManager->flush();
-            return $this->redirectToRoute('admin_villes_list');
-        }}
+            if ($villeForm2->isSubmitted() && $villeForm2->isValid()) {
+                $villeNew = $villeForm2->getData();
+                $entityManager->persist($villeNew);
+                $entityManager->flush();
+                return $this->redirectToRoute('admin_villes_list');
+            }
+        }
         return $this->render('admin/villes_list.html.twig', ['ville' => $ville, 'villeForm' => $villeForm, 'villeForm2' => $villeForm2]);
     }
 
@@ -101,7 +104,64 @@ final class AdminController extends AbstractController
                 return $this->redirectToRoute('admin_campus_list');
             }
         }
-        return $this->render('admin/campus_list.html.twig', ['campus' => $campus, 'campusForm' => $campusForm, 'campusForm2' => $campusForm2]);
+        return $this->render('admin/campus_list.html.twig', [
+            'campus' => $campus,
+            'campusForm' => $campusForm,
+            'campusForm2' => $campusForm2
+        ]);
+    }
+
+    #[Route('/manage/deleteOrInactive', name: 'deleteOrInactive', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteOrInactive(
+        Request                $request,
+        EntityManagerInterface $entityManager,
+        ParticipantRepository  $participantRepository
+    ): Response
+    {
+//        trouve tous les utilisateurs
+        $participants = $participantRepository->findAll();
+        /* Barre de recherche pour les utilisateurs */
+        $userSearch = new UserSearch();
+        $userSearchForm = $this->createForm(UserSearchType::class, $userSearch);
+
+        if ($request->request->has('search')) {
+            $userSearchForm->handleRequest($request);
+            if ($userSearchForm->isSubmitted() && $userSearchForm->isValid()) {
+                $userSearch = $userSearchForm->getData();
+                $participants = $participantRepository->findUserBySearch($userSearch);
+            }
+        } else {
+
+            if ($request->isMethod('POST')) {
+                $action = $request->request->get('action');
+                $id = (int)$request->request->get('id');
+                $participant = $participantRepository->find($id);
+                if (!$participant) {
+                    $this->addFlash('error', 'User introuvable');
+                } else {
+                    match ($action) {
+                        'activate' => $participant->setActif(true),
+                        'inactive' => $participant->setActif(false),
+                        'delete' => $entityManager->remove($participant),
+                        default => null
+                    };
+                    $entityManager->flush();
+                    $this->addFlash('success', match ($action) {
+                        'activate' => 'User activé',
+                        'inactive' => 'User désactivé',
+                        'delete' => 'User supprimé (avec ses sorties)'
+                    });
+                }
+                return $this->redirectToRoute('admin_deleteOrInactive');
+            }
+        }
+
+
+        return $this->render('admin/participant_deleteOrInactive.html.twig', [
+            'participants' => $participants,
+            'userSearchForm' => $userSearchForm
+        ]);
     }
 
     #[Route('/campus/delete/{id}', name: 'campus_delete')]
@@ -192,38 +252,5 @@ final class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/manage/deleteOrInactive', name: 'deleteOrInactive', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function deleteOrInactive(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
-    {
-//        trouve tout les utilisateurs
-        $participants = $participantRepository->findAll();
-        if ($request->isMethod('POST')) {
-            $action = $request->request->get('action');
-            $id = (int)$request->request->get('id');
-            $participant = $participantRepository->find($id);
-            if (!$participant) {
-                $this->addFlash('error', 'User introuvable');
-            } else {
-                match ($action) {
-                    'activate' => $participant->setActif(true),
-                    'inactive' => $participant->setActif(false),
-                    'delete' => $entityManager->remove($participant),
-                    default => null
-                };
-                $entityManager->flush();
-                $this->addFlash('success', match ($action) {
-                    'activate' => 'User activé',
-                    'inactive' => 'User désactivé',
-                    'delete' => 'User supprimé (avec ses sorties)'
-                });
-            }
-            return $this->redirectToRoute('admin_deleteOrInactive');
-        }
 
-
-        return $this->render('admin/participant_deleteOrInactive.html.twig', [
-            'participants' => $participants,
-        ]);
-    }
 }
