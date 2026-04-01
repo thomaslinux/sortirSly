@@ -14,7 +14,7 @@ class VilleSearchType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Ville ou Code postal',
+                'label' => 'Ville ou Code Postal :',
                 'attr' => [
                     'placeholder' => 'Rechercher...',
                     'autofocus' => 'true'
