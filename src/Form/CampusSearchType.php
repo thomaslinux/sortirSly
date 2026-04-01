@@ -13,7 +13,7 @@ class CampusSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',TextType::class, [
+            ->add('nom', TextType::class, [
                 'label' => 'Campus :'
             ]);
     }
@@ -22,6 +22,7 @@ class CampusSearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => CampusSearch::class,
+            'required' => false,
         ]);
     }
 }
