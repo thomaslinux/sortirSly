@@ -9,7 +9,7 @@ import './stimulus_bootstrap.js';
 import './styles/eniwhere2.css';
 import './styles/nav2.css';
 // import './styles/style_formulaire.css'
-
+import './js/filtrerRecherchables.js'
 import './js/trierLesTablesParTh.js'
 
 

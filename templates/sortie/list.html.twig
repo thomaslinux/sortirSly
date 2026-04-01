@@ -14,7 +14,7 @@
         {% block buttonLabel %}
             Rechercher
         {% endblock %}
-        {% block sortieLength %}
+        {% block resultsLength %}
             {{ sorties | length }}
         {% endblock %}
     {% endembed %}
@@ -23,24 +23,24 @@
         <table class="event-table sortable">
             <thead>
             <tr>
-                <th>Nom de la sortie <span>&uarr;</span></th>
-                <th>Date de la sortie <span>&uarr;</span></th>
-                <th>Clôture <span>&uarr;</span></th>
-                <th>Inscrits/Places</th>
+                <th title="trier par">Nom de la sortie <span>&uarr;</span></th>
+                <th title="trier par">Date de la sortie <span>&uarr;</span></th>
+                <th title="trier par">Clôture <span>&uarr;</span></th>
+                <th title="trier par">Inscrits/Places</th>
                 <th class="sortiePassee">État <span>&uarr;</span></th>
                 <th style="text-align: center;">Inscrit <span>&uarr;</span></th>
-                <th>Organisateur <span>&uarr;</span></th>
-                <th>Actions <span>&uarr;</span></th>
+                <th title="trier par">Organisateur <span>&uarr;</span></th>
+                <th title="trier par">Actions <span>&uarr;</span></th>
             </tr>
             </thead>
             <tbody>
-            {% include 'views/list/pc-list.html.twig' %}
+            {% include 'views/list/sortie-list.html.twig' %}
             </tbody>
         </table>
     </section>
 {% endblock %}
 {% block bonusjavascripts %}
-    <script defer src="{{ asset('js/filtrerSorties.js') }}"></script>
+    <script defer src="{{ asset('js/filtrerRecherchables.js') }}"></script>
 {% endblock %}
 
 

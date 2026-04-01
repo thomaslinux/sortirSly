@@ -1,7 +1,7 @@
 {% for v in ville %}
 
     <tr>
-        <td class="event-name">
+        <td class="event-name recherchable">
             {{ v.nom }}
         </td>
         <td>
@@ -111,8 +111,10 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({   nom: nom,
-                codePostal: cp})
+            body: JSON.stringify({
+                nom: nom,
+                codePostal: cp
+            })
         })
             .then(response => {
                 if (!response.ok) {
