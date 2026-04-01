@@ -4,20 +4,15 @@
     {% block formTitle %}
     {% endblock %}
 </h2>
-{{ form_start(sortieForm) }}
-{{ form_widget(sortieForm) }}
-
-    <button>
-        {% block buttonLabel %}
-        {% endblock %}
-    </button>
-<a href="{{ path('main_home') }}">Annuler</a>
-
-
-<a href="#" id="mask">Ajouter un lieu</a>
-
-
-{#LIEN CADUQUE 6 ITERATION 1#}
-{#<a href="{{ path('lieu_create') }}">Ajouter un lieu</a>#}
-
-{{ form_end(sortieForm) }}
+<div class="form-group-list">
+    {{ form_row(sortieForm.nom) }}
+    <div class="input-row">
+        {{ form_row(sortieForm.dateHeureDebut) }}
+        {{ form_row(sortieForm.dateLimiteInscription) }}
+    </div>
+    <div class="input-row">
+        {{ form_row(sortieForm.nbPlaces) }}
+        {{ form_row(sortieForm.duree) }}
+    </div>
+    {{ form_row(sortieForm.description) }}
+</div>
