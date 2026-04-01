@@ -8,8 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CampusSearch
 {
 
-    #[Assert\NotBlank(message: 'Veuillez renseigner un nom pour le campus')]
-    #[Assert\Length(min: 3, minMessage: 'Remplir avec au moins 3 caractères')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un nom pour le campus recherché')]
     private ?string $nom = null;
 
     public function getNom(): ?string
