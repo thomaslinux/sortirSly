@@ -14,16 +14,21 @@
         {{ form_start(sortieForm) }}
 
         {% embed 'views/form/template-form-sortie.html.twig' %}
-            {% block formTitle %}Informations Générales{% endblock %}
+            {% block formTitle %}Modification d'une sortie{% endblock %}
         {% endembed %}
+
+        {% if is_granted('DELETE', sortie) %}
+            <a href="{{ path('sortie_delete', {'id': sortie.id}) }}">Supprimer</a>
+        {% endif %}
 
         {{ form_end(sortieForm) }}
     </div>
 {% endblock %}
 
+
 {% block bonusjavascripts %}
     <script defer
             src="{{ asset('js/apiVilleEtLieux.js') }}"></script>
     <script defer
-            src="{{ asset('js/controleDatesJS.js') }}"></script>
+            src="{{ asset('js/apiVilleEtLieux.js') }}"></script>
 {% endblock %}
