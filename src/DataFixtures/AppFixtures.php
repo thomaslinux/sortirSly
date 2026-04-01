@@ -91,6 +91,7 @@ class AppFixtures extends Fixture
         $lieuList = explode("; ", $lieux);
         $villeList = $manager->getRepository(Ville::class)->findAll();
 
+
         foreach ($lieuList as $element) {
 
             $lieu = new Lieu();
@@ -99,11 +100,8 @@ class AppFixtures extends Fixture
                 ->setVille($faker->randomElement($villeList))
                 ->setLatitude($faker->randomFloat(4, -50, 50))
                 ->setLongitude($faker->randomFloat(4, -50, 50));
-
-
             $manager->persist($lieu);
         }
-
         $manager->flush();
     }
 
@@ -111,6 +109,7 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
         $campusList = $manager->getRepository(Campus::class)->findAll();
+        $avatar = ['avatar_1.jpg','avatar_2.jpg','avatar_3.jpg'];
 
         $admin = new Participant();
         $admin
@@ -118,6 +117,7 @@ class AppFixtures extends Fixture
             ->setEmail('admin@admin.admin')
             ->setRoles(['ROLE_ADMIN'])
             ->setCampus($campusList[0])
+            ->setPhoto('admin.jpg')
             ->setPassword(
                 $this->userPasswordHasher->hashPassword($admin, 'admin')
             );
@@ -129,6 +129,7 @@ class AppFixtures extends Fixture
             ->setEmail('user@user.user')
             ->setRoles(['ROLE_USER'])
             ->setCampus($campusList[0])
+            ->setPhoto('neo.jpg')
             ->setPassword(
                 $this->userPasswordHasher->hashPassword($userUser, 'user')
             );
@@ -144,9 +145,11 @@ class AppFixtures extends Fixture
                 ->setRoles(['ROLE_USER'])
                 ->setEmail($faker->email())
                 ->setUsername($faker->userName())
+                ->setPhoto($faker->randomElement($avatar))
                 ->setPassword(
                     $this->userPasswordHasher->hashPassword($user, '123456')
                 );
+
             $manager->persist($user);
         }
 

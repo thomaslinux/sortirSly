@@ -7,7 +7,6 @@ let ville = selectVille.closest('.form-group');
 let lieu = selectLieu.closest('.form-group');
 let lieu2 = selectLieu2.closest('.form-group');
 
-console.log(URL_PREFIX);
 
 async function callAPI(url) {
     let val = await fetch(url)
@@ -71,6 +70,7 @@ function modifLieux() {
             document.getElementById('mask').innerHTML = "Ajouter un lieu"
         }
     })
+
 
 
 }
