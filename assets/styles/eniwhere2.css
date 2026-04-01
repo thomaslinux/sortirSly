@@ -271,6 +271,10 @@ tbody tr:hover td {
     background: rgba(204, 246, 247, 0.3);
 }
 
+tr th:hover {
+    cursor: pointer;
+}
+
 /* Liens dans les tableaux */
 tbody td a {
     text-decoration: none;
@@ -283,6 +287,7 @@ tbody td a:hover {
     color: var(--primary-container);
     opacity: 0.9;
 }
+
 .event-name {
     font-weight: 700;
     color: var(--primary);
@@ -482,7 +487,7 @@ tbody td a:hover {
     text-decoration: underline;
 }
 
-.sortie-length {
+.search-length {
     position: absolute;
     right: 50px;
 }
@@ -497,6 +502,7 @@ tbody td a:hover {
     .filter-grid {
         grid-template-columns: 1fr 1fr;
     }
+
     thead th, tbody td {
         padding: 0.875rem 1rem;
     }
@@ -520,9 +526,11 @@ tbody td a:hover {
     .mobile-hidden {
         display: none;
     }
+
     thead th, tbody td {
         padding: 0.75rem 0.875rem;
     }
+
     table {
         font-size: 0.9rem;
     }
