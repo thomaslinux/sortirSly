@@ -7,6 +7,7 @@ let ville = selectVille.closest('.form-group');
 let lieu = selectLieu.closest('.form-group');
 let lieu2 = selectLieu2.closest('.form-group');
 
+console.log(URL_PREFIX);
 
 async function callAPI(url) {
     let val = await fetch(url)
@@ -28,7 +29,7 @@ async function displayLieu() {
         selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
         let idVille = parseInt(event.target.value);
 
-        let lieux = await callAPI(`api/villes/${idVille}/lieux`)
+        let lieux = await callAPI(`${URL_PREFIX}/${idVille}/lieux`)
 
         for (const l of lieux) {
             const opt = document.createElement("option");
@@ -56,7 +57,7 @@ function inverse() {
     lieu2.classList.toggle('hide-me');
 }
 
-function modifLieux(){
+function modifLieux() {
     document.getElementById('mask').addEventListener("click", (e) => {
         e.preventDefault();
         inverse()
@@ -70,7 +71,6 @@ function modifLieux(){
             document.getElementById('mask').innerHTML = "Ajouter un lieu"
         }
     })
-
 
 
 }

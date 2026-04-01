@@ -27,8 +27,11 @@
 
 
 {% block bonusjavascripts %}
+    <script>
+        const URL_PREFIX = "{{ path('api_villes_retrieve_all') }}"
+    </script>
     <script defer
             src="{{ asset('js/apiVilleEtLieux.js') }}"></script>
     <script defer
-            src="{{ asset('js/apiVilleEtLieux.js') }}"></script>
+            src="{{ asset('js/controleDatesJS.js') }}"></script>
 {% endblock %}
