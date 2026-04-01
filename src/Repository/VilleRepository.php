@@ -24,6 +24,7 @@ class VilleRepository extends ServiceEntityRepository
         if ($villeNom) {
             $qb
                 ->andWhere($qb->expr()->like('v.nom', ':villeNom'))
+                ->orWhere($qb->expr()->like('v.codePostal', ':villeNom'))
                 ->setParameter('villeNom', '%' . $villeNom . '%');
         }
         $qb
