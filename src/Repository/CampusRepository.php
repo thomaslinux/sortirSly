@@ -16,16 +16,6 @@ class CampusRepository extends ServiceEntityRepository
         parent::__construct($registry, Campus::class);
     }
 
-    public function findAllFiltred(): array
-    {
-        $dql = "
-            SELECT campus FROM App\Entity\Campus AS campus
-        ";
-
-        $query = $this->getEntityManager()->createQuery($dql);
-        return $query->getResult();
-    }
-
     public function findCampusBySearch(mixed $campusSearch)
     {
         $campusNom = $campusSearch->getNom();
