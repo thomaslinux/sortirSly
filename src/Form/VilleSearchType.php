@@ -14,7 +14,11 @@ class VilleSearchType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Ville :'
+                'label' => 'Ville :',
+                'attr' => [
+                    'placeholder' => 'Rechercher...',
+                    'autofocus' => 'true'
+                ],
             ]);
 
     }
