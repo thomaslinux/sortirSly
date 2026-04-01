@@ -66,7 +66,6 @@ class ParticipantType extends AbstractType
                 'second_options' => ['label' => 'Confirmation Mot de passe : '],
                 'mapped' => false,
                 'constraints' => [
-                    new Assert\NotBlank(),
                     new Assert\Regex([
                         'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/',
                         'message' => 'Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.'
