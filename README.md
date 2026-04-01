@@ -49,7 +49,7 @@ Faire un composer install car ajout du composer league/csv
     - [x] date par défaut est aujourd'hui, front date est aujourd'hui
     - [/] date en placeholder
     - [ ] trier les dates de sorties en affichant la dernière sortie créée
-    - [ ] Création d'un nouveau lieu depuis le formulaire de création de sortie
+    - [x] Création d'un nouveau lieu depuis le formulaire de création de sortie
     - [x] réduire le nombre de query sur la liste
 - [x] Liste des sorties
     - [x] Afficher la barre de recherche multi critères dans la liste des sorties
@@ -58,9 +58,9 @@ Faire un composer install car ajout du composer league/csv
 
 ## V2 - API recherche de sorties
 
-- [ ] selecteur de lieu en fonction de la ville dans le créateur de sorties
+- [x] selecteur de lieu en fonction de la ville dans le créateur de sorties
 - [ ] Cocher un critère de recherche de sortie recharge dynamiquement la liste des sorties via un appel API
-- [ ] Formulaire de création de sorties
+- [x] Formulaire de création de sorties
     - [ ] Faire un menu déroulant 'calendrier' plus fonctionnel (menu creation / modification d'une sortie
 
 ## V3 - CSS et JS
