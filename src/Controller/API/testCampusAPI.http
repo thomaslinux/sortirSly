@@ -25,6 +25,7 @@ Content-Type: application/json
 ### get campus
 GET http://localhost:8081/projet_sortir/public/api/campus/7
 ###
+
 ### get campus
 GET http://localhost:8081/projet_sortir/public/api/campus
 ###

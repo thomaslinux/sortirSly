@@ -32,6 +32,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/admin', name: 'admin_')]
 final class AdminController extends AbstractController
 {
+    // Gestion des villes dans la page dédiée
     #[Route('/villes/list', name: 'villes_list')]
     #[IsGranted('ROLE_ADMIN')]
     public function villes_list(
@@ -68,6 +69,8 @@ final class AdminController extends AbstractController
         return $this->render('admin/villes_list.html.twig', ['ville' => $ville, 'villeForm' => $villeForm, 'villeForm2' => $villeForm2]);
     }
 
+
+    // Gestion des campus dans la page dédiée
     #[Route('/campus/list', name: 'campus_list')]
     #[IsGranted('ROLE_ADMIN')]
     public function campus_list(
@@ -104,18 +107,6 @@ final class AdminController extends AbstractController
         return $this->render('admin/campus_list.html.twig', ['campus' => $campus, 'campusForm' => $campusForm, 'campusForm2' => $campusForm2]);
     }
 
-    #[Route('/campus/delete/{id}', name: 'campus_delete')]
-    public function campus_delete(): Response
-    {
-        // TODO logique de suppression
-        // TODO delete on cascade
-    }
-
-    #[Route('/campus/modify/{id}', name: 'campus_modify')]
-    public function campus_modify(): Response
-    {
-        // TODO logique de modification
-    }
 
     #[Route('/manage/user', name: 'manage_user', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN')]
@@ -126,21 +117,20 @@ final class AdminController extends AbstractController
         ]);
     }
 
+
     #[Route('/new/users', name: 'new_user_csv', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, ImportParticipantService $importParticipantService): Response
     {
-//        nouveau dto
+        //nouveau dto
         $import = new UserImport();
-//        crée le formulaire
+        //crée le formulaire
         $form = $this->createForm(UserImportType::class, $import);
-//        récupere le post
+        //récupère le post
         $form->handleRequest($request);
-//      validation du formulaire
+        //validation du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-//            fichier uploadé
-//            $csvFile = $import->csvFile;
-//            envoie au service
+        //envoie au service
             $results = $importParticipantService->importFromCsv($import);
 
             $this->addFlash('success', sprintf(
@@ -186,7 +176,6 @@ final class AdminController extends AbstractController
             return $this->redirectToRoute('admin_new_user');
         }
 
-
         return $this->render('admin/participant_create_unique.html.twig', [
             'participant' => $participant, 'form' => $participantForm->createView(),
         ]);
@@ -196,7 +185,7 @@ final class AdminController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function deleteOrInactive(Request $request, EntityManagerInterface $entityManager, ParticipantRepository $participantRepository): Response
     {
-//        trouve tout les utilisateurs
+        //trouve tous les utilisateurs
         $participants = $participantRepository->findAll();
         if ($request->isMethod('POST')) {
             $action = $request->request->get('action');
@@ -220,7 +209,6 @@ final class AdminController extends AbstractController
             }
             return $this->redirectToRoute('admin_deleteOrInactive');
         }
-
 
         return $this->render('admin/participant_deleteOrInactive.html.twig', [
             'participants' => $participants,

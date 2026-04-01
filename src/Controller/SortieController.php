@@ -35,10 +35,11 @@ final class SortieController extends AbstractController
         Request          $request
     )
     {
-        // TODO récupérer le campus du current User et l'envoyer dans le formulaire de recherche
-        // TODO changer les résultats de recherche en fonction du sélecteur de campus
-        // TODO récupérer les informations dans les paramètres de recherche
-        // TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
+// TODO récupérer le campus du current User et l'envoyer dans le formulaire de recherche
+// TODO changer les résultats de recherche en fonction du sélecteur de campus
+// TODO récupérer les informations dans les paramètres de recherche
+// TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
+
         $sortieService->MaJEtat();
 
         $sortieSearch = new SortieSearch();
@@ -54,8 +55,8 @@ final class SortieController extends AbstractController
         ]);
     }
 
-// code commum pour les 3 fonctions de création, de modification et de publication
-// Pour la publication => ne fonctionne que dans les pages de création ou de modification (voir publishID pour différence)
+    // code commum pour les 3 fonctions de création, de modification et de publication
+    // Pour la publication : ne fonctionne que dans les pages de création ou de modification (voir publishID pour la fonction sur la page de liste de sortie)
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     #[Route('/publish', name: 'publish', methods: ['POST'])]
@@ -130,7 +131,7 @@ final class SortieController extends AbstractController
 
     }
 
-// affichage de la page de détail d'une sortie
+    // affichage de la page de détail d'une sortie
     #[Route('/detail/{id}', name: 'detail', requirements: ['id' => '\d+'])]
     public function detail(
         int              $id,
@@ -144,7 +145,7 @@ final class SortieController extends AbstractController
         return $this->render('sortie/detail.html.twig', ['sortie' => $sortie]);
     }
 
-    // Permet d'annuler une sortie lorsqu'elle est "Ouverte" : passe en statut annulé
+    // Permet d'annuler une sortie lorsqu'elle est "Ouverte" : passe en statut "Annulee"
     #[Route('/cancel/{id}', name: 'cancel', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function cancel(
         int                    $id,
@@ -180,7 +181,7 @@ final class SortieController extends AbstractController
         return $this->render('sortie/cancel.html.twig', ['sortie' => $sortie, 'cancelSortieForm' => $cancelSortieForm]);
     }
 
-//Permet de supprimer une sortie lorsqu'elle est "en création" : elle disparait de la BdD
+    // Permet de supprimer une sortie lorsqu'elle est "En création" : elle disparait de la BdD
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
     public function delete(
         int                    $id,
@@ -227,14 +228,13 @@ final class SortieController extends AbstractController
     }
 
 
-    // inscription à une sortie
+    // Inscription à une sortie
     #[Route('/subscribe/{id}', name: 'subscribe', requirements: ['id' => '\d+'])]
     public function subscribe(int                    $id,
                               EntityManagerInterface $entityManager,
                               EtatService            $etatService,
                               SortieRepository       $sortieRepository): Response
     {
-
         $sortie = $sortieRepository->find($id);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée');
@@ -245,17 +245,17 @@ final class SortieController extends AbstractController
         $user = $this->getUser();
         $sortie->sIncrire($user);
         $this->addFlash('success', 'Vous êtes inscrit à la sortie ' . $sortie->getNom());
-// passage à l'état cloturé ou reste à l'état ouvert
+
+        // Passage à l'état "Cloturee" ou reste à l'état "Ouverte"
         $sortie->setEtat($etatService->checkEtat($sortie));
 
         $entityManager->persist($sortie);
         $entityManager->flush();
 
-
         return $this->redirectToRoute('sortie_list');
     }
 
-// se désister d'une sortie
+    // Se désister d'une sortie
     #[Route('/unsubscribe/{id}', name: 'unsubscribe', requirements: ['id' => '\d+'])]
     public function unsubscribe(int                    $id,
                                 EntityManagerInterface $entityManager,
@@ -272,8 +272,10 @@ final class SortieController extends AbstractController
         $user = $this->getUser();
         $sortie->seDesister($user);
         $this->addFlash('success', 'Vous vous êtes désisté de la sortie ' . $sortie->getNom());
-        // passage à l'état ouvert si cloturée
+
+        // passage à l'état "Ouverte" si "Cloturee"
         $sortie->setEtat($etatService->checkEtat($sortie));
+
         $entityManager->persist($sortie);
         $entityManager->flush();
 

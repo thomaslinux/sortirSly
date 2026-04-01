@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+// Controller API de gestion des "Villes"
 #[Route('/sortie/api/villes', name: "api_villes_")]
 final class VilleController extends AbstractController
 {
@@ -25,6 +26,7 @@ final class VilleController extends AbstractController
         return $this->json($villes, Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
 
+
     #[Route('/{id}', name: 'retrieve_one', methods: ['GET'])]
     public function retrieveOne(SerializerInterface $serializer,
                                 VilleRepository     $villeRepository,
@@ -34,6 +36,7 @@ final class VilleController extends AbstractController
         return $this->json($ville, Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
 
+    // c'est cette fonction qui permet de gérer les lieux dans l'ajout de lieux (créer une sortie)
     #[Route('/{id}/lieux', name: 'api_ville_lieux', methods: ['GET'])]
     public function LieuxAll(
         VilleRepository $villeRepository,
@@ -77,6 +80,7 @@ final class VilleController extends AbstractController
         $entityManager->flush();
         return $this->json(['success' => 'Ville supprimée!'], Response::HTTP_ACCEPTED);
     }
+
 
     #[Route('/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
     public function update(
