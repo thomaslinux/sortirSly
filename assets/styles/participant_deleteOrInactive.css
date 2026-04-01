@@ -60,7 +60,7 @@
     /* flex-direction: column; */
     text-align: center;
     gap: 0.75rem;
-    align-items: anchor-center;
+    align-items: center;
 }
 
 .stat-icon {
