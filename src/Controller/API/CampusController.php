@@ -9,11 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 // Controller API de gestion des "Campus"
 #[Route('/api/campus', name: "api_campus_")]
+#[IsGranted("ROLE_ADMIN")]
 final class CampusController extends AbstractController
 {
     #[Route('', name: 'retrieve_all', methods: 'GET')]

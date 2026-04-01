@@ -12,8 +12,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\utils\FileUploader;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/participant', name: 'participant_')]
+#[IsGranted('ROLE_USER')]
 final class ParticipantController extends AbstractController
 {
     // route pour consultation des autres profils sans modification possible
