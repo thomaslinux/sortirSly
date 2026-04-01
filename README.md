@@ -89,6 +89,7 @@ Faire un composer install car ajout du composer league/csv
 
 - [x] Trier les éléments de la liste de sorties dans le tableau de sorties (javascript)
 - [-] Masquer des sorties en fonction de leur Etat
+- [ ] Afficher la carte en fonction de la latitude et longitude
 
 ## V5 - Après test utilisateur
 
