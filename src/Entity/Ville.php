@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VilleRepository::class)]
 class Ville
@@ -19,9 +20,14 @@ class Ville
 
     #[ORM\Column(length: 255)]
     #[Groups('villes-api')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un nom pour la ville')]
+    #[Assert\Length(min: 3, minMessage: 'Remplir avec au moins 3 caractères')]
     private ?string $nom = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un code postal pour la sortie')]
+    #[Assert\Positive]
+    #[Assert\LessThanOrEqual(99999)]
     #[Groups('villes-api')]
     private ?int $codePostal = null;
 
