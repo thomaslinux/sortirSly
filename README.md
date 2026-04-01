@@ -72,15 +72,18 @@ Faire un composer install car ajout du composer league/csv
     - [x] Tester le style sur la page reset depuis un lien par mail
 - [x] Modifier le thème pour éviter de perdre de l'espace
 - [ ] Désactiver la grille au redimensionnement
-- [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
+- [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille ? (css on check ?)
 - [x] Recherche JavaScript
     - [x] Recherche javascript désactivable côté client
     - [x] Croix pour effacer le champ de recherche actuel
     - [ ] Recherche compatible toutes pages
 - [x] Recherche CSS (🤯)
-    - [x] Inscrit / Pas inscrit
     - [x] Organisateur
-    - [ ] Sorties Passees
+    - [x] Inscrit
+    - [x] Pas inscrit
+    - [x] Sorties Passees
+- [ ] Autoriser le scroll horizontal sur la liste des sorties
+- [ ] Styliser la modification des campus et des villes comme le login ? (URGENT)
 
   ~~Récupérer les états historisés uniquement pour l'admin~~
   (uniquement en BDD même pour les admins pas visibles dans la liste des sorties
@@ -93,9 +96,9 @@ Faire un composer install car ajout du composer league/csv
 
 ## V5 - Après test utilisateur
 
-- [ ] Gestion des utilisateurs
-    - [ ] Chaque action dans sa colonne nommée plus que la colonne nommée action ?
-    - [ ] Rendre inactif à la place de désactiver comme texte on hover
+- [x] Gestion des utilisateurs
+    - [x] Chaque action dans sa colonne nommée plus que la colonne nommée action ?
+    - [x] Rendre inactif à la place de désactiver comme texte on hover
 
 # Modèle graphique html :
 

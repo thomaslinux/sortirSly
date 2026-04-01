@@ -40,6 +40,10 @@
                     <a href="{{ path('sortie_list') }}" class="btn-cancel">Annuler</a>
                     <button type="submit" class="btn-primary">Enregistrer brouillon</button>
                     {{ form_row(sortieForm.publier) }}
+                    <a href="#" id="mask" class="btn-lieu">
+                        <span class="material-symbols-outlined">add</span>
+                        Ajouter un lieu
+                    </a>
                 </div>
                 {{ form_end(sortieForm) }}
             </div>
@@ -66,10 +70,7 @@
         {#            <div class="map-container"> #}
         {#                [image:1] #}
         {#            </div> #}
-                    <a href="#" id="mask" class="btn-lieu">
-                        <span class="material-symbols-outlined">add</span>
-                        Ajouter un lieu
-                    </a>
+
     </div>
     </div>
     <script>

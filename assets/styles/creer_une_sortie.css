@@ -4,7 +4,7 @@
 
 .profile-container {
     padding: 8rem 1.5rem 5rem;
-    max-width: 1280px;
+    max-width: 1300px !important;
     margin: 0 auto;
 }
 
@@ -23,16 +23,16 @@
 .profile-card::before {
     content: '';
     position: absolute;
-    top: 15rem;
-    left: 2rem;
-    right: 2rem;
+    top: 14rem !important;
+    left: 1.5rem !important;
+    right: 1.5rem !important;
     bottom: 4rem;
     background: linear-gradient(135deg, var(--primary), var(--primary-container));
     border-radius: 1.5rem;
     z-index: -1;
     margin: 0 auto;
-    width: 130%;
-    max-width: 1400px;
+    width: 1000px !important;
+    max-width: 100px !important;
 }
 /* Header */
 .profile-header {
@@ -63,14 +63,16 @@
 .form-grid-2cols {
     position: relative;
     z-index: 1;
-    background: transparent;
+    background: rgba(255,255,255,0.05);
+    border-radius: 1.5rem;
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 4rem !important;
-    width: 100%;
+    width: 200%;
     max-width: 1200px;
     justify-content: center;
-    padding: 0 3.5rem 3rem !important;
+    padding: 1rem 3.5rem 3rem !important;
+    margin: 1rem 0;
     justify-items: stretch !important;
     align-items: start;
 }
@@ -110,6 +112,9 @@ div:has(> form) label {
     max-width: 100%;
     justify-self: start;
 }
+.form-col.section-general label {
+    color: var(--primary) !important;
+}
 .form-col.section-logistics {
     background: var(--surface-container-low) !important;
     border: 1px solid rgba(255,255,255,0.2) !important;
@@ -118,6 +123,9 @@ div:has(> form) label {
     max-width: 100%;
     justify-self: end;
 }
+.form-col.section-logistics label {
+    color: var(--on-surface-variant) !important;
+}
 .form-col .form-widget,
 .form-col input,
 .form-col select,
@@ -125,6 +133,13 @@ div:has(> form) label {
     background: rgba(255,255,255,0.95) !important;
     color: var(--on-surface) !important;
     border: 1px solid rgba(207,195,202,0.3) !important;
+}
+.form-col .form-widget:focus,
+.form-col input:focus,
+.form-col select:focus,
+.form-col textarea:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(65, 43, 64, 0.2) !important;
 }
 .section-logistics {
     background: var(--surface-container-low);
@@ -159,6 +174,12 @@ div:has(> form) {
     border-radius: 0 !important;
     box-shadow: none !important;
     padding: 0 !important;
+}
+div:has(> form) h2 {
+    background: rgba(255,255,255,0.2) !important;
+    padding: 0.75rem 1.25rem !important;
+    border-radius: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
 }
 div:has(> form) h2::before {
     content: "info" !important;
@@ -211,7 +232,10 @@ div:has(> form) h2 {
     cursor: pointer !important;
     transition: color 0.3s !important;
 }
-
+.btn-cancel,
+.btn-outline {
+    text-transform: uppercase !important;
+}
 .btn-cancel:hover {
     color: white !important;
     background: linear-gradient(135deg, var(--error), #d32f2f) !important;
