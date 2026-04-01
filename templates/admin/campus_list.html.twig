@@ -6,7 +6,6 @@
 {% block body %}
     <h2>Gérer les Campus</h2>
 
-
     {% embed 'views/form/template-form-search-ville.html.twig' with {form : campusForm} %}
         {% block formTitle %}Filtrer les campus{% endblock %}
         {% block buttonLabel %}
@@ -26,10 +25,7 @@
         </tr>
         </thead>
         <tbody>
-
-
         {% include 'views/list/tous-campus-list.html.twig' %}
-
         </tbody>
     </table>
 {% endblock %}

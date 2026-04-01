@@ -46,22 +46,25 @@ final class AdminController extends AbstractController
 
         $villeForm = $this->createForm(VilleSearchType::class, $villeSearch);
         $villeForm2 = $this->createForm(VilleType::class, $villeNew);
-        $villeForm->handleRequest($request);
-        $villeForm2->handleRequest($request);
 
 
-        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
-            $villeSearch = $villeForm->getData();
-            $ville = $villeRepository->findVillesBySearch($villeSearch);
-
+        if ($request->request->has('search')) {
+            $villeForm->handleRequest($request);
+            if ($villeForm->isSubmitted() && $villeForm->isValid()) {
+                $villeSearch = $villeForm->getData();
+                $ville = $villeRepository->findVillesBySearch($villeSearch);
+            }
         }
+
+        if ($request->request->has('create')) {
+        $villeForm2->handleRequest($request);
 
         if ($villeForm2->isSubmitted() && $villeForm2->isValid()) {
             $villeNew = $villeForm2->getData();
             $entityManager->persist($villeNew);
             $entityManager->flush();
             return $this->redirectToRoute('admin_villes_list');
-        }
+        }}
         return $this->render('admin/villes_list.html.twig', ['ville' => $ville, 'villeForm' => $villeForm, 'villeForm2' => $villeForm2]);
     }
 
@@ -70,34 +73,36 @@ final class AdminController extends AbstractController
     public function campus_list(
         EntityManagerInterface $entityManager,
         Request                $request,
-        CampusRepository $campusRepository
+        CampusRepository       $campusRepository
     ): Response
     {
-
         $campusSearch = new CampusSearch();
         $campusNew = new Campus();
-        $campus = $campusRepository->findAll();
 
         $campusForm = $this->createForm(CampusSearchType::class, $campusSearch);
         $campusForm2 = $this->createForm(CampusType::class, $campusNew);
-        $campusForm->handleRequest($request);
-        $campusForm2->handleRequest($request);
 
-        if ($campusForm->isSubmitted() && $campusForm->isValid()) {
-            $campusSearch = $campusForm->getData();
-            $campus = $campusRepository->findCampusBySearch($campusSearch);
+        $campus = $campusRepository->findAll();
+
+        if ($request->request->has('search')) {
+            $campusForm->handleRequest($request);
+            if ($campusForm->isSubmitted() && $campusForm->isValid()) {
+                $campusSearch = $campusForm->getData();
+                $campus = $campusRepository->findCampusBySearch($campusSearch);
+            }
         }
 
-        if ($campusForm2->isSubmitted() && $campusForm2->isValid()) {
-            $campusNew = $campusForm2->getData();
-            $entityManager->persist($campusNew);
-            $entityManager->flush();
-            return $this->redirectToRoute('admin_campus_list');
+        if ($request->request->has('create')) {
+            $campusForm2->handleRequest($request);
+            if ($campusForm2->isSubmitted() && $campusForm2->isValid()) {
+                $campusNew = $campusForm2->getData();
+                $entityManager->persist($campusNew);
+                $entityManager->flush();
+                return $this->redirectToRoute('admin_campus_list');
+            }
         }
-
         return $this->render('admin/campus_list.html.twig', ['campus' => $campus, 'campusForm' => $campusForm, 'campusForm2' => $campusForm2]);
-
-   }
+    }
 
     #[Route('/campus/delete/{id}', name: 'campus_delete')]
     public function campus_delete(): Response

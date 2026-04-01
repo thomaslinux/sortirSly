@@ -23,6 +23,7 @@ class CampusType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Campus::class,
+            'required' => false
         ]);
     }
 }

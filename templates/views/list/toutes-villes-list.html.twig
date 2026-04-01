@@ -8,17 +8,27 @@
             {{ v.codePostal }}
         </td>
         <td class="actions-cell">
-            <a class="action-link"
-               href="{{ path('api_villes_update', {'id': v.id}) }}">Modifier</a>
-            <a class="action-link"
-               href="{{ path('api_villes_delete', {'id': v.id}) }}">Supprimer</a>
+            <button class="action-link edit-btn"
+                    data-id="{{ v.id }}"
+                    data-nom="{{ v.nom }}"
+                    data-cp="{{ v.codePostal }}"
+            >
+                Modifier
+            </button>
 
+            <button class="action-link delete-btn"
+                    data-id="{{ v.id }}"
+                    data-nom="{{ v.nom }}"
+
+            >
+                Supprimer
+            </button>
         </td>
     </tr>
 
 {% endfor %}
 
-{#TODO faire des cases vides pour ajouter une ville#}
+{# TODO faire des cases vides pour ajouter une ville #}
 
 {{ form_start(villeForm2) }}
 <tr>
@@ -26,8 +36,134 @@
     <td>{{ form_row(villeForm2.codePostal, {'attr': {'class': 'input-field'}}) }}</td>
     <td class="actions-cell">
 
-        <button type="submit" class="action-link">Ajouter</button>
+        <button type="submit"
+                class="action-link"
+                name="create">Ajouter
+        </button>
     </td>
 </tr>
 {{ form_end(villeForm2) }}
 
+
+{# Modal de modification #}
+<div id="editModal"
+     style="display: none; position:fixed; top:50%; left:35%;">
+    <h4>Modifier la ville</h4>
+    <input type="hidden"
+           id="villeId">
+    <div>
+        <label for="villeNom">Nom : </label>
+        <input type="text"
+               id="villeNom">
+    </div>
+    <div>
+        <label for="villeCP">Code Postal : </label>
+        <input type="number"
+               id="villeCP">
+    </div>
+    <br>
+    <button id="saveBtn">Modifier</button>
+    <button onclick="closeModal()">Annuler</button>
+</div>
+
+{# Modal de suppression #}
+<div id="editModal2"
+     style="display: none; position:fixed; top:50%; left:35%;">
+    <h4>Supprimer la ville</h4>
+    <input type="hidden"
+           id="villeId2">
+    <input type="hidden"
+           id="villeCP2">
+    <div>
+        <label for="villeNom2"></label>
+        <input type="text"
+               id="villeNom2"
+               readonly>
+    </div>
+    <br>
+    <button id="saveBtn2">Supprimer</button>
+    <button onclick="closeModal2()">Annuler</button>
+</div>
+
+<script>
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('editModal').style.display = 'block';
+            document.getElementById('villeId').value = button.dataset.id;
+            document.getElementById('villeNom').value = button.dataset.nom;
+            document.getElementById('villeCP').value = button.dataset.cp;
+
+        });
+    });
+
+    function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+        const id = document.getElementById('villeId').value;
+        const nom = document.getElementById('villeNom').value;
+        const cp = document.getElementById('villeCP').value;
+        console.log(nom, cp);
+
+        fetch('{{ path('api_villes_update') }}/' + id, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({   nom: nom,
+                codePostal: cp})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erreur HTTP " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                location.reload(); // refresh la liste
+            })
+            .catch(error => console.error(error));
+    });
+
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('editModal2').style.display = 'block';
+            document.getElementById('villeId2').value = button.dataset.id;
+            document.getElementById('villeNom2').value = button.dataset.nom;
+            document.getElementById('villeCP2').value = button.dataset.cp;
+
+        });
+    });
+
+    function closeModal2() {
+        document.getElementById('editModal2').style.display = 'none';
+    }
+
+    document.getElementById('saveBtn2').addEventListener('click', () => {
+
+        const id = document.getElementById('villeId2').value;
+        const nom = document.getElementById('villeNom2').value;
+        console.log('Envoi fetch avec id =', id, 'nom =', nom);
+
+        fetch('{{ path('api_villes_delete') }}/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erreur HTTP " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                location.reload(); // refresh la liste
+            })
+            .catch(error => console.error(error));
+    });
+</script>
