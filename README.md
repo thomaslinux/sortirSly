@@ -67,12 +67,20 @@ Faire un composer install car ajout du composer league/csv
 
 - [x] Styliser la page de détails de la sortie
 - [x] Styliser la page d'annulation de la sortie
-- [ ] Styliser la page de réinitialisation de mot de passe
-    - [ ] Tester si le mot de passe est bien reset
-    - [ ] Tester le style sur la page reset depuis un lien par mail
+- [x] Styliser la page de réinitialisation de mot de passe
+    - [x] Tester si le mot de passe est bien reset
+    - [x] Tester le style sur la page reset depuis un lien par mail
 - [x] Modifier le thème pour éviter de perdre de l'espace
 - [ ] Désactiver la grille au redimensionnement
 - [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
+- [x] Recherche JavaScript
+    - [x] Recherche javascript désactivable côté client
+    - [x] Croix pour effacer le champ de recherche actuel
+    - [ ] Recherche compatible toutes pages
+- [x] Recherche CSS (🤯)
+    - [x] Inscrit / Pas inscrit
+    - [x] Organisateur
+    - [ ] Sorties Passees
 
   ~~Récupérer les états historisés uniquement pour l'admin~~
   (uniquement en BDD même pour les admins pas visibles dans la liste des sorties
@@ -81,16 +89,13 @@ Faire un composer install car ajout du composer league/csv
 
 - [x] Trier les éléments de la liste de sorties dans le tableau de sorties (javascript)
 - [-] Masquer des sorties en fonction de leur Etat
-- [x] Recherche Javascript
-    - [x] Recherche javascript désactivable côté client
-    - [x] Croix pour effacer le champ de recherche actuel
-    - [ ] Recherche rapide utilisateurs inscrits
-    - [ ] Recherche rapide organisateur
+- [ ] Afficher la carte en fonction de la latitude et longitude
 
 ## V5 - Après test utilisateur
-- [ ] Gestion des utilisateur
-  - [ ] Chaque action dans sa colonne nommée plus que la colonne nommée action ?
-  - [ ] Rendre inactif plus que désactiver comme texte on hover
+
+- [ ] Gestion des utilisateurs
+    - [ ] Chaque action dans sa colonne nommée plus que la colonne nommée action ?
+    - [ ] Rendre inactif à la place de désactiver comme texte on hover
 
 # Modèle graphique html :
 
