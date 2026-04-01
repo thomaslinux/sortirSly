@@ -13,9 +13,9 @@ class VilleSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',TextType::class, [
-        'label' => 'Ville :'
-    ]);
+            ->add('nom', TextType::class, [
+                'label' => 'Ville :'
+            ]);
 
     }
 
@@ -23,6 +23,7 @@ class VilleSearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => VilleSearch::class,
+            'required' => false
         ]);
     }
 }
