@@ -35,7 +35,7 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $this->getEntityManager()->flush();
     }
 
-//    Login : username ou email + actif seulement
+    // Login : username ou email + actif seulement
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
         $user = $this->createQueryBuilder('p')

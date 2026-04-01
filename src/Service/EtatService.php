@@ -20,13 +20,13 @@ class EtatService
 
 
         if ($sortie->getInscriptions()->count() >= $sortie->getNbPlaces()) {
-            return $etat->findOneBy(["nom" => "Cloturee"]); //Cloturee
+            return $etat->findOneBy(["nom" => "Cloturee"]);
         }
         if ($sortie->getInscriptions()->count() < $sortie->getNbPlaces()) {
-            return $etat->findOneBy(["nom" => "Ouverte"]); //Ouverte
+            return $etat->findOneBy(["nom" => "Ouverte"]);
         }
         if ($sortie->getDateLimiteInscription() < $now) {
-            return $etat->findOneBy(["nom" => "Cloturee"]); //Cloturee
+            return $etat->findOneBy(["nom" => "Cloturee"]);
         }
 
         return $etat->findOneBy(["nom" => "Ouverte"]);

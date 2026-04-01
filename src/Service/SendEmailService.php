@@ -12,8 +12,7 @@ class SendEmailService
         private MailerInterface $mailer,
         private Environment     $twig
     )
-    {
-    }
+    {    }
 
     public function send(string $from, string $to, string $subject, string $template, array $context = []): void
     {
