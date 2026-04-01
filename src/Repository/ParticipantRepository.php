@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * @extends ServiceEntityRepository<Participant>
  */
@@ -48,5 +49,22 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
             throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException();
         }
         return $user;
+    }
+
+    public function findUserBySearch(mixed $userSearch)
+    {
+        $userNom = $userSearch->getNom();
+
+        $qb = $this->createQueryBuilder('u');
+        if ($userNom) {
+            $qb
+                ->andWhere($qb->expr()->like('u.username', ':userNom'))
+                ->setParameter('userNom', '%' . $userNom . '%');
+        }
+        $qb
+            ->orderBy('u.nom', 'DESC');
+
+        $query = $qb->getQuery();
+        return $query->getResult();
     }
 }

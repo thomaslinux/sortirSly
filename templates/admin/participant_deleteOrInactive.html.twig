@@ -32,14 +32,23 @@
             <span class="stat-label">Comptes inactifs</span>
         </div>
     </div>
+    {% embed 'views/form/template-form-search-global.html.twig' with {form : userSearchForm} %}
+        {% block formTitle %}Filtrer les utilisateurs{% endblock %}
+        {% block buttonLabel %}
+            Rechercher
+        {% endblock %}
+        {% block resultsLength %}
+            {{ participants | length }}
+        {% endblock %}
+    {% endembed %}
     <div class="content-card">
         <div class="table-wrapper">
             <table>
                 <thead>
                 <tr>
-                    <th>Pseudo<span>&uarr;</span></th>
-                    <th>Nom<span>&uarr;</span></th>
-                    <th>État<span>&uarr;</span></th>
+                    <th title="trier par">Pseudo<span>&uarr;</span></th>
+                    <th title="trier par">Nom<span>&uarr;</span></th>
+                    <th title="trier par">État<span>&uarr;</span></th>
                     <th style="text-align: right;">Actions</th>
                 </tr>
                 </thead>
@@ -47,7 +56,8 @@
                 {% for participant in participants %}
                     <tr>
                         <td class="cell-pseudo">
-                            <a href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.username }}</a>
+                            <a class="recherchable"
+                               href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.username }}</a>
                         </td>
                         <td class="cell-nom">
                             <a href="{{ path('participant_profil', {'id': participant.id}) }}">{{ participant.prenom }} {{ participant.nom }}</a>
@@ -62,23 +72,24 @@
                             <div class="action-group">
                                 {% if participant.isActif() %}
                                     <form method="post" style="display: inline;"
-                                          onsubmit="return confirm('Désactiver cet utilisateur ?')">
+                                          onsubmit="return confirm('Désactiver l\'utilisateur {{ participant.username }} ?')">
                                         <input type="hidden" name="action" value="inactive">
                                         <input type="hidden" name="id" value="{{ participant.id }}">
-                                        <button type="submit" class="btn-action btn-toggle" title="Désactiver"><span
+                                        <button type="submit" class="btn-action btn-toggle" title="Rendre inactif"><span
                                                 class="material-symbols-outlined">block</span></button>
                                     </form>
                                 {% else %}
                                     <form method="post" style="display: inline;"
-                                          onsubmit="return confirm('Activer cet utilisateur ?')">
+                                          onsubmit="return confirm('Activer l\'utilisateur {{ participant.username }} ?')">
                                         <input type="hidden" name="action" value="activate">
                                         <input type="hidden" name="id" value="{{ participant.id }}">
-                                        <button type="submit" class="btn-action btn-toggle inactive" title="Activer">
+                                        <button type="submit" class="btn-action btn-toggle inactive"
+                                                title="Rendre actif">
                                             <span class="material-symbols-outlined">check_circle</span></button>
                                     </form>
                                 {% endif %}
                                 <form method="post" style="display: inline;"
-                                      onsubmit="return confirm('Supprimer définitivement l\'utilisateur ainsi que ses sorties et supprimez toutes ses participations ?')">
+                                      onsubmit="return confirm('Supprimer définitivement l\'utilisateur {{ participant.username }} ainsi que ses sorties et supprimer toutes ses participations ?')">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="id" value="{{ participant.id }}">
                                     <button type="submit" class="btn-action btn-delete" title="Supprimer"><span

@@ -6,13 +6,12 @@
 {% block body %}
     <h2>Gérer les villes</h2>
 
-
-    {% embed 'views/form/template-form-search-ville.html.twig' with {form : villeForm} %}
+    {% embed 'views/form/template-form-search-global.html.twig' with {form : villeForm} %}
         {% block formTitle %}Filtrer les villes{% endblock %}
         {% block buttonLabel %}
             Rechercher
         {% endblock %}
-        {% block sortieLength %}
+        {% block resultsLength %}
             {{ ville | length }}
         {% endblock %}
     {% endembed %}
@@ -21,9 +20,8 @@
         <table class="event-table sortable">
             <thead>
             <tr>
-                <th>Nom<span>&uarr;</span></th>
-                <th>Code Postal <span>&uarr;</span></th>
-
+                <th title="trier par">Nom<span>&uarr;</span></th>
+                <th title="trier par">Code Postal <span>&uarr;</span></th>
                 <th style="text-align: right;">Actions <span>&uarr;</span></th>
             </tr>
             </thead>
@@ -33,11 +31,6 @@
         </table>
     </section>
 {% endblock %}
-{#    {% block bonusjavascripts %} #}
-{#        <script defer src="{{ asset('js/filtrerSorties.js') }}"></script> #}
-{#    {% endblock %} #}
-
-
 
 
 

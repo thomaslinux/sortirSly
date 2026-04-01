@@ -4,15 +4,17 @@ namespace App\Form\Model;
 
 use App\Entity\Campus;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class SortieSearch
 {
-    // TODO ajouter la validation des champs
 
     private ?string $nom = null;
     private ?Campus $campus = null;
+    #[Assert\LessThan(propertyPath: 'dateHeureFin ', message: 'Choisir une date AVANT la date de fin ')]
     private ?\DateTime $dateHeureDebut = null;
+    #[Assert\GreaterThan(propertyPath: 'dateHeureDebut', message: 'Choisir une date APRES la date de début')]
     private ?\DateTime $dateHeureFin = null;
-
     private ?bool $organisateur = null;
     private ?bool $inscrit = null;
     private ?bool $pasInscrit = null;

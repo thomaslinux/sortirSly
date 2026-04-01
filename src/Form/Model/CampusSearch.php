@@ -2,11 +2,14 @@
 
 namespace App\Form\Model;
 
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 class CampusSearch
 {
 
-// TODO ajouter la validation des champs
-
+    #[Assert\NotBlank(message: 'Veuillez renseigner un nom pour le campus')]
+    #[Assert\Length(min: 3, minMessage: 'Remplir avec au moins 3 caractères')]
     private ?string $nom = null;
 
     public function getNom(): ?string

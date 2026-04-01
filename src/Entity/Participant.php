@@ -23,8 +23,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Assert\NotBlank(message: "Please enter a username")]
-    #[Assert\Length(max: 180, maxMessage: "Max {{ limit }} characters allowed")]
+    #[Assert\NotBlank(message: "Veuillez renseigner un pseudo")]
+    #[Assert\Length(min: 3, minMessage: 'Remplir avec au moins 3 caractères')]
+    #[Assert\Length(max: 180, maxMessage: "Max 180 caractères")]
     private ?string $username = null;
 
     /**
@@ -40,9 +41,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Please enter a valid email address.")]
-    #[Assert\Email(message: "The email '{{ value }}' is not a valid email address.", mode: 'strict')]
-    #[Assert\Length(max: 255, maxMessage: "Max {{ limit }} characters allowed")]
+    #[Assert\NotBlank(message: "Entrez un email.")]
+    #[Assert\Email(message: "L'email {{ value }} n'est pas valide.", mode: 'strict')]
+    #[Assert\Length(max: 255, maxMessage: "Max 255 caractères")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -54,6 +55,8 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Image]
+    #[Assert\File(maxSize:"2M")]
     private ?string $photo = null;
 
     #[ORM\Column]
@@ -78,7 +81,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(max: 255)]
     #[Assert\Regex(
         pattern: '/^(0\d(?:[\s\.\-\(\)]*\d){10})$/',
-        message: "Telephone must be a valid phone number.")]
+        message: "Le numéro doit être un numéro de téléphone valide")]
     private ?string $tel = null;
 
     public function __construct()

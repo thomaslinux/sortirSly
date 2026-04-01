@@ -16,39 +16,27 @@ final class LieuController extends AbstractController
 {
 
     // ITERATION 1 - n'est plus utilisée avec l'API
-    #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
-    public function createLieu(
-        EntityManagerInterface $entityManager,
-        Request                $request
-    ): Response
-    {
-        $lieu = new Lieu();
-        $lieuForm = $this->createForm(LieuType::class, $lieu);
-        $lieuForm->handleRequest($request);
-
-    if($lieuForm->isSubmitted()){
-        $this->addFlash('success', 'Votre lieu de sortie : ' . $lieu->getNom() . ' a été créé');
-
-        $entityManager->persist($lieu);
-        $entityManager->flush();
-        return $this->redirectToRoute('sortie_create');
-    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-        return $this->render('lieu/create.html.twig', [
-            'lieuForm' => $lieuForm
-        ]);
-    }
+//    #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
+//    public function createLieu(
+//        EntityManagerInterface $entityManager,
+//        Request                $request
+//    ): Response
+//    {
+//        $lieu = new Lieu();
+//        $lieuForm = $this->createForm(LieuType::class, $lieu);
+//        $lieuForm->handleRequest($request);
+//
+//    if($lieuForm->isSubmitted()){
+//        $this->addFlash('success', 'Votre lieu de sortie : ' . $lieu->getNom() . ' a été créé');
+//
+//        $entityManager->persist($lieu);
+//        $entityManager->flush();
+//        return $this->redirectToRoute('sortie_create');
+//    }
+//        return $this->render('lieu/create.html.twig', [
+//            'lieuForm' => $lieuForm
+//        ]);
+//    }
 }

@@ -2,19 +2,19 @@
 
 namespace App\Form;
 
-use App\Form\Model\VilleSearch;
+use App\Form\Model\UserSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VilleSearchType extends AbstractType
+class UserSearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Ville :'
+                'label' => 'Pseudo :'
             ]);
 
     }
@@ -22,7 +22,7 @@ class VilleSearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => VilleSearch::class,
+            'data_class' => UserSearch::class,
             'required' => false
         ]);
     }

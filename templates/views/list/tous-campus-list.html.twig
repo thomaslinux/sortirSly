@@ -1,7 +1,7 @@
 {% for c in campus %}
 
     <tr>
-        <td class="event-name">
+        <td class="event-name recherchable">
             {{ c.nom }}
         </td>
         <td class="actions-cell">
@@ -31,14 +31,15 @@
     <td class="actions-cell">
 
         <button type="submit"
-                class="action-link">Ajouter
+                class="action-link"
+                name="create">Ajouter
         </button>
     </td>
 </tr>
 {{ form_end(campusForm2) }}
 
 
-{#Modal de modification#}
+{# Modal de modification #}
 <div id="editModal"
      style="display: none; position:fixed; top:50%; left:35%;">
     <h4>Modifier le campus</h4>
@@ -54,15 +55,15 @@
     <button onclick="closeModal()">Annuler</button>
 </div>
 
-{#Modal de suppression#}
+{# Modal de suppression #}
 <div id="editModal2"
      style="display: none; position:fixed; top:50%; left:35%;">
     <h4>Supprimer le campus</h4>
     <input type="hidden"
            id="campusId2">
-    <div> <label for="campusNom"></label><input type="text"
-                                                 id="campusNom2"
-                                                 readonly></div>
+    <div><label for="campusNom"></label><input type="text"
+                                               id="campusNom2"
+                                               readonly></div>
 
     <br>
     <button id="saveBtn2">Supprimer</button>
@@ -87,7 +88,6 @@
     document.getElementById('saveBtn').addEventListener('click', () => {
         const id = document.getElementById('campusId').value;
         const nom = document.getElementById('campusNom').value;
-
 
 
         fetch('{{ path('api_campus_update') }}/' + id, {
@@ -127,10 +127,6 @@
     document.getElementById('saveBtn2').addEventListener('click', () => {
 
         const id = document.getElementById('campusId2').value;
-        const nom = document.getElementById('campusNom2').value;
-
-
-        console.log('Envoi fetch avec id =', id, 'nom =', nom);
 
         fetch('{{ path('api_campus_delete') }}/' + id, {
 
@@ -138,7 +134,6 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-             // body: JSON.stringify({nom})
         })
             .then(response => {
                 if (!response.ok) {

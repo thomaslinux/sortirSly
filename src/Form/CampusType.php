@@ -14,7 +14,7 @@ class CampusType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nouvelle ville :'
+                'label' => 'Nouveau campus :'
             ])
         ;
     }
@@ -23,6 +23,7 @@ class CampusType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Campus::class,
+            'required' => false
         ]);
     }
 }

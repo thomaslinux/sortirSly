@@ -96,7 +96,10 @@ class AppFixtures extends Fixture
             $lieu = new Lieu();
             $lieu
                 ->setNom($element)
-                ->setVille($faker->randomElement($villeList));
+                ->setVille($faker->randomElement($villeList))
+                ->setLatitude($faker->randomFloat(4, -50, 50))
+                ->setLongitude($faker->randomFloat(4, -50, 50));
+
 
             $manager->persist($lieu);
         }
