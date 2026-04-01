@@ -166,13 +166,15 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 200; $i++) {
             $sortie = new Sortie();
+            $organisateur = $faker->randomElement($participantList);
             $sortie
                 ->setDateHeureDebut($faker->dateTimeBetween('-2 month', '+2 months', 'Europe/Paris'))
                 ->setDateLimiteInscription($faker->dateTimeBetween($sortie->getDateHeureDebut()->modify('-14 days'), $sortie->getDateHeureDebut()->modify('-1 days'), 'Europe/Paris'))
                 ->setDuree($faker->numberBetween(15, 180))
                 ->setNbPlaces($faker->numberBetween(2, 40))
                 ->setDescription($faker->realText(255))
-                ->setOrganisateur($faker->randomElement($participantList))
+                ->setOrganisateur($organisateur)
+                ->sIncrire($organisateur)
                 ->setCampus($faker->randomElement($campusList))
                 ->setEtat($faker->randomElement($etatList))
                 ->setLieu($faker->randomElement($lieuList))
