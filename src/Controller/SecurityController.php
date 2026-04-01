@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Service\JWTService;
 use App\Service\SendEmailService;
+
 class SecurityController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
@@ -31,17 +32,20 @@ class SecurityController extends AbstractController
             'error' => $error,
         ]);
     }
+
     #[Route(path: '/login_check', name: 'app_login_check', methods: ['POST'])]
     public function login_check(): void
     {
         throw new \LogicException('Cette méthode ne doit JAMAIS être appelée directement.');
     }
+
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
     }
-    #[Route('/mot-de-passe-oublier', name: 'forgotten_password', methods: ['GET', 'POST'])]
-    public function motDePasseOublier(Request $request, ParticipantRepository $participantRepository, JWTService $JWTService, SendEmailService $mail): Response
+
+    #[Route('/forgotten_password', name: 'forgotten_password', methods: ['GET', 'POST'])]
+    public function forgottenPassword(Request $request, ParticipantRepository $participantRepository, JWTService $JWTService, SendEmailService $mail): Response
     {
 //        création du formulaire
         $form = $this->createForm(ResetPasswordRequestFormType::class);
@@ -79,8 +83,8 @@ class SecurityController extends AbstractController
             'requestPassForm' => $form->createView()]);
     }
 
-    #[Route('/mot-de-passe-oublier/{token}', name: 'reset_password')]
-    public function resetPassword($token, JWTService $JWTService, ParticipantRepository $participantRepository, Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager) : Response
+    #[Route('/forgotten_password/{token}', name: 'reset_password')]
+    public function resetPassword($token, JWTService $JWTService, ParticipantRepository $participantRepository, Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
 //        verifie si JWT est valide, pas expiré et verifie la clé secrète sinon renvoie un message flash
         if (!$JWTService->isValid($token) || $JWTService->isExpired($token) || !$JWTService->check($token, $JWTService->getSecret())) {

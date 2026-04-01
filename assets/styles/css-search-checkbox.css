@@ -1,0 +1,15 @@
+body:has(#sortie_search_inscrit:checked) tr:has(.pasInscrit) {
+    display: none;
+}
+
+body:has(#sortie_search_pasInscrit:checked) tr:has(.inscrit) {
+    display: none;
+}
+
+body:has(#sortie_search_organisateur:checked) tr:has(.pasOrganisateur) {
+    display: none;
+}
+
+body:has(#sortie_search_sortiesPassees:checked) tr:not(:has(.sortiePassee)) {
+    display: none;
+}

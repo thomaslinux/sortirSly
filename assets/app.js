@@ -8,7 +8,7 @@ import './stimulus_bootstrap.js';
 // import './styles/app.css';
 import './styles/eniwhere2.css';
 import './styles/nav2.css';
-import './styles/style_formulaire.css'
+// import './styles/style_formulaire.css'
 
 import './js/trierLesTablesParTh.js'
 

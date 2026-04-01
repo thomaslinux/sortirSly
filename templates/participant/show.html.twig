@@ -3,18 +3,63 @@
     Détails - {{ participant.username }}
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/details-profil.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h2>{{ participant.username }}</h2>
-    <div>
-        <div>
-            <img src="{{ asset('images/profil/'~participant.photo) }}" alt="{{ participant.username }}">
+    <a class="back-button" href="{{ path('sortie_list') }}">
+        <span class="material-symbols-outlined">arrow_back</span>
+        Retour à la liste des sorties
+    </a>
+    <main class="profile-container">
+        <div class="profile-card">
+            <!-- Left Column: Media -->
+            <aside class="profile-sidebar">
+                <div class="profile-image-container">
+                    <img src="{{ asset('images/profil/'~participant.photo) }}" alt="{{ participant.username }}">
+                </div>
+                <div class="profile-badge">Membre
+                    <span>
+                    {% if participant.actif %}
+                        actif
+                    {% else %}
+                        inactif
+                    {% endif %}
+
+                    </span>
+                </div>
+            </aside>
+            <!-- Right Column: Details -->
+            <section class="profile-main">
+                <header class="profile-header">
+                    <h1 class="profile-name">{{ participant.username }}</h1>
+                    <div class="header-underline"></div>
+                </header>
+                <div class="info-section">
+                    <div class="info-group">
+                        <span class="info-label">Prénom</span>
+                        <span class="info-value">{{ participant.prenom }}</span>
+                    </div>
+                    <div class="info-group">
+                        <span class="info-label">Nom</span>
+                        <span class="info-value">{{ participant.nom }}</span>
+                    </div>
+                    <div class="info-group">
+                        <span class="info-label">Téléphone</span>
+                        <span class="info-value">{{ participant.tel }}</span>
+                    </div>
+                    <div class="info-group">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">{{ participant.email }}</span>
+                    </div>
+                    <div class="info-group">
+                        <span class="info-label">Campus</span>
+                        <span class="info-value">{{ participant.campus.nom }}</span>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div>Prénom : {{ participant.prenom }}</div>
-        <div>Nom : {{ participant.nom }}</div>
-        <div>Télephone : {{ participant.tel }}</div>
-        <div>Email : {{ participant.email }}</div>
-        <div>Campus : {{ participant.campus.nom }}</div>
-    </div>
-    <div><a href="{{ path('sortie_list') }}">Retour</a></div>
+    </main>
 {% endblock %}
 

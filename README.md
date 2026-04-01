@@ -66,12 +66,16 @@ Faire un composer install car ajout du composer league/csv
 ## V3 - CSS et JS
 
 - [x] Styliser la page de détails de la sortie
-- [ ] Styliser la page d'annulation de la sortie (URGENT)
-- [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
+- [x] Styliser la page d'annulation de la sortie
+- [ ] Styliser la page de réinitialisation de mot de passe
+    - [ ] Tester si le mot de passe est bien reset
+    - [ ] Tester le style sur la page reset depuis un lien par mail
 - [x] Modifier le thème pour éviter de perdre de l'espace
 - [ ] Désactiver la grille au redimensionnement
-  ~~Récupérer les états historisés uniquement pour l'admin~~ (uniquement en BDD même pour les admins pas visibles dans
-  la liste des sorties)
+- [ ] Basculer entre un affichage en liste des sorties, et un affichage en grille (css on check)
+
+  ~~Récupérer les états historisés uniquement pour l'admin~~
+  (uniquement en BDD même pour les admins pas visibles dans la liste des sorties
 
 ## V4 - Bonus
 
@@ -82,6 +86,11 @@ Faire un composer install car ajout du composer league/csv
     - [x] Croix pour effacer le champ de recherche actuel
     - [ ] Recherche rapide utilisateurs inscrits
     - [ ] Recherche rapide organisateur
+
+## V5 - Après test utilisateur
+- [ ] Gestion des utilisateur
+  - [ ] Chaque action dans sa colonne nommée plus que la colonne nommée action ?
+  - [ ] Rendre inactif plus que désactiver comme texte on hover
 
 # Modèle graphique html :
 

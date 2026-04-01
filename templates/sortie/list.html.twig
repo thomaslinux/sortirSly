@@ -3,6 +3,10 @@
     Liste des sorties
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/css-search-checkbox.css') }}">
+{% endblock %}
+
 {% block body %}
     {#    {% include 'views/list/pc-list-search.html.twig' %} #}
     {% embed 'views/form/template-form-search-sortie.html.twig' with {form : sortieForm} %}
@@ -23,7 +27,7 @@
                 <th>Date de la sortie <span>&uarr;</span></th>
                 <th>Clôture <span>&uarr;</span></th>
                 <th>Inscrits/Places</th>
-                <th>État <span>&uarr;</span></th>
+                <th class="sortiePassee">État <span>&uarr;</span></th>
                 <th style="text-align: center;">Inscrit <span>&uarr;</span></th>
                 <th>Organisateur <span>&uarr;</span></th>
                 <th>Actions <span>&uarr;</span></th>
@@ -36,7 +40,6 @@
     </section>
 {% endblock %}
 {% block bonusjavascripts %}
-    {#    <script defer src="{{ asset('js/trierLesTablesParTh.js') }}"></script> #}
     <script defer src="{{ asset('js/filtrerSorties.js') }}"></script>
 {% endblock %}
 
