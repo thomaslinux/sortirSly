@@ -9,12 +9,23 @@
             {{ form_label(form.nom) }}
             <div class="input-wrapper">
                 {{ form_widget(form.nom, {'attr': {'class': 'input-field'}}) }}
+                <span class="material-symbols-outlined clear-icon" id="clear-btn"
+                      style="appearance: checkbox; display: none; position: absolute; right: 40px; cursor: pointer;">
+                    close
+                </span>
                 <span class="material-symbols-outlined">search</span>
             </div>
             {{ form_errors(form.nom) }}
         </div>
 
-        <button  name="search">{% block buttonLabel %}{% endblock %}</button>
+        <button name="search">{% block buttonLabel %}{% endblock %}</button>
+        <div class="search-length"><span id="nbSearchResults">{% block resultsLength %}{% endblock %}</span> résultats
+            trouvés
+
+            <label class="checkbox-label">
+                <input id="javascript_search" type="checkbox" checked>javascript search
+            </label>
+        </div>
     </div>
 
     {{ form_end(form) }}
