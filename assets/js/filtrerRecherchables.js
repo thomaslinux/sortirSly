@@ -10,9 +10,13 @@ function filterSorties() {
     if (JAVASCRIPT_SEARCH.checked) {
         const query = SEARCH_INPUT.value.trim().toLowerCase();
         let i = 0;
-        document.querySelectorAll('.recherchable').forEach(e => {
-            const tr = e.closest('tr');
-            if (query === '' || e.innerText.trim().toLowerCase().includes(query)) {
+        const rows = document.querySelectorAll('tr:has(.recherchable)');
+        rows.forEach(tr => {
+            const cells = Array.from(tr.querySelectorAll('.recherchable'));
+            const isMatch = query === '' || cells.some(td =>
+                td.innerText.trim().toLowerCase().includes(query.toLowerCase())
+            );
+            if (isMatch) {
                 tr.style.display = '';
                 i++;
             } else {
