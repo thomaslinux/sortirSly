@@ -72,7 +72,7 @@
                             <div class="action-group">
                                 {% if participant.isActif() %}
                                     <form method="post" style="display: inline;"
-                                          onsubmit="return confirm('Désactiver cet utilisateur ?')">
+                                          onsubmit="return confirm('Désactiver l\'utilisateur {{ participant.username }} ?')">
                                         <input type="hidden" name="action" value="inactive">
                                         <input type="hidden" name="id" value="{{ participant.id }}">
                                         <button type="submit" class="btn-action btn-toggle" title="Rendre inactif"><span
@@ -80,7 +80,7 @@
                                     </form>
                                 {% else %}
                                     <form method="post" style="display: inline;"
-                                          onsubmit="return confirm('Activer cet utilisateur ?')">
+                                          onsubmit="return confirm('Activer l\'utilisateur {{ participant.username }} ?')">
                                         <input type="hidden" name="action" value="activate">
                                         <input type="hidden" name="id" value="{{ participant.id }}">
                                         <button type="submit" class="btn-action btn-toggle inactive"
@@ -89,7 +89,7 @@
                                     </form>
                                 {% endif %}
                                 <form method="post" style="display: inline;"
-                                      onsubmit="return confirm('Supprimer définitivement l\'utilisateur ainsi que ses sorties et supprimez toutes ses participations ?')">
+                                      onsubmit="return confirm('Supprimer définitivement l\'utilisateur {{ participant.username }} ainsi que ses sorties et supprimer toutes ses participations ?')">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="id" value="{{ participant.id }}">
                                     <button type="submit" class="btn-action btn-delete" title="Supprimer"><span
