@@ -99,7 +99,9 @@ Faire un composer install car ajout du composer league/csv
 - [x] Gestion des utilisateurs
     - [x] Chaque action dans sa colonne nommée plus que la colonne nommée action ?
     - [x] Rendre inactif à la place de désactiver comme texte on hover
-
+- [ ] Bouton pour voir son profil côté utilisateur depuis la page de modification de son profil
+- [ ] Bouton pour modifier son profil depuis la page de détails de son profil
+      
 # Modèle graphique html :
 
 https://raw.githack.com/thomaslinux/sortirSly/refs/heads/master/CONCEPTION/template-list1.html
