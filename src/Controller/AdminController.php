@@ -32,11 +32,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 #[Route('/admin', name: 'admin_')]
+#[IsGranted('ROLE_ADMIN')]
 final class AdminController extends AbstractController
 {
     // Gestion des villes dans la page dédiée
-    #[Route('/villes/list', name: 'villes_list')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/villes/list', name: 'villes_list', methods: ['GET', 'POST'])]
     public function villes_list(
         EntityManagerInterface $entityManager,
         villeRepository        $villeRepository,
@@ -74,8 +74,7 @@ final class AdminController extends AbstractController
 
 
     // Gestion des campus dans la page dédiée
-    #[Route('/campus/list', name: 'campus_list')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/campus/list', name: 'campus_list', methods: ['GET', 'POST'])]
     public function campus_list(
         EntityManagerInterface $entityManager,
         Request                $request,
@@ -115,7 +114,6 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/manage/deleteOrInactive', name: 'deleteOrInactive', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
     public function deleteOrInactive(
         Request                $request,
         EntityManagerInterface $entityManager,
@@ -169,8 +167,7 @@ final class AdminController extends AbstractController
 
 
     #[Route('/manage/user', name: 'manage_user', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function manage_user(): Response
+       public function manage_user(): Response
     {
         return $this->render('admin/manage_user.html.twig', [
             'controller_name' => 'AdminController',
@@ -179,8 +176,7 @@ final class AdminController extends AbstractController
 
 
     #[Route('/new/users', name: 'new_user_csv', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function create(Request $request, ImportParticipantService $importParticipantService): Response
+     public function create(Request $request, ImportParticipantService $importParticipantService): Response
     {
         //nouveau dto
         $import = new UserImport();
@@ -205,8 +201,7 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/new/user', name: 'new_user', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function createOne(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, FileUploader $fileUploader): Response
+       public function createOne(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, FileUploader $fileUploader): Response
     {
         $participant = new Participant();
         $participantForm = $this->createForm(ParticipantType::class, $participant);

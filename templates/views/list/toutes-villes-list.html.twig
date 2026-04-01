@@ -47,7 +47,7 @@
 
 {# Modal de modification #}
 <div id="editModal"
-     style="display: none; position:fixed; top:50%; left:35%;">
+     style="display: none;">
     <h4>Modifier la ville</h4>
     <input type="hidden"
            id="villeId">
@@ -68,7 +68,7 @@
 
 {# Modal de suppression #}
 <div id="editModal2"
-     style="display: none; position:fixed; top:50%; left:35%;">
+     style="display: none;">
     <h4>Supprimer la ville</h4>
     <input type="hidden"
            id="villeId2">
@@ -88,6 +88,7 @@
 <script>
     document.querySelectorAll('.edit-btn').forEach(button => {
         button.addEventListener('click', () => {
+            closeModal2()
             document.getElementById('editModal').style.display = 'block';
             document.getElementById('villeId').value = button.dataset.id;
             document.getElementById('villeNom').value = button.dataset.nom;
@@ -132,6 +133,7 @@
 
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', () => {
+            closeModal()
             document.getElementById('editModal2').style.display = 'block';
             document.getElementById('villeId2').value = button.dataset.id;
             document.getElementById('villeNom2').value = button.dataset.nom;
