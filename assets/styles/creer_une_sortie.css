@@ -1,0 +1,340 @@
+/* ==============================================
+   CRÉER UNE SORTIE - ENIMove (avec EMBED)
+   ============================================== */
+
+/* Main Container */
+.main-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem 5rem;
+}
+
+/* Page Header */
+.page-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-container));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.form-container {
+    background: var(--surface-container-lowest);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(207, 195, 202, 0.15);
+    padding: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.form-column {
+    /* Colonne principale avec le formulaire embed */
+}
+
+.form-column-2 {
+    /* Colonne lieu */
+}
+/* Section Lieu */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.section-header .material-symbols-outlined {
+    color: var(--secondary);
+    font-size: 1.875rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0;
+}
+.page-subtitle {
+    color: var(--on-surface-variant);
+    font-size: 1.125rem;
+    max-width: 40rem;
+    margin: 0 auto;
+    font-weight: 500;
+}
+
+/* Embed Container */
+div:has(> form) {
+    background: var(--surface-container-lowest);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(207, 195, 202, 0.15);
+    padding: 2.5rem;
+    margin: 0 auto 3rem;
+    max-width: 800px;
+}
+
+/* OVERRIDE template-form-sortie.html.twig */
+h2 {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: var(--primary) !important;
+    margin-bottom: 2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+}
+
+h2::before {
+    content: "info";
+    font-family: "Material Symbols Outlined" !important;
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 48 !important;
+    color: var(--secondary) !important;
+    font-size: 1.875rem !important;
+}
+
+/* Form Styling Global */
+div:has(> form) input,
+div:has(> form) select,
+div:has(> form) textarea {
+    width: 100% !important;
+    padding: 1rem 1.25rem !important;
+    background: var(--surface-container) !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--radius-lg) !important;
+    font-family: inherit !important;
+    font-size: 1rem !important;
+    color: var(--on-surface) !important;
+    margin-bottom: 1.5rem !important;
+    transition: all 0.3s ease !important;
+}
+
+div:has(> form) input:focus,
+div:has(> form) select:focus,
+div:has(> form) textarea:focus {
+    background: var(--surface-container-lowest) !important;
+    border-color: var(--secondary) !important;
+    box-shadow: 0 4px 12px rgba(92, 88, 145, 0.15) !important;
+    outline: none !important;
+}
+
+/* Buttons du template-form-sortie */
+div:has(> form) button,
+div:has(> form) a[href="{{ path('main_home') }}"] {
+    background: linear-gradient(135deg, var(--primary), var(--primary-container)) !important;
+    color: var(--on-primary) !important;
+    padding: 1rem 3rem !important;
+    border-radius: var(--radius-xl) !important;
+    border: none !important;
+    font-weight: 800 !important;
+    font-size: 0.875rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    cursor: pointer !important;
+    box-shadow: var(--shadow-md) !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    transition: all 0.2s !important;
+    margin-right: 1rem !important;
+}
+
+div:has(> form) a[href="{{ path('main_home') }}"] {
+    background: transparent !important;
+    border: 2px solid var(--primary) !important;
+    color: var(--primary) !important;
+    box-shadow: none !important;
+}
+
+div:has(> form) button:hover,
+div:has(> form) a[href="{{ path('main_home') }}"]:hover:not([href="#"]) {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 20px 40px rgba(65, 43, 64, 0.25) !important;
+}
+
+div:has(> form) a[href="{{ path('main_home') }}"]:hover {
+    background: var(--primary) !important;
+    color: var(--on-primary) !important;
+}
+div:has(> form) h2 {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: var(--primary) !important;
+    margin-bottom: 2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+}
+
+div:has(> form) h2::before {
+    content: "info" !important;
+    font-family: "Material Symbols Outlined" !important;
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 48 !important;
+    color: var(--secondary) !important;
+    font-size: 1.875rem !important;
+}
+/* Ajouter un lieu */
+#mask {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    background: var(--secondary-container) !important;
+    color: var(--on-secondary) !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: var(--radius-lg) !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s !important;
+    margin-top: 1rem !important;
+}
+
+#mask:hover {
+    background: var(--secondary) !important;
+    color: var(--on-secondary) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Bouton Lieu (en haut de la colonne 2) */
+.btn-lieu {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--secondary-container);
+    color: var(--on-secondary);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: fit-content;
+    margin-bottom: 2rem;
+}
+
+.btn-lieu:hover {
+    background: var(--secondary);
+    color: var(--on-secondary);
+    transform: translateY(-1px);
+}
+
+/* Boutons alignés en bas */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(207, 195, 202, 0.2);
+}
+
+.btn-cancel {
+    background: transparent;
+    border: 2px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-lg);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.btn-cancel:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+    border-color: var(--primary);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 1rem 2.5rem;
+    border-radius: var(--radius-lg);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-container));
+    color: var(--on-primary);
+    padding: 1.25rem 3rem;
+    border-radius: var(--radius-xl);
+    border: none;
+    font-weight: 800;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(65, 43, 64, 0.25);
+}
+/* Responsive */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 6rem 1rem 3rem !important;
+    }
+
+    .page-title {
+        font-size: 2.25rem !important;
+    }
+
+    div:has(> form) {
+        padding: 2rem 1.5rem !important;
+        margin: 0 1rem 2rem !important;
+    }
+    .main-container {
+        padding: 6rem 1rem 3rem;
+    }
+    .page-title {
+        font-size: 2.25rem;
+    }
+    .form-container {
+        padding: 2rem;
+        margin: 0 1rem;
+    }
+}
+@media (max-width: 1024px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
