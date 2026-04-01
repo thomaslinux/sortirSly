@@ -6,87 +6,30 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('styles/creer_une_sortie.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/style_formulaire.css') }}">
 {% endblock %}
 
-
 {% block body %}
-    <div class="profile-container">
-        <div class="profile-card">
-            <header class="profile-header">
-                <h1>Création d'une sortie</h1>
-                <p>Partagez un moment unique avec la communauté ENI. Remplissez les détails ci-dessous pour planifier
-                    votre prochain événement.</p>
-            </header>
-            {{ form_start(sortieForm) }}
-            <div class="form-grid-2cols">
-                <div class="form-col section-general">
-                    {% embed 'views/form/template-form-sortie.html.twig' %}
-                        {% block formTitle %}Informations Générales{% endblock %}
-                    {% endembed %}
-                </div>
-                <div class="form-col section-logistics">
-                    <div class="section-header">
-                        <span class="material-symbols-outlined">location_on</span>
-                        <h3 class="section-title">Lieu & Logistique</h3>
-                    </div>
-                    {{ form_row(sortieForm.campus) }}
-                    {{ form_row(sortieForm.villes) }}
-                    {{ form_row(sortieForm.lieu) }}
-                    {{ form_row(sortieForm.lieu2) }}
-                </div>
-                <div class="form-footer">
-                    <a href="{{ path('sortie_list') }}" class="btn-cancel">Annuler</a>
-                    <button type="submit" class="btn-primary">Enregistrer brouillon</button>
-                    {{ form_row(sortieForm.publier) }}
-                    <a href="#" id="mask" class="btn-lieu">
-                        <span class="material-symbols-outlined">add</span>
-                        Ajouter un lieu
-                    </a>
-                </div>
-                {{ form_end(sortieForm) }}
-            </div>
+    <div>
+        {{ form_start(sortieForm) }}
+        {% embed 'views/form/template-form-sortie.html.twig' %}
+            {% block formTitle %}Informations Générales{% endblock %}
+        {% endembed %}
+        {{ form_row(sortieForm.campus) }}
+        {{ form_row(sortieForm.villes) }}
+        {{ form_row(sortieForm.lieu) }}
+        {{ form_row(sortieForm.lieu2) }}
+
+        <div class="form-footer">
+            <a href="{{ path('sortie_list') }}" class="btn-cancel">Annuler</a>
+            <button type="submit" class="btn-primary">Enregistrer brouillon</button>
+            {{ form_row(sortieForm.publier) }}
         </div>
-
-
-        {#            <div class="gps-card"> #}
-        {#                <div class="gps-header"> #}
-        {#                    <span>Coordonnées GPS auto</span> #}
-        {#                    <span class="material-symbols-outlined">gps_fixed</span> #}
-        {#                </div> #}
-        {#                <div class="gps-coords"> #}
-        {#                    <div class="coord-item"> #}
-        {#                        <label>LATITUDE</label> #}
-        {#                        <input readonly type="text" value="47.2184"/> #}
-        {#                    </div> #}
-        {#                    <div class="coord-item"> #}
-        {#                        <label>LONGITUDE</label> #}
-        {#                        <input readonly type="text" value="-1.5536"/> #}
-        {#                    </div> #}
-        {#                </div> #}
-        {#            </div> #}
-
-        {#            <div class="map-container"> #}
-        {#                [image:1] #}
-        {#            </div> #}
-
+        {{ form_end(sortieForm) }}
     </div>
-    </div>
-    <script>
-        const dateHeureDebut = document.getElementById('sortie_dateHeureDebut');
-        const dateLimiteInscription = document.getElementById('sortie_dateLimiteInscription');
-        dateHeureDebut.addEventListener('change', () => {
-            const dateDebut = dateHeureDebut.value.slice(0, 10);
-            dateLimiteInscription.setAttribute('max', dateDebut);
-            if (dateLimiteInscription.value > dateDebut) {
-                dateLimiteInscription.value = dateDebut;
-            }
-        });
-    </script>
-
 {% endblock %}
 
 {% block bonusjavascripts %}
     <script defer src="{{ asset('js/apiVilleEtLieux.js') }}"></script>
+    <script defer src="{{ asset('js/controleDatesJS.js') }}"></script>
 {% endblock %}

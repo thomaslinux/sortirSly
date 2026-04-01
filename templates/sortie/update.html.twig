@@ -11,13 +11,17 @@
 {% block body %}
     <div>
         {% embed 'views/form/template-form-sortie.html.twig' %}
-            {% block formTitle %}Création d'une sortie{% endblock %}
+            {% block formTitle %}Modification d'une sortie{% endblock %}
 
             {% block buttonLabel %}
                 Enregistrer "brouillon"
             {% endblock %}
 
         {% endembed %}
+        {{ form_row(sortieForm.campus) }}
+        {{ form_row(sortieForm.villes) }}
+        {{ form_row(sortieForm.lieu) }}
+        {{ form_row(sortieForm.lieu2) }}
 
         {% if is_granted('DELETE', sortie) %}
             <a href="{{ path('sortie_delete', {'id': sortie.id}) }}">Supprimer</a>
