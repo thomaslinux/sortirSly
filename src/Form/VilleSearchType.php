@@ -23,6 +23,7 @@ class VilleSearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => VilleSearch::class,
+            'required' => false
         ]);
     }
 }

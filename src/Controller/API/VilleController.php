@@ -68,7 +68,7 @@ final class VilleController extends AbstractController
     public function delete(
         EntityManagerInterface $entityManager,
         VilleRepository        $villeRepository,
-        int                    $id
+        int                    $id = null
     ): Response
     {
         $ville = $villeRepository->find($id);
@@ -83,7 +83,7 @@ final class VilleController extends AbstractController
         Request                $request,
         EntityManagerInterface $entityManager,
         VilleRepository        $villeRepository,
-        int                    $id
+        int                    $id = null
     ): Response
     {
         $ville = $villeRepository->find($id);
@@ -92,7 +92,6 @@ final class VilleController extends AbstractController
         if (!$ville) {
             return $this->json(['error' => 'Ville non trouvée'], Response::HTTP_NOT_FOUND);
         }
-
         if (isset($data['nom'])) {
             $ville->setNom($data['nom']);
         }
@@ -102,6 +101,4 @@ final class VilleController extends AbstractController
         $entityManager->flush();
         return $this->json($ville, Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
-
-
 }

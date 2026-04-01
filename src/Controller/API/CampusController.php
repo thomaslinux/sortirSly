@@ -55,7 +55,7 @@ final class CampusController extends AbstractController
     public function delete(
         EntityManagerInterface $entityManager,
         CampusRepository       $campusRepository,
-        int                    $id=null
+        int                    $id = null
     ): Response
     {
         $campus = $campusRepository->find($id);
@@ -80,14 +80,10 @@ final class CampusController extends AbstractController
         if (!$campus) {
             return $this->json(['error' => 'Campus non trouvée'], Response::HTTP_NOT_FOUND);
         }
-
         if (isset($data['nom'])) {
             $campus->setNom($data['nom']);
         }
         $entityManager->flush();
         return $this->json($campus, Response::HTTP_OK, [],['groups' => 'campus-api']);
-
     }
-
-
 }
