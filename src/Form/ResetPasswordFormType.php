@@ -12,14 +12,16 @@ class ResetPasswordFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('password', PasswordType::class, ['label' => 'Entrez votre mot de passe'])
+            ->add('password', PasswordType::class, [
+                'label' => 'Entrez votre mot de passe'
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+
         ]);
     }
 }

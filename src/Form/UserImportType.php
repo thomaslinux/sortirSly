@@ -23,20 +23,27 @@ class UserImportType extends AbstractType
                 'label' => 'Fichier CSV (pseudo;nom;prenom;mail;telephones)',
                 'required' => true,
                 'mapped' => true,
-                'attr' => ['class' => 'form-widget form-control'],
-                'row_attr' => ['class' => 'form-group full-width']
+                'attr' => [
+                    'class' => 'form-widget form-control'
+                ],
+                'row_attr' => [
+                    'class' => 'form-group full-width'
+                ]
             ])
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'nom',
                 'required' => true,
-                'mapped'=> true,
+                'mapped' => true,
                 'query_builder' => function (CampusRepository $campusRepository) {
-                    return $campusRepository->createQueryBuilder('c')
-                        ->addOrderBy('c.nom', 'ASC');
+                    return $campusRepository->createQueryBuilder('c')->addOrderBy('c.nom', 'ASC');
                 },
-                'attr' => ['class' => 'form-widget form-control'],
-                'row_attr' => ['class' => 'form-group full-width'] // forcer la ligne complète
+                'attr' => [
+                    'class' => 'form-widget form-control'
+                ],
+                'row_attr' => [
+                    'class' => 'form-group full-width'
+                ] // forcer la ligne complète
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -45,13 +52,21 @@ class UserImportType extends AbstractType
                 'mapped' => true,
                 'first_options' => [
                     'label' => 'Mot de passe',
-                    'attr' => ['class' => 'form-widget form-control'],
-                    'row_attr' => ['class' => 'form-group full-width']
+                    'attr' => [
+                        'class' => 'form-widget form-control'
+                    ],
+                    'row_attr' => [
+                        'class' => 'form-group full-width'
+                    ]
                 ],
                 'second_options' => [
                     'label' => 'Confirmation Mot de passe',
-                    'attr' => ['class' => 'form-widget'],
-                    'row_attr' => ['class' => 'form-group full-width']
+                    'attr' => [
+                        'class' => 'form-widget'
+                    ],
+                    'row_attr' => [
+                        'class' => 'form-group full-width'
+                    ]
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),

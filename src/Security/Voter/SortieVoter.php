@@ -19,8 +19,6 @@ final class SortieVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        // replace with your own logic
-        // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::VIEW, self::INS, self::DESINS, self::PUBLISH, self::CANCEL, self::DELETE])
             && $subject instanceof \App\Entity\Sortie;
     }
@@ -30,7 +28,7 @@ final class SortieVoter extends Voter
         $user = $token->getUser();
         $now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
-        // if the user is anonymous, do not grant access
+        // Si l'utilisateur n'est pas connecté
         if (!$user instanceof UserInterface) {
             $vote?->addReason('Vous devez être connecté');
             return false;
@@ -38,7 +36,6 @@ final class SortieVoter extends Voter
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return true;
         }
-
 
         $sortie = $subject;
 
@@ -51,7 +48,6 @@ final class SortieVoter extends Voter
                 }
                 return false;
 
-
             case self::VIEW:
                 // vérifie si la sortie est en création => ne s'affiche pas! sauf si organisateur
                 if ($sortie->getEtat()->getNom() === 'En creation' &&
@@ -63,7 +59,6 @@ final class SortieVoter extends Voter
 
             case self::INS:
                 // vérifie les conditions pour s'inscrire à une sortie (date limite, nb place et pas déjà inscrit ok)
-
                 if ($sortie->getEtat()->getNom() === 'Ouverte' &&
                     $sortie->getDateLimiteInscription() > $now &&
                     $sortie->getInscriptions()->count() < $sortie->getNbPlaces() &&
@@ -84,7 +79,6 @@ final class SortieVoter extends Voter
                 }
                 return false;
 
-
             case self::PUBLISH:
                 // vérifie les conditions pour publier une sortie
                 if ($sortie->getEtat()->getNom() == "En creation" &&
@@ -93,7 +87,6 @@ final class SortieVoter extends Voter
                     return true;
                 }
                 return false;
-
 
             case self::CANCEL:
                 // vérifie les conditions pour annuler une sortie
@@ -112,9 +105,7 @@ final class SortieVoter extends Voter
                     return true;
                 }
                 return false;
-
         }
-
         return false;
     }
 }

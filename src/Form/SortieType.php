@@ -100,9 +100,8 @@ class SortieType extends AbstractType
                 'mapped' => false,
                 'choice_label' => 'nom',
                 'choice_value' => 'id',
-                'placeholder' => '- Choisir lieu -',
-                                'required' => false
-
+                'placeholder' => '- Choisir un lieu -',
+                'required' => false
             ])
             ->add('lieu2', LieuType::class, [
                 'label' => 'Ajoute un lieu de sortie',

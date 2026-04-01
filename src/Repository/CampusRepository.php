@@ -20,7 +20,6 @@ class CampusRepository extends ServiceEntityRepository
     {
         $campusNom = $campusSearch->getNom();
 
-
         $qb = $this->createQueryBuilder('c');
         if ($campusNom) {
             $qb

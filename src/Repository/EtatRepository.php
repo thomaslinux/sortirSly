@@ -19,7 +19,6 @@ class EtatRepository extends ServiceEntityRepository
 
     public function findEtat()
     {
-
         $qb = $this->createQueryBuilder('e');
         $qb
             ->where('e.nom IN (:nom)' )
@@ -29,29 +28,4 @@ class EtatRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-
-    //    /**
-    //     * @return Etat[] Returns an array of Etat objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Etat
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }
