@@ -1,340 +1,284 @@
 /* ==============================================
-   CRÉER UNE SORTIE - ENIMove (avec EMBED)
+   CRÉER UNE SORTIE - Layout 2-colonnes MODÈLE
    ============================================== */
 
-/* Main Container */
-.main-container {
+.profile-container {
+    padding: 8rem 1.5rem 5rem;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 8rem 1.5rem 5rem;
 }
 
-/* Page Header */
-.page-header {
-    margin-bottom: 3rem;
+.profile-card {
+    background: linear-gradient(135deg, var(--primary), var(--primary-container)) !important;
+    color: white;
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius-xl);
+    padding: 0;
+    box-shadow: var(--shadow-sm);
+    /*ne pas toucher au 3 ligne suivante sa gere l'emplacement des colones*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile-card::before {
+    content: '';
+    position: absolute;
+    top: 15rem;
+    left: 2rem;
+    right: 2rem;
+    bottom: 4rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-container));
+    border-radius: 1.5rem;
+    z-index: -1;
+    margin: 0 auto;
+    width: 130%;
+    max-width: 1400px;
+}
+/* Header */
+.profile-header {
     text-align: center;
+    padding: 3rem 3.5rem 0;
+    margin-bottom: 0;
+    color: white !important;
 }
 
-.page-title {
+.profile-header h1 {
     font-size: 3rem;
     font-weight: 800;
-    color: var(--primary);
-    letter-spacing: -0.025em;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--primary), var(--primary-container));
+    color: white !important;
+    background: linear-gradient(135deg, white , rgba(255,255,255,0.8));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
 }
-.form-container {
-    background: var(--surface-container-lowest);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid rgba(207, 195, 202, 0.15);
-    padding: 2.5rem;
+.profile-header h1,
+.profile-header p {
+    color: white !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+
+/* Grille 2-colonnes */
+.form-grid-2cols {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 4rem !important;
+    width: 100%;
     max-width: 1200px;
-    margin: 0 auto 3rem;
+    justify-content: center;
+    padding: 0 3.5rem 3rem !important;
+    justify-items: stretch !important;
+    align-items: start;
+}
+.form-group label,
+div:has(> form) label {
+    font-size: 0.875rem !important;
+    padding-left: 0.25rem;
+    width: 100%;
+}
+.form-widget,
+.form-widget input,
+.form-widget select,
+.form-widget textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1.25rem 1.75rem !important;
+    font-size: 1.05rem !important;
+}
+.form-col {
+    background: rgba(255,255,255,0.15) !important;
+    backdrop-filter: blur(15px);
+    border-radius: 1rem;
+    padding: 2.5rem 3.5rem !important;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    color: white !important;
+    width: 100%;
+}
+.form-col label {
+    color: var(--primary) !important;
+    text-shadow: none !important;
+}
+.form-col.section-general {
+    background: var(--surface-container-lowest) !important;
+    border: 1px solid rgba(207,195,202,0.15) !important;
+    width: 100%;
+    max-width: 100%;
+    justify-self: start;
+}
+.form-col.section-logistics {
+    background: var(--surface-container-low) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    padding: 2.5rem 3.5rem !important;
+    width: 100%;
+    max-width: 100%;
+    justify-self: end;
+}
+.form-col .form-widget,
+.form-col input,
+.form-col select,
+.form-col textarea {
+    background: rgba(255,255,255,0.95) !important;
+    color: var(--on-surface) !important;
+    border: 1px solid rgba(207,195,202,0.3) !important;
+}
+.section-logistics {
+    background: var(--surface-container-low);
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    padding: 2.5rem 3.5rem !important;
 }
 
-.form-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.form-column {
-    /* Colonne principale avec le formulaire embed */
-}
-
-.form-column-2 {
-    /* Colonne lieu */
-}
-/* Section Lieu */
+/* Section headers */
 .section-header {
-    display: flex;
+    display: flex !important;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2rem !important;
 }
 
 .section-header .material-symbols-outlined {
-    color: var(--secondary);
-    font-size: 1.875rem;
-}
-
-.section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin: 0;
-}
-.page-subtitle {
-    color: var(--on-surface-variant);
-    font-size: 1.125rem;
-    max-width: 40rem;
-    margin: 0 auto;
-    font-weight: 500;
-}
-
-/* Embed Container */
-div:has(> form) {
-    background: var(--surface-container-lowest);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid rgba(207, 195, 202, 0.15);
-    padding: 2.5rem;
-    margin: 0 auto 3rem;
-    max-width: 800px;
-}
-
-/* OVERRIDE template-form-sortie.html.twig */
-h2 {
-    font-size: 1.5rem !important;
-    font-weight: 700 !important;
-    color: var(--primary) !important;
-    margin-bottom: 2rem !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.75rem !important;
-}
-
-h2::before {
-    content: "info";
-    font-family: "Material Symbols Outlined" !important;
-    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 48 !important;
     color: var(--secondary) !important;
     font-size: 1.875rem !important;
 }
 
-/* Form Styling Global */
-div:has(> form) input,
-div:has(> form) select,
-div:has(> form) textarea {
-    width: 100% !important;
-    padding: 1rem 1.25rem !important;
-    background: var(--surface-container) !important;
-    border: 1px solid transparent !important;
-    border-radius: var(--radius-lg) !important;
-    font-family: inherit !important;
-    font-size: 1rem !important;
-    color: var(--on-surface) !important;
-    margin-bottom: 1.5rem !important;
-    transition: all 0.3s ease !important;
-}
-
-div:has(> form) input:focus,
-div:has(> form) select:focus,
-div:has(> form) textarea:focus {
-    background: var(--surface-container-lowest) !important;
-    border-color: var(--secondary) !important;
-    box-shadow: 0 4px 12px rgba(92, 88, 145, 0.15) !important;
-    outline: none !important;
-}
-
-/* Buttons du template-form-sortie */
-div:has(> form) button,
-div:has(> form) a[href="{{ path('main_home') }}"] {
-    background: linear-gradient(135deg, var(--primary), var(--primary-container)) !important;
-    color: var(--on-primary) !important;
-    padding: 1rem 3rem !important;
-    border-radius: var(--radius-xl) !important;
-    border: none !important;
-    font-weight: 800 !important;
-    font-size: 0.875rem !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.1em !important;
-    cursor: pointer !important;
-    box-shadow: var(--shadow-md) !important;
-    text-decoration: none !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 0.75rem !important;
-    transition: all 0.2s !important;
-    margin-right: 1rem !important;
-}
-
-div:has(> form) a[href="{{ path('main_home') }}"] {
-    background: transparent !important;
-    border: 2px solid var(--primary) !important;
-    color: var(--primary) !important;
-    box-shadow: none !important;
-}
-
-div:has(> form) button:hover,
-div:has(> form) a[href="{{ path('main_home') }}"]:hover:not([href="#"]) {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 20px 40px rgba(65, 43, 64, 0.25) !important;
-}
-
-div:has(> form) a[href="{{ path('main_home') }}"]:hover {
-    background: var(--primary) !important;
-    color: var(--on-primary) !important;
-}
-div:has(> form) h2 {
+.section-title {
     font-size: 1.5rem !important;
     font-weight: 700 !important;
+    margin: 0 !important;
     color: var(--primary) !important;
-    margin-bottom: 2rem !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.75rem !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
 }
 
+/* Form embed - laisse style_formulaire gérer */
+div:has(> form) {
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
 div:has(> form) h2::before {
     content: "info" !important;
     font-family: "Material Symbols Outlined" !important;
     font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 48 !important;
     color: var(--secondary) !important;
-    font-size: 1.875rem !important;
+    margin-right: 0.75rem !important;
 }
-/* Ajouter un lieu */
-#mask {
-    display: inline-flex !important;
+
+.section-title,
+div:has(> form) h2 {
+    color: var(--primary) !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    text-shadow: none !important;
+    font-size: 1.5rem !important;
+}
+/* Footer boutons */
+.form-footer {
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
     align-items: center !important;
-    gap: 0.5rem !important;
-    background: var(--secondary-container) !important;
-    color: var(--on-secondary) !important;
-    padding: 0.75rem 1.5rem !important;
-    border-radius: var(--radius-lg) !important;
-    text-decoration: none !important;
+    gap: 1.5rem !important;
+    border-top: 2px solid rgba(207, 195, 202, 0.3) !important;
+    background: var(--surface-container-lowest) !important;
+    backdrop-filter: blur(10px);
+    border-radius: 1rem !important;
+    padding: 2.5rem 3.5rem !important;
+    margin-top: 2.5rem !important;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+}
+
+/* BOUTONS DU MODÈLE */
+.btn-cancel,
+.btn-outline,
+.btn-primary {
+    border-radius: 1rem !important;
+    padding: 1.25rem 3rem !important;
+    font-size: 1rem !important;
     font-weight: 700 !important;
-    font-size: 0.875rem !important;
-    transition: all 0.2s !important;
-    margin-top: 1rem !important;
 }
-
-#mask:hover {
-    background: var(--secondary) !important;
-    color: var(--on-secondary) !important;
-    transform: translateY(-1px) !important;
-}
-
-/* Bouton Lieu (en haut de la colonne 2) */
-.btn-lieu {
-    display: inline-flex !important;
-    align-items: center;
-    gap: 0.75rem;
-    background: var(--secondary-container);
-    color: var(--on-secondary);
-    padding: 1rem 1.5rem;
-    border-radius: var(--radius-lg);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    width: fit-content;
-    margin-bottom: 2rem;
-}
-
-.btn-lieu:hover {
-    background: var(--secondary);
-    color: var(--on-secondary);
-    transform: translateY(-1px);
-}
-
-/* Boutons alignés en bas */
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(207, 195, 202, 0.2);
-}
-
 .btn-cancel {
-    background: transparent;
-    border: 2px solid var(--outline-variant);
-    color: var(--on-surface-variant);
-    padding: 1rem 2rem;
-    border-radius: var(--radius-lg);
-    font-weight: 700;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
+    background: none !important;
+    border: none !important;
+    color: var(--on-surface-variant) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    cursor: pointer !important;
+    transition: color 0.3s !important;
 }
 
 .btn-cancel:hover {
-    background: var(--primary);
-    color: var(--on-primary);
-    border-color: var(--primary);
+    color: white !important;
+    background: linear-gradient(135deg, var(--error), #d32f2f) !important;
+    transform: scale(1.05) !important;
 }
 
-.btn-secondary {
-    background: transparent;
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    padding: 1rem 2.5rem;
-    border-radius: var(--radius-lg);
-    font-weight: 700;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.2s;
+.btn-outline {
+    background: none !important;
+    border: 2px solid var(--primary) !important;
+    color: var(--primary) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    cursor: pointer !important;
+    transition: all 0.3s !important;
 }
 
-.btn-secondary:hover {
-    background: var(--primary);
-    color: var(--on-primary);
-    transform: translateY(-1px);
+.btn-outline:hover {
+    background: var(--primary) !important;
+    color: white !important;
 }
 
+button[type="submit"].btn-primary,
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-container));
-    color: var(--on-primary);
-    padding: 1.25rem 3rem;
-    border-radius: var(--radius-xl);
-    border: none;
-    font-weight: 800;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    box-shadow: var(--shadow-md);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    transition: all 0.2s;
+    background: linear-gradient(135deg, var(--primary), var(--primary-container)) !important;
+    color: white !important;
+    border: none !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    cursor: pointer !important;
+    box-shadow: 0 10px 15px rgba(65, 43, 64, 0.15) !important;
+    transition: all 0.3s !important;
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 20px 40px rgba(65, 43, 64, 0.25);
+    box-shadow: 0 15px 25px rgba(65, 43, 64, 0.25) !important;
+    transform: scale(1.02) !important;
 }
-/* Responsive */
-@media (max-width: 768px) {
-    .main-container {
-        padding: 6rem 1rem 3rem !important;
-    }
-
-    .page-title {
-        font-size: 2.25rem !important;
-    }
-
-    div:has(> form) {
-        padding: 2rem 1.5rem !important;
-        margin: 0 1rem 2rem !important;
-    }
-    .main-container {
-        padding: 6rem 1rem 3rem;
-    }
-    .page-title {
-        font-size: 2.25rem;
-    }
-    .form-container {
-        padding: 2rem;
-        margin: 0 1rem;
-    }
+.input-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 2rem !important;
 }
+
+/* Responsive comme le modèle */
 @media (max-width: 1024px) {
-    .form-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+    .form-grid-2cols {
+        grid-template-columns: 1fr !important;
+        gap: 2.5rem !important;
+        padding: 0 2.5rem 2.5rem !important;
+        justify-items: stretch !important;
+        max-width: 100%;
+    }
+    .form-footer {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .btn-primary, .btn-outline, .btn-cancel {
+        justify-content: center !important;
+    }.form-col {
+         padding: 2.5rem 3rem !important;
+     }
+    .form-col.section-general,
+    .form-col.section-logistics {
+        justify-self: stretch !important;
     }
 }
+
+/* Lieux */
+.hide-me { display: none !important; }
+.show-me { display: block !important; }
