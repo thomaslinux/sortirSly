@@ -14,6 +14,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+
+// Tâche CRON qui permet de mettre à jour les états des sorties
+// Actuellement c'est le service : "SortieService" qui permet de faire ca dans la fonction list() de "SortieController"
 #[AsCommand(
     name: 'app:en-cours',
     description: 'Add a short description for your command',

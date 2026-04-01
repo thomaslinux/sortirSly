@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+// Controller API de gestion des "Campus"
 #[Route('/api/campus', name: "api_campus_")]
 final class CampusController extends AbstractController
 {
@@ -23,6 +24,7 @@ final class CampusController extends AbstractController
         return $this->json($campus, Response::HTTP_OK, [],['groups' => 'campus-api']);
     }
 
+
     #[Route('/{id}', name: 'retrieve_one', methods: ['GET'])]
     public function retrieveOne(
         CampusRepository $campusRepository,
@@ -31,6 +33,7 @@ final class CampusController extends AbstractController
         $campus = $campusRepository->find($id);
         return $this->json($campus, Response::HTTP_OK, [],['groups' => 'campus-api']);
     }
+
 
     #[Route('', name: 'create', methods: ['POST'])]
     public function create(SerializerInterface    $serializer,
@@ -63,8 +66,8 @@ final class CampusController extends AbstractController
         $entityManager->remove($campus);
         $entityManager->flush();
         return $this->json(['success' => 'Campus supprimée!'], Response::HTTP_ACCEPTED);
-
     }
+
 
     #[Route('/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
     public function update(

@@ -11,10 +11,10 @@ Content-Type: application/json
 
 ###
 
-
 ### DELETE Ville
 DELETE http://localhost:8081/projet_sortir/public/api/villes/8
 ####
+
 ### UPDATE VILLE
 PUT http://localhost:8081/projet_sortir/public/api/villes/9
 Content-Type: application/json

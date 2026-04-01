@@ -45,32 +45,38 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/forgotten_password', name: 'forgotten_password', methods: ['GET', 'POST'])]
-    public function forgottenPassword(Request $request, ParticipantRepository $participantRepository, JWTService $JWTService, SendEmailService $mail): Response
+    public function forgottenPassword(
+        Request               $request,
+        ParticipantRepository $participantRepository,
+        JWTService            $JWTService,
+        SendEmailService      $mail): Response
     {
-//        création du formulaire
+        // création du formulaire
         $form = $this->createForm(ResetPasswordRequestFormType::class);
-//        récupère les données
+        // récupère les données
         $form->handleRequest($request);
-//        vérifie si le formulaire est soumis et mail valide(format, non vide)
+        // vérifie si le formulaire est soumis et mail valide(format, non vide)
         if ($form->isSubmitted() && $form->isValid()) {
-//            cherche le participant en bdd
+            // cherche le participant en bdd
             $participant = $participantRepository->findOneByEmail($form->get('email')->getData());
-//          si trouvé
+            // si trouvé
             if ($participant) {
-//                en-tete du token encodée
+                // en-tete du token encodée
                 $header = [
                     'typ' => 'JWT',
                     'alg' => 'HS256'
                 ];
-//                corps du token encodée
+                // corps du token encodé
                 $payload = [
                     'participant_id' => $participant->getId()
                 ];
-//                génération complete du token
+                // génération complete du token
                 $token = $JWTService->generate($header, $payload, $JWTService->getSecret());
-//              génére le lien complet
+
+                // génère le lien complet
                 $url = $this->generateUrl('reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
-//              envoie du mail
+
+                // envoie du mail
                 $mail->send('no-reply@openblog.test', $participant->getEmail(), 'Récupération de mot de passe sur le site OpenBlog', 'password_reset', compact('participant', 'url'));
 
                 $this->addFlash('success', 'Email envoyé avec succès');
@@ -84,31 +90,40 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/forgotten_password/{token}', name: 'reset_password')]
-    public function resetPassword($token, JWTService $JWTService, ParticipantRepository $participantRepository, Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    public function resetPassword(
+        $token,
+        JWTService $JWTService,
+        ParticipantRepository $participantRepository,
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
+        EntityManagerInterface $entityManager): Response
     {
-//        verifie si JWT est valide, pas expiré et verifie la clé secrète sinon renvoie un message flash
+        // vérifie si JWT est valide, pas expiré et vérifie la clé secrète sinon renvoie un message flash
         if (!$JWTService->isValid($token) || $JWTService->isExpired($token) || !$JWTService->check($token, $JWTService->getSecret())) {
             $this->addFlash('danger', 'Le token est invalide ou a expiré');
             return $this->redirectToRoute('app_login');
         }
-//     extrait les données du token
+        // extrait les données du token
         $payload = $JWTService->getPayload($token);
-//        récupère participant
+
+        // récupère participant
         $participant = $participantRepository->find($payload['participant_id']);
 
-//      si participant pas récupere
+        // si participant pas récupéré
         if (!$participant) {
             $this->addFlash('danger', 'Utilisateur non trouvé');
             return $this->redirectToRoute('app_login');
         }
-//      créer le formulaire
+
+        // créer le formulaire
         $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
-//        si formulaire soumis et valid
+
+        // si formulaire soumis et valid
         if ($form->isSubmitted() && $form->isValid()) {
-//            hashage du mot de passe
+            // hashage du mot de passe
             $participant->setPassword($passwordHasher->hashPassword($participant, $form->get('password')->getData()));
-//            enregistre en bdd
+            // enregistre en bdd
             $entityManager->flush();
             $this->addFlash('success', 'Mot de passe changé avec succès');
             return $this->redirectToRoute('app_login');
