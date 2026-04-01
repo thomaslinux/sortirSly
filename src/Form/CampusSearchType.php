@@ -14,7 +14,11 @@ class CampusSearchType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Campus :'
+                'label' => 'Campus :',
+                'attr' => [
+                    'placeholder' => 'Rechercher...',
+                    'autofocus' => 'true'
+                ],
             ]);
     }
 

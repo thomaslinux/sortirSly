@@ -14,7 +14,11 @@ class UserSearchType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Pseudo :'
+                'label' => 'Pseudo :',
+                'attr' => [
+                    'placeholder' => 'Rechercher...',
+                    'autofocus' => 'true'
+                ],
             ]);
 
     }
