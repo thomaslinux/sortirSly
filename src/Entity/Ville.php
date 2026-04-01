@@ -26,8 +26,8 @@ class Ville
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Veuillez renseigner un code postal pour la sortie')]
-    #[Assert\Positive]
-    #[Assert\LessThanOrEqual(99999)]
+    #[Assert\Positive(message: 'Le code doit être positif (Pas de -)')]
+    #[Assert\LessThanOrEqual(99999, message: 'Le code doit être valide')]
     #[Groups('villes-api')]
     private ?int $codePostal = null;
 
