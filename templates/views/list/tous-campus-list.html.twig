@@ -73,6 +73,7 @@
 <script>
     document.querySelectorAll('.edit-btn').forEach(button => {
         button.addEventListener('click', () => {
+            closeModal2()
             document.getElementById('editModal').style.display = 'block';
             document.getElementById('campusId').value = button.dataset.id;
             document.getElementById('campusNom').value = button.dataset.nom;
@@ -113,6 +114,7 @@
 
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', () => {
+            closeModal()
             document.getElementById('editModal2').style.display = 'block';
             document.getElementById('campusId2').value = button.dataset.id;
             document.getElementById('campusNom2').value = button.dataset.nom;
