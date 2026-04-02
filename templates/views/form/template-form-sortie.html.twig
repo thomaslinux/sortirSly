@@ -1,23 +1,46 @@
 {% form_theme sortieForm 'views/form/form-theme.html.twig' %}
 
-<h2>
-    {% block formTitle %}
-    {% endblock %}
-</h2>
-<div>
-    {{ form_row(sortieForm.nom) }}
-    {{ form_row(sortieForm.dateHeureDebut) }}
-    {{ form_row(sortieForm.dateLimiteInscription) }}
-    {{ form_row(sortieForm.duree) }}
-    {{ form_row(sortieForm.nbPlaces) }}
-    {{ form_row(sortieForm.description) }}
-    {{ form_row(sortieForm.campus) }}
-    {{ form_row(sortieForm.villes) }}
-    {{ form_row(sortieForm.lieu) }}
-    {{ form_row(sortieForm.lieu2) }}
-</div>
+<!-- Left Column: Informations Générales -->
+<section class="form-section section-general">
+    <div class="section-header">
+        <span class="material-symbols-outlined">info</span>
+        <h2 class="section-title text-primary">Informations Générales</h2>
+    </div>
+    <div class="form-group-list">
+        {{ form_row(sortieForm.nom) }}
+        <div class="input-row">
+            {{ form_row(sortieForm.dateHeureDebut) }}
+            {{ form_row(sortieForm.dateLimiteInscription) }}
+        </div>
+        <div class="input-row">
+            {{ form_row(sortieForm.nbPlaces) }}
+            {{ form_row(sortieForm.duree) }}
+        </div>
+        {{ form_row(sortieForm.description) }}
+    </div>
+</section>
+<!-- Right Column: Lieu & Logistique -->
+<section class="form-section section-logistics">
+    <div class="section-header">
+        <span class="material-symbols-outlined">location_on</span>
+        <h2 class="section-title text-primary">Lieu &amp; Logistique</h2>
+    </div>
+    <div class="form-group-list">
+        <div class="input-row">
+            {{ form_row(sortieForm.campus) }}
+            {{ form_row(sortieForm.villes) }}
+        </div>
+        {{ form_row(sortieForm.lieu) }}
+        {{ form_row(sortieForm.lieu2) }}
+    </div>
+</section>
 <div>
 
+    <a href="#"
+       id="mask"
+       class="btn-lieu">
+        Ajouter un lieu
+    </a>
     <button type="submit"
             class="btn-primary">Enregistrer brouillon
     </button>
@@ -27,14 +50,8 @@
     <a href="{{ path('sortie_list') }}"
        class="btn-cancel">Annuler</a>
 
-    <a href="#"
-       id="mask"
-       class="btn-lieu">
-        Ajouter un lieu
-    </a>
-
 </div>
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('styles/creer_une_sortie.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/creer_une_sortie_thomas.css') }}">
 {% endblock %}

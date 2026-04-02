@@ -33,7 +33,7 @@ body {
 }
 
 /* Layout Container */
-.main-container {
+.container {
     max-width: 1280px; /* Optimized for standard large desktop viewing */
     margin: 0 auto;
     padding: 8rem 1.5rem 5rem;

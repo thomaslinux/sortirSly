@@ -19,7 +19,6 @@ class LieuType extends AbstractType
     {
 
         $builder
-
             ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'nom',
@@ -27,7 +26,8 @@ class LieuType extends AbstractType
             ])
             ->add('nom', TextType::class, [
                 'label' => 'Nom du lieu :',
-            ])->add('rue', TextType::class, [
+            ])
+            ->add('rue', TextType::class, [
                 'label' => 'Rue :'
             ])
             ->add('latitude', NumberType::class, [
