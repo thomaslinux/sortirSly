@@ -541,3 +541,7 @@ tbody td a:hover {
         font-size: 0.9rem;
     }
 }
+
+li[id*="error"] {
+    color: var(--error);
+}

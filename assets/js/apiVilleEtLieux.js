@@ -64,13 +64,12 @@ function modifLieux() {
         selectVille.value = "";
         selectLieu.innerHTML = '<option value="" selected hidden>- Lieu de sortie -</option>';
 
-        if (document.getElementById('mask').textContent.trim() === "Ajouter un lieu") {
-            document.getElementById('mask').innerHTML = "Revenir au choix par défaut"
+        if (document.getElementById('mask').textContent.trim() === "+") {
+            document.getElementById('mask').textContent = "-"
         } else {
-            document.getElementById('mask').innerHTML = "Ajouter un lieu"
+            document.getElementById('mask').textContent = "+"
         }
     })
-
 
 
 }

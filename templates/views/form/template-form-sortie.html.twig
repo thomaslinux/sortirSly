@@ -30,28 +30,57 @@
             {{ form_row(sortieForm.campus) }}
             {{ form_row(sortieForm.villes) }}
         </div>
-        {{ form_row(sortieForm.lieu) }}
+        <div class="input-group">
+            <label for="{{ field_id(sortieForm.lieu) }}">{{ field_label(sortieForm.lieu) }}</label>
+            <div class="input-with-action">
+                <select id="{{ field_id(sortieForm.lieu) }}"
+                        name="{{ field_name(sortieForm.lieu) }}"
+                        class="form-widget form-input form-group"
+                >
+                </select>
+                <div id="mask" class="btn-add btn-lieu" type="button">
+                    +
+                </div>
+            </div>
+            {{ form_errors(sortieForm.lieu) }}
+        </div>
+
+        {#        {{ form_row(sortieForm.lieu) }} #}
         {{ form_row(sortieForm.lieu2) }}
     </div>
 </section>
-<div>
+<footer class="form-footer">
 
-    <a href="#"
-       id="mask"
-       class="btn-lieu">
-        Ajouter un lieu
-    </a>
+    {% if sortie is defined %}
+        {% if is_granted('DELETE', sortie) %}
+            <a class="btn-cancel" href="{{ path('sortie_delete', {'id': sortie.id}) }}">Supprimer</a>
+        {% endif %}
+    {% else %}
+        <a href="{{ path('sortie_list') }}" class="btn-cancel">Annuler</a>
+    {% endif %}
     <button type="submit"
-            class="btn-primary">Enregistrer brouillon
+            class="btn-outline">Enregistrer
     </button>
-
-    {{ form_row(sortieForm.publier) }}
-
-    <a href="{{ path('sortie_list') }}"
-       class="btn-cancel">Annuler</a>
-
-</div>
+    {#    {{ form_row(sortieForm.publier) }} #}
+    <button class="btn-primary" type="submit"
+            id="{{ field_id(sortieForm.publier) }}"
+            name="{{ field_name(sortieForm.publier) }}">
+        <span class="material-symbols-outlined">rocket_launch</span>
+        Publier la sortie
+    </button>
+</footer>
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('styles/creer_une_sortie_thomas.css') }}">
 {% endblock %}
+
+
+    {% block bonusjavascripts %}
+        <script>
+            const URL_PREFIX = "{{ path('api_villes_retrieve_all') }}"
+        </script>
+        <script defer
+                src="{{ asset('js/apiVilleEtLieux.js') }}"></script>
+        <script defer
+                src="{{ asset('js/controleDatesJS.js') }}"></script>
+    {% endblock %}
