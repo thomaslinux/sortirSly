@@ -26,9 +26,13 @@
                     {% else %}
                         inactif
                     {% endif %}
-
                     </span>
                 </div>
+                {% if app.user.id == participant.id %}
+                    <a class="back-button" href="{{ path('participant_update') }}">
+                        Modifier mon profil
+                    </a>
+                {% endif %}
             </aside>
             <!-- Right Column: Details -->
             <section class="profile-main">
