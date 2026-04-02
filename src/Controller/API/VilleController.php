@@ -15,10 +15,11 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 // Controller API de gestion des "Villes"
-#[Route('/sortie/api/villes', name: "api_villes_")]
-//#[IsGranted("ROLE_ADMIN")]
+#[Route('/api/villes', name: "api_villes_")]
+
 final class VilleController extends AbstractController
 {
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('', name: 'retrieve_all', methods: ['GET'])]
     public function retrieveAll(
 
@@ -28,7 +29,7 @@ final class VilleController extends AbstractController
         return $this->json($villes, Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
 
-
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/{id}', name: 'retrieve_one', methods: ['GET'])]
     public function retrieveOne(
         VilleRepository $villeRepository,
@@ -39,6 +40,7 @@ final class VilleController extends AbstractController
     }
 
     // c'est cette fonction qui permet de gérer les lieux dans l'ajout de lieux (créer une sortie)
+    #[IsGranted("ROLE_USER")]
     #[Route('/{id}/lieux', name: 'api_ville_lieux', methods: ['GET'])]
     public function LieuxAll(
         VilleRepository $villeRepository,
@@ -49,7 +51,7 @@ final class VilleController extends AbstractController
         return $this->json($ville->getLieux(), Response::HTTP_OK, [], ['groups' => 'villes-api']);
     }
 
-
+    #[IsGranted("ROLE_USER")]
     #[Route('', name: 'create', methods: ['POST'])]
     public function create(SerializerInterface    $serializer,
                            EntityManagerInterface $entityManager,
@@ -68,7 +70,7 @@ final class VilleController extends AbstractController
         }
     }
 
-
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(
         EntityManagerInterface $entityManager,
@@ -83,7 +85,7 @@ final class VilleController extends AbstractController
         return $this->json(['success' => 'Ville supprimée!'], Response::HTTP_ACCEPTED);
     }
 
-
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
     public function update(
         Request                $request,
