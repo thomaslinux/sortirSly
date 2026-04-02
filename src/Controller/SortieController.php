@@ -37,11 +37,6 @@ final class SortieController extends AbstractController
         Request          $request
     )
     {
-// TODO récupérer le campus du current User et l'envoyer dans le formulaire de recherche
-// TODO changer les résultats de recherche en fonction du sélecteur de campus
-// TODO récupérer les informations dans les paramètres de recherche
-// TODO envoyer les champs de recherche en paramètre de request via le formulaire de recherche
-
         $sortieService->MaJEtat();
 
         $sortieSearch = new SortieSearch();

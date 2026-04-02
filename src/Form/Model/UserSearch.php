@@ -4,8 +4,6 @@ namespace App\Form\Model;
 
 class UserSearch
 {
-// TODO ajouter la validation des champs
-
     private ?string $nom = null;
 
     public function getNom(): ?string
