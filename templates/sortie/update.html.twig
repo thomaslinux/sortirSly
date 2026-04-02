@@ -11,20 +11,5 @@
     {% embed 'views/form/template-form-sortie.html.twig' %}
     {% endembed %}
 
-    {% if is_granted('DELETE', sortie) %}
-        <a href="{{ path('sortie_delete', {'id': sortie.id}) }}">Supprimer</a>
-    {% endif %}
-
     {{ form_end(sortieForm) }}
-{% endblock %}
-
-
-{% block bonusjavascripts %}
-    <script>
-        const URL_PREFIX = "{{ path('api_villes_retrieve_all') }}"
-    </script>
-    <script defer
-            src="{{ asset('js/apiVilleEtLieux.js') }}"></script>
-    <script defer
-            src="{{ asset('js/controleDatesJS.js') }}"></script>
 {% endblock %}

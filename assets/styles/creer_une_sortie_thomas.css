@@ -342,6 +342,12 @@ textarea.form-input {
         justify-content: center;
     }
 }
+
 /* Lieux */
-.hide-me { display: none !important; }
-.show-me { display: block !important; }
+.hide-me {
+    display: none !important;
+}
+
+.show-me {
+    display: block !important;
+}
