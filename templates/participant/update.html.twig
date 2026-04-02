@@ -8,20 +8,23 @@
 
 {% block body %}
     <div class="profile-container">
+        <a class="back-button" href="{{ path('participant_profil', {'id': app.user.id}) }}">
+            Voir mon profil côté utilisateur
+        </a>
         <div class="profile-card">
             <header class="profile-header">
                 <h1>Mon profil : {{ app.user.username }}</h1>
                 <p>Gérez vos informations personnelles et préférences de compte.</p>
             </header>
             <div class="form-section">
-                    {% embed 'views/form/template-form-participant.html.twig' with {'form': form} %}
-                        {% block formTitle %}
-                            <div style="height: 0; visibility: hidden;"></div>
-                        {% endblock %}
-                        {% block buttonLabel %}
-                            Enregistrer
-                        {% endblock %}
-                    {% endembed %}
+                {% embed 'views/form/template-form-participant.html.twig' with {'form': form} %}
+                    {% block formTitle %}
+                        <div style="height: 0; visibility: hidden;"></div>
+                    {% endblock %}
+                    {% block buttonLabel %}
+                        Enregistrer
+                    {% endblock %}
+                {% endembed %}
             </div>
         </div>
     </div>
