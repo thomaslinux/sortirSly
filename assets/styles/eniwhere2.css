@@ -148,7 +148,7 @@ a {
     padding-top: 1.5rem;
     border-top: 1px solid rgba(207, 195, 202, 0.1);
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 2rem;
 }
 
@@ -508,10 +508,16 @@ tbody td a:hover {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
     .filter-grid {
         grid-template-columns: 1fr;
     }
+
+    .checkbox-group {
+
+        flex-direction: column;
+    }
+
 
     .footer-content {
         flex-direction: column;
