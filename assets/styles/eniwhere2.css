@@ -545,3 +545,7 @@ tbody td a:hover {
 li[id*="error"] {
     color: var(--error);
 }
+
+.success {
+    color: var(--success);
+}
